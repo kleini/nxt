@@ -18,75 +18,75 @@ public class TiltedTwister implements Solver {
     private static final int UPPERFACE = 4;
     private static final int DOWNFACE = 5;
 
-//    #define  UPPERLEFT    0
-//    #define  UPPERMID     1
-//    #define  UPPERRIGHT   2
-//    #define  MIDLEFT      3
-//    #define  CENTER       4
-//    #define  MIDRIGHT     5
-//    #define  DOWNLEFT     6
-//    #define  DOWNMID      7
-//    #define  DOWNRIGHT    8
+    private static final int UPPERLEFT = 0;
+    private static final int UPPERMID = 1;
+    private static final int UPPERRIGHT = 2;
+    private static final int MIDLEFT = 3;
+    private static final int CENTER = 4;
+    private static final int MIDRIGHT = 5;
+    private static final int DOWNLEFT = 6;
+    private static final int DOWNMID = 7;
+    private static final int DOWNRIGHT = 8;
 
-//    #define  LEFTFACE_UPPERLEFT   0
-//    #define  LEFTFACE_UPPERMID    1
-//    #define  LEFTFACE_UPPERRIGHT  2
-//    #define  LEFTFACE_MIDLEFT     3
-//    #define  LEFTFACE_CENTER      4
-//    #define  LEFTFACE_MIDRIGHT    5
-//    #define  LEFTFACE_DOWNLEFT    6
-//    #define  LEFTFACE_DOWNMID     7
+    private static final int LEFTFACE_UPPERLEFT = 0;
+    private static final int LEFTFACE_UPPERMID = 1;
+    private static final int LEFTFACE_UPPERRIGHT = 2;
+    private static final int LEFTFACE_MIDLEFT = 3;
+    private static final int LEFTFACE_CENTER = 4;
+    private static final int LEFTFACE_MIDRIGHT = 5;
+    private static final int LEFTFACE_DOWNLEFT = 6;
+    private static final int LEFTFACE_DOWNMID = 7;
 //    #define  LEFTFACE_DOWNRIGHT   8
 
-//    #define  FRONTFACE_UPPERLEFT  9
-//    #define  FRONTFACE_UPPERMID   10
-//    #define  FRONTFACE_UPPERRIGHT 11
-//    #define  FRONTFACE_MIDLEFT    12
-//    #define  FRONTFACE_CENTER     13
-//    #define  FRONTFACE_MIDRIGHT   14
-//    #define  FRONTFACE_DOWNLEFT   15
-//    #define  FRONTFACE_DOWNMID    16
+    private static final int FRONTFACE_UPPERLEFT = 9;
+    private static final int FRONTFACE_UPPERMID = 10;
+    private static final int FRONTFACE_UPPERRIGHT = 11;
+    private static final int FRONTFACE_MIDLEFT = 12;
+    private static final int FRONTFACE_CENTER = 13;
+    private static final int FRONTFACE_MIDRIGHT = 14;
+    private static final int FRONTFACE_DOWNLEFT = 15;
+    private static final int FRONTFACE_DOWNMID = 16;
 //    #define  FRONTFACE_DOWNRIGHT  17
 
-//    #define  RIGHTFACE_UPPERLEFT  18
-//    #define  RIGHTFACE_UPPERMID   19
-//    #define  RIGHTFACE_UPPERRIGHT 20
-//    #define  RIGHTFACE_MIDLEFT    21
-//    #define  RIGHTFACE_CENTER     22
-//    #define  RIGHTFACE_MIDRIGHT   23
-//    #define  RIGHTFACE_DOWNLEFT   24
-//    #define  RIGHTFACE_DOWNMID    25
+    private static final int RIGHTFACE_UPPERLEFT = 18;
+    private static final int RIGHTFACE_UPPERMID = 19;
+    private static final int RIGHTFACE_UPPERRIGHT = 20;
+    private static final int RIGHTFACE_MIDLEFT = 21;
+    private static final int RIGHTFACE_CENTER = 22;
+    private static final int RIGHTFACE_MIDRIGHT = 23;
+    private static final int RIGHTFACE_DOWNLEFT = 24;
+    private static final int RIGHTFACE_DOWNMID = 25;
 //    #define  RIGHTFACE_DOWNRIGHT  26
 
-//    #define  BACKFACE_UPPERLEFT   27
-//    #define  BACKFACE_UPPERMID    28
-//    #define  BACKFACE_UPPERRIGHT  29
-//    #define  BACKFACE_MIDLEFT     30
-//    #define  BACKFACE_CENTER      31
-//    #define  BACKFACE_MIDRIGHT    32
-//    #define  BACKFACE_DOWNLEFT    33
-//    #define  BACKFACE_DOWNMID     34
-//    #define  BACKFACE_DOWNRIGHT   35
+    private static final int BACKFACE_UPPERLEFT = 27;
+    private static final int BACKFACE_UPPERMID = 28;
+    private static final int BACKFACE_UPPERRIGHT = 29;
+    private static final int BACKFACE_MIDLEFT = 30;
+    private static final int BACKFACE_CENTER = 31;
+    private static final int BACKFACE_MIDRIGHT = 32;
+    private static final int BACKFACE_DOWNLEFT = 33;
+    private static final int BACKFACE_DOWNMID = 34;
+    private static final int BACKFACE_DOWNRIGHT = 35;
 
-//    #define  UPPERFACE_UPPERLEFT  36
-//    #define  UPPERFACE_UPPERMID   37
-//    #define  UPPERFACE_UPPERRIGHT 38
-//    #define  UPPERFACE_MIDLEFT    39
-//    #define  UPPERFACE_CENTER     40
-//    #define  UPPERFACE_MIDRIGHT   41
-//    #define  UPPERFACE_DOWNLEFT   42
-//    #define  UPPERFACE_DOWNMID    43
-//    #define  UPPERFACE_DOWNRIGHT  44
+    private static final int UPPERFACE_UPPERLEFT = 36;
+    private static final int UPPERFACE_UPPERMID = 37;
+    private static final int UPPERFACE_UPPERRIGHT = 38;
+    private static final int UPPERFACE_MIDLEFT = 39;
+    private static final int UPPERFACE_CENTER = 40;
+    private static final int UPPERFACE_MIDRIGHT = 41;
+    private static final int UPPERFACE_DOWNLEFT = 42;
+    private static final int UPPERFACE_DOWNMID = 43;
+    private static final int UPPERFACE_DOWNRIGHT = 44;
 
-//    #define  DOWNFACE_UPPERLEFT   45
-//    #define  DOWNFACE_UPPERMID    46
-//    #define  DOWNFACE_UPPERRIGHT  47
-//    #define  DOWNFACE_MIDLEFT     48
-//    #define  DOWNFACE_CENTER      49
-//    #define  DOWNFACE_MIDRIGHT    50
-//    #define  DOWNFACE_DOWNLEFT    51
-//    #define  DOWNFACE_DOWNMID     52
-//    #define  DOWNFACE_DOWNRIGHT   53
+    private static final int DOWNFACE_UPPERLEFT = 45;
+    private static final int DOWNFACE_UPPERMID = 46;
+    private static final int DOWNFACE_UPPERRIGHT = 47;
+    private static final int DOWNFACE_MIDLEFT = 48;
+    private static final int DOWNFACE_CENTER = 49;
+    private static final int DOWNFACE_MIDRIGHT = 50;
+    private static final int DOWNFACE_DOWNLEFT = 51;
+    private static final int DOWNFACE_DOWNMID = 52;
+    private static final int DOWNFACE_DOWNRIGHT = 53;
 
 //    #define SENSORPOS_HOME      50
 //    #define SENSORPOS_CENTER    150
@@ -100,7 +100,7 @@ public class TiltedTwister implements Solver {
 //    #define TILTREST  800   // Time (ms) to rest before return tilterarm
 //    #define SCANSPEED 40
 
-//    #define MAXMOVES  300
+    private static final int MAXMOVES = 300;
 
 //    #define BT_CONN 2
 //    #define INBOX 5
@@ -148,7 +148,7 @@ public class TiltedTwister implements Solver {
 //    UPPERFACE_UPPERRIGHT,BACKFACE_UPPERLEFT,RIGHTFACE_UPPERRIGHT,
 //    UPPERFACE_DOWNLEFT,FRONTFACE_UPPERLEFT,LEFTFACE_UPPERRIGHT,
 //    UPPERFACE_DOWNRIGHT,RIGHTFACE_UPPERLEFT,FRONTFACE_UPPERRIGHT,
-//    DOWNFACE_UPPERLEFT,LEFTFACE_DOWNRIGHT,FRONTFACE_DOWNLEFT,
+    // DOWNFACE_UPPERLEFT,LEFTFACE_DOWNRIGHT,FRONTFACE_DOWNLEFT,
 //    DOWNFACE_UPPERRIGHT,FRONTFACE_DOWNRIGHT,RIGHTFACE_DOWNLEFT,
 //    DOWNFACE_DOWNLEFT,BACKFACE_DOWNRIGHT,LEFTFACE_DOWNLEFT,
 //    DOWNFACE_DOWNRIGHT,RIGHTFACE_DOWNRIGHT,BACKFACE_DOWNLEFT};
@@ -180,13 +180,13 @@ public class TiltedTwister implements Solver {
 
 //    colorType cubeColor[6*9];
     private final char[] cube = new char[6*9];
-//    char tmpCube[6*9];
-//    char moves[MAXMOVES];
+    private final char[] tmpCube = new char[6*9];
+    private final char[] moves = new char[MAXMOVES];
     private int movesCount = 0;
-//    char solution[MAXMOVES];
-//    int  solutionCount;
-//    int  solutionTwists;
-//    int  twists;
+    private char[] solution = new char[MAXMOVES];
+    private int solutionCount;
+    private int solutionTwists;
+    private int twists;
     private final char[] staticfaces = {'L','F','R','B','U','D'};
     private final char[] faces = {'L','F','R','B','U','D'};
 //    bool cubeGrabbed;
@@ -205,7 +205,9 @@ public class TiltedTwister implements Solver {
 //    rgb sensorColor[6*9];
 //    unsigned long costMatrix[12*12];
 //    int twistMatrix[12*12];
-    private final byte[] color = new byte[6*9];
+
+    /** Found colors on the cube */ 
+    private final char[] color = new char[6 * 9];
 
 //    inline void ColorSet(int face, int pos,int col)
 //    {
@@ -558,18 +560,15 @@ public class TiltedTwister implements Solver {
 //      SetSensorType(IN_1,SENSOR_TYPE_NONE);
 //    }
 
+    //*****************************************************************************
+    // Color resolving
 
-//    //*****************************************************************************
-//    // Color resolving
-
-//    void Sorry()
-//    {
-//      TextOut(5,LCD_LINE2,"SORRY",true);
-//      TextOut(5,LCD_LINE4,"Can't resolve" );
-//      TextOut(5,LCD_LINE5,"colors" );
-//      PlayFile("Sorry.rso");
-//    }
-
+    private void Sorry() {
+    	System.out.println("SORRY"); // TextOut(5,LCD_LINE2,"SORRY",true);
+    	System.out.println("Can't resolve"); // TextOut(5,LCD_LINE4,"Can't resolve" );
+    	System.out.println("colors"); // TextOut(5,LCD_LINE5,"colors" );
+    	// PlayFile("Sorry.rso");
+    }
 
 //    int GetRefCornerColor(rgb refColor1,rgb refColor2)
 //    {
@@ -909,925 +908,821 @@ public class TiltedTwister implements Solver {
 //      DumpCube();
 //    }
 
-//    //*****************************************************************************
-//    // Solve functions
-
-//    inline void CubeSet(int face, int pos, char value)
-//    {
-//      cube[face * 9 + pos] = value;
-//    }
-
-//    inline char CubeGet(int face, int pos)
-//    {
-//      return cube[face * 9 + pos];
-//    }
-
-//    inline char TmpCubeGet(int face, int pos)
-//    {
-//      return tmpCube[face * 9 + pos];
-//    }
-
-//    inline void CopyCube()
-//    {
-//      ArraySubset(tmpCube,cube,0,54);
-//    }
-
-
-//    void CopyFace(int fromFace,int toFace)
-//    {
-//      int fromFaceOffset=fromFace*9;
-//      int toFaceOffset=toFace*9;
-//      for(int i=0;i<9;i++)
-//        cube[toFaceOffset+i]=tmpCube[fromFaceOffset+i];
-//    }
-
-
-//    void CopyFaceClockwise(int fromFace, int toFace, int turns)
-//    {
-//      int fromFaceOffset = fromFace*9;
-//      int toFaceOffset = toFace*9;
-//      if(turns==1)
-//      {
-//        cube[toFaceOffset + UPPERLEFT] = tmpCube[fromFaceOffset + DOWNLEFT];
-//        cube[toFaceOffset + UPPERMID] = tmpCube[fromFaceOffset + MIDLEFT];
-//        cube[toFaceOffset + UPPERRIGHT] = tmpCube[fromFaceOffset + UPPERLEFT];
-//        cube[toFaceOffset + MIDLEFT] = tmpCube[fromFaceOffset + DOWNMID];
-//        cube[toFaceOffset + CENTER] = tmpCube[fromFaceOffset + CENTER];
-//        cube[toFaceOffset + MIDRIGHT] = tmpCube[fromFaceOffset + UPPERMID];
-//        cube[toFaceOffset + DOWNLEFT] = tmpCube[fromFaceOffset + DOWNRIGHT];
-//        cube[toFaceOffset + DOWNMID] = tmpCube[fromFaceOffset + MIDRIGHT];
-//        cube[toFaceOffset + DOWNRIGHT] =tmpCube[fromFaceOffset +UPPERRIGHT];
-//      }
-//      else if(turns==2)
-//      {
-//        cube[toFaceOffset + UPPERLEFT] = tmpCube[fromFaceOffset + DOWNRIGHT];
-//        cube[toFaceOffset + UPPERMID] = tmpCube[fromFaceOffset + DOWNMID];
-//        cube[toFaceOffset + UPPERRIGHT] = tmpCube[fromFaceOffset + DOWNLEFT];
-//        cube[toFaceOffset + MIDLEFT] = tmpCube[fromFaceOffset + MIDRIGHT];
-//        cube[toFaceOffset + CENTER] = tmpCube[fromFaceOffset + CENTER];
-//        cube[toFaceOffset + MIDRIGHT] = tmpCube[fromFaceOffset + MIDLEFT];
-//        cube[toFaceOffset + DOWNLEFT] = tmpCube[fromFaceOffset + UPPERRIGHT];
-//        cube[toFaceOffset + DOWNMID] = tmpCube[fromFaceOffset + UPPERMID];
-//        cube[toFaceOffset + DOWNRIGHT] =tmpCube[fromFaceOffset +UPPERLEFT];
-//      }
-//      else //turns==3
-//      {
-//        cube[toFaceOffset + UPPERLEFT] = tmpCube[fromFaceOffset + UPPERRIGHT];
-//        cube[toFaceOffset + UPPERMID] = tmpCube[fromFaceOffset + MIDRIGHT];
-//        cube[toFaceOffset + UPPERRIGHT] = tmpCube[fromFaceOffset + DOWNRIGHT];
-//        cube[toFaceOffset + MIDLEFT] = tmpCube[fromFaceOffset + UPPERMID];
-//        cube[toFaceOffset + CENTER] = tmpCube[fromFaceOffset + CENTER];
-//        cube[toFaceOffset + MIDRIGHT] = tmpCube[fromFaceOffset + DOWNMID];
-//        cube[toFaceOffset + DOWNLEFT] = tmpCube[fromFaceOffset + UPPERLEFT];
-//        cube[toFaceOffset + DOWNMID] = tmpCube[fromFaceOffset + MIDLEFT];
-//        cube[toFaceOffset + DOWNRIGHT] =tmpCube[fromFaceOffset +DOWNLEFT];
-//      }
-//    }
-
-
-//    void TurnCube(int turns)
-//    {
-//      CopyCube();
-//      if(turns==1)
-//      {
-//        CopyFaceClockwise(UPPERFACE,UPPERFACE,1);
-//        CopyFace(LEFTFACE,BACKFACE);
-//        CopyFace(BACKFACE,RIGHTFACE);
-//        CopyFace(RIGHTFACE,FRONTFACE);
-//        CopyFace(FRONTFACE,LEFTFACE);
-//        CopyFaceClockwise(DOWNFACE,DOWNFACE,3);
-//      }
-//      else if(turns==2)
-//      {
-//        CopyFaceClockwise(UPPERFACE,UPPERFACE,2);
-//        CopyFace(LEFTFACE,RIGHTFACE);
-//        CopyFace(BACKFACE,FRONTFACE);
-//        CopyFace(RIGHTFACE,LEFTFACE);
-//        CopyFace(FRONTFACE,BACKFACE);
-//        CopyFaceClockwise(DOWNFACE,DOWNFACE,2);
-//      }
-//      else //turns==3
-//      {
-//        CopyFaceClockwise(UPPERFACE,UPPERFACE,3);
-//        CopyFace(LEFTFACE,FRONTFACE);
-//        CopyFace(BACKFACE,LEFTFACE);
-//        CopyFace(RIGHTFACE,BACKFACE);
-//        CopyFace(FRONTFACE,RIGHTFACE);
-//        CopyFaceClockwise(DOWNFACE,DOWNFACE,1);
-//      }
-//    }
-
-
-//    void TiltCube(int turns)
-//    {
-//      CopyCube();
-//      if(turns==1)
-//      {
-//        CopyFaceClockwise(UPPERFACE,RIGHTFACE,1);
-//        CopyFaceClockwise(RIGHTFACE,DOWNFACE,1);
-//        CopyFaceClockwise(DOWNFACE,LEFTFACE,1);
-//        CopyFaceClockwise(LEFTFACE,UPPERFACE,1);
-//        CopyFaceClockwise(FRONTFACE,FRONTFACE,1);
-//        CopyFaceClockwise(BACKFACE,BACKFACE,3);
-//      }
-//      else if(turns==2)
-//      {
-//        CopyFaceClockwise(UPPERFACE,DOWNFACE,2);
-//        CopyFaceClockwise(RIGHTFACE,LEFTFACE,2);
-//        CopyFaceClockwise(DOWNFACE,UPPERFACE,2);
-//        CopyFaceClockwise(LEFTFACE,RIGHTFACE,2);
-//        CopyFaceClockwise(FRONTFACE,FRONTFACE,2);
-//        CopyFaceClockwise(BACKFACE,BACKFACE,2);
-//      }
-//      else //turns==3
-//      {
-//        CopyFaceClockwise(UPPERFACE,LEFTFACE,3);
-//        CopyFaceClockwise(RIGHTFACE,UPPERFACE,3);
-//        CopyFaceClockwise(DOWNFACE,RIGHTFACE,3);
-//        CopyFaceClockwise(LEFTFACE,DOWNFACE,3);
-//        CopyFaceClockwise(FRONTFACE,FRONTFACE,3);
-//        CopyFaceClockwise(BACKFACE,BACKFACE,1);
-//      }
-//    }
-
-
-//    void TwistCube(int turns)
-//    {
-//      if(movesCount+turns>=MAXMOVES)
-//      {
-//        Sorry();
-//        Wait(10000);
-//        Stop(true);
-//      }
-//      for (int twists = 0; twists < turns; twists++)
-//      {
-//        CopyCube();
-//        CopyFaceClockwise(DOWNFACE, DOWNFACE,1);
-//        for (int i = 6; i < 9; i++)
-//        {
-//          CubeSet(LEFTFACE, i, TmpCubeGet(BACKFACE, i));
-//          CubeSet(FRONTFACE, i, TmpCubeGet(LEFTFACE, i));
-//          CubeSet(RIGHTFACE, i, TmpCubeGet(FRONTFACE, i));
-//          CubeSet(BACKFACE, i, TmpCubeGet(RIGHTFACE, i));
-//        }
-//        moves[movesCount++]=cube[DOWNFACE_CENTER];
-//      }
-//      PlayTone(200+movesCount*20,1);
-//    }
-
-
-//    void RotateFace(int face, int turns)
-//    {
-//      switch (face)
-//      {
-//        case UPPERFACE:
-//          TiltCube(2); TwistCube(turns); TiltCube(2); break;
-//        case LEFTFACE:
-//          TiltCube(3); TwistCube(turns); TiltCube(1); break;
-//        case FRONTFACE:
-//          TurnCube(1); TiltCube(3); TwistCube(turns); TiltCube(1); TurnCube(3); break;
-//        case RIGHTFACE:
-//          TiltCube(1); TwistCube(turns); TiltCube(3); break;
-//        case BACKFACE:
-//          TurnCube(3); TiltCube(3); TwistCube(turns); TiltCube(1); TurnCube(1); break;
-//        case DOWNFACE:
-//          TwistCube(turns); break;
-//      }
-//    }
-
-
-//    void RotateFaces(string faces)
-//    {
-//      char faceturn;
-//      for (int i = 0; i < StrLen(faces); i++)
-//      {
-//        faceturn=faces[i];
-//        switch (faceturn)
-//        {
-//          case 'U': RotateFace(UPPERFACE, 1); break;
-//          case 'L': RotateFace(LEFTFACE, 1); break;
-//          case 'F': RotateFace(FRONTFACE, 1); break;
-//          case 'R': RotateFace(RIGHTFACE, 1); break;
-//          case 'B': RotateFace(BACKFACE, 1); break;
-//          case 'D': RotateFace(DOWNFACE, 1); break;
-//          case 'u': RotateFace(UPPERFACE, 3); break;
-//          case 'l': RotateFace(LEFTFACE, 3); break;
-//          case 'f': RotateFace(FRONTFACE, 3); break;
-//          case 'r': RotateFace(RIGHTFACE, 3); break;
-//          case 'b': RotateFace(BACKFACE, 3); break;
-//          case 'd': RotateFace(DOWNFACE, 3); break;
-//        }
-//      }
-//    }
-
-
-//    bool CornerColorOk(int position, char c1, char c2)
-//    {
-//      return cube[position] == c1 || cube[position] == c2;
-//    }
-
-
-//    bool TryBottomFace(char c1, char c2, int twists)
-//    {
-//      for (int i = 0; i < 4; i++)
-//      {
-//        if (twists == 0)
-//        {
-//          if (CornerColorOk(DOWNFACE_UPPERLEFT, c1, c2) && CornerColorOk(DOWNFACE_UPPERRIGHT, c1, c2) && CornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && !CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2))
-//            return true;
-//        }
-//        else if (twists == 1)
-//        {
-//          if (CornerColorOk(DOWNFACE_UPPERLEFT, c1, c2) && CornerColorOk(DOWNFACE_UPPERRIGHT, c1, c2))
-//          {
-//            for (int j = 0; j < 4; j++)
-//            {
-//              RotateFaces("B");
-//              if (CornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && !CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2))
-//                return true;
-//              else if (!CornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2))
-//              {
-//                TurnCube(3);
-//                return true;
-//              }
-//              else if (CornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2))
-//              {
-//                if (CornerColorOk(UPPERFACE_UPPERLEFT, c1, c2) && CornerColorOk(UPPERFACE_UPPERRIGHT, c1, c2) && CornerColorOk(UPPERFACE_DOWNLEFT, c1, c2) && CornerColorOk(UPPERFACE_DOWNRIGHT, c1, c2))
-//                  return true;
-//              }
-//            }
-//          }
-//        }
-//        else if (twists == 2)
-//        {
-//          if (CornerColorOk(DOWNFACE_UPPERLEFT, c1, c2))
-//          {
-//            for (int j = 0; j < 4; j++)
-//            {
-//              RotateFaces("R");
-//              if (CornerColorOk(DOWNFACE_UPPERRIGHT, c1, c2))
-//              {
-//                for (int k = 0; k < 4; k++)
-//                {
-//                  RotateFaces("B");
-//                  if (CornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && !CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2))
-//                    return true;
-//                  else if (!CornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2))
-//                  {
-//                    TurnCube(3);
-//                    return true;
-//                  }
-//                }
-//              }
-//            }
-//          }
-//        }
-//        TurnCube(1);
-//      }
-//      return false;
-//    }
-
-
-//    bool PrepareBottomFace(char c1, char c2, int twists)
-//    {
-//      if (TryBottomFace(c1, c2, twists))
-//        return true;
-//      TiltCube(1);
-//      if (TryBottomFace(c1, c2, twists))
-//        return true;
-//      TiltCube(1);
-//      if (TryBottomFace(c1, c2, twists))
-//        return true;
-//      TiltCube(1);
-//      if (TryBottomFace(c1, c2, twists))
-//        return true;
-//      TurnCube(1);
-//      TiltCube(1);
-//      if (TryBottomFace(c1, c2, twists))
-//        return true;
-//      TiltCube(2);
-//      if (TryBottomFace(c1, c2, twists))
-//        return true;
-//      return false;
-//    }
-
-
-//    bool MoveCorners(int corner1,int corner2,int corner3,int corner4, char color1, char color2, string moves)
-//    {
-//      if (CornerColorOk(corner1, color1, color2) &&
-//        CornerColorOk(corner2, color1, color2) &&
-//        CornerColorOk(corner3, color1, color2) &&
-//        CornerColorOk(corner4, color1, color2))
-//      {
-//        RotateFaces(moves);
-//        return true;
-//      }
-//      return false;
-//    }
-
-
-//    void OrientAllCorners(char c1, char c2)
-//    {
-//      if (!PrepareBottomFace(c1, c2, 0))
-//        if (!PrepareBottomFace(c1, c2, 1))
-//          PrepareBottomFace(c1, c2, 2);
-//      if (CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2))
-//        return;
-//      else if (CornerColorOk(LEFTFACE_DOWNLEFT, c1, c2))
-//      {
-//        for (int i = 0; i < 4; i++)
-//        {
-//          if (MoveCorners(BACKFACE_UPPERRIGHT, RIGHTFACE_UPPERRIGHT, UPPERFACE_DOWNLEFT, UPPERFACE_DOWNRIGHT, c1, c2, "Lul"))
-//            return;
-//          else if (MoveCorners(BACKFACE_UPPERRIGHT, UPPERFACE_UPPERRIGHT, UPPERFACE_DOWNLEFT, FRONTFACE_UPPERRIGHT, c1, c2, "flF"))
-//            return;
-//          else if (MoveCorners(LEFTFACE_UPPERLEFT, UPPERFACE_UPPERRIGHT, LEFTFACE_UPPERRIGHT, RIGHTFACE_UPPERLEFT, c1, c2, "fLLF"))
-//            return;
-//          else if (MoveCorners(BACKFACE_UPPERRIGHT, UPPERFACE_UPPERRIGHT, FRONTFACE_UPPERLEFT, RIGHTFACE_UPPERLEFT, c1, c2, "LLDF"))
-//            return;
-//          else if (MoveCorners(UPPERFACE_UPPERLEFT, UPPERFACE_UPPERRIGHT, FRONTFACE_UPPERLEFT, UPPERFACE_DOWNRIGHT, c1, c2, "LfLf"))
-//            return;
-//          else if (MoveCorners(LEFTFACE_UPPERLEFT, BACKFACE_UPPERLEFT, LEFTFACE_UPPERRIGHT, UPPERFACE_DOWNRIGHT, c1, c2, "bDDLdl"))
-//            return;
-//          else if (MoveCorners(BACKFACE_UPPERRIGHT, RIGHTFACE_UPPERRIGHT, FRONTFACE_UPPERLEFT, FRONTFACE_UPPERRIGHT, c1, c2, "fLfDDb"))
-//            return;
-//          else if (MoveCorners(LEFTFACE_UPPERLEFT, BACKFACE_UPPERLEFT, FRONTFACE_UPPERLEFT, RIGHTFACE_UPPERLEFT, c1, c2, "lULfLLF"))
-//            return;
-//          RotateFaces("U");
-//        }
-//      }
-//      else if (CornerColorOk(BACKFACE_DOWNRIGHT, c1, c2))
-//      {
-//        for (int i = 0; i < 4; i++)
-//        {
-//          if (MoveCorners(LEFTFACE_UPPERLEFT, UPPERFACE_UPPERRIGHT, FRONTFACE_UPPERLEFT, UPPERFACE_DOWNRIGHT, c1, c2, "bUB"))
-//            return;
-//          else if (MoveCorners(LEFTFACE_UPPERLEFT, UPPERFACE_UPPERRIGHT, UPPERFACE_DOWNLEFT, RIGHTFACE_UPPERLEFT, c1, c2, "LDF"))
-//            return;
-//          else if (MoveCorners(BACKFACE_UPPERRIGHT, BACKFACE_UPPERLEFT, UPPERFACE_DOWNLEFT, FRONTFACE_UPPERRIGHT, c1, c2, "RBBr"))
-//            return;
-//          else if (MoveCorners(LEFTFACE_UPPERLEFT, RIGHTFACE_UPPERRIGHT, UPPERFACE_DOWNLEFT, FRONTFACE_UPPERRIGHT, c1, c2, "FFdB"))
-//            return;
-//          else if (MoveCorners(UPPERFACE_UPPERLEFT, RIGHTFACE_UPPERRIGHT, UPPERFACE_DOWNLEFT, UPPERFACE_DOWNRIGHT, c1, c2, "bRbr"))
-//            return;
-//          else if (MoveCorners(BACKFACE_UPPERRIGHT, BACKFACE_UPPERLEFT, LEFTFACE_UPPERRIGHT, UPPERFACE_DOWNRIGHT, c1, c2, "LUUfDF"))
-//            return;
-//          else if (MoveCorners(LEFTFACE_UPPERLEFT, RIGHTFACE_UPPERRIGHT, FRONTFACE_UPPERLEFT, RIGHTFACE_UPPERLEFT, c1, c2, "RbRDDL"))
-//            return;
-//          else if (MoveCorners(BACKFACE_UPPERRIGHT, RIGHTFACE_UPPERRIGHT, LEFTFACE_UPPERRIGHT, FRONTFACE_UPPERRIGHT, c1, c2, "FluRUUR"))
-//            return;
-//          RotateFaces("U");
-//        }
-//      }
-//    }
-
-
-//    void SplitCorners(char color, char oppositeColor)
-//    {
-//      int count = 0;
-//      for (int i = 0; i < 4; i++)
-//      {
-//        if (cube[DOWNFACE_UPPERLEFT] == color)
-//          count++;
-//        TurnCube(1);
-//      }
-//      if (count == 1 || count == 3)
-//      {
-//        int singleColor;
-//        if (count == 1)
-//          singleColor = color;
-//        else
-//          singleColor = oppositeColor;
-//        while (cube[DOWNFACE_UPPERLEFT] != singleColor)
-//          TurnCube(1);
-//        while (cube[UPPERFACE_DOWNRIGHT] == singleColor)
-//          RotateFaces("U");
-//        if (cube[UPPERFACE_DOWNRIGHT] == cube[UPPERFACE_CENTER])
-//          RotateFaces("RRDLL");
-//        else
-//          RotateFaces("RRDRR");
-//      }
-//      else if (count == 2)
-//      {
-//        if (cube[DOWNFACE_UPPERLEFT] != cube[DOWNFACE_DOWNRIGHT])
-//          TiltCube(2);
-//        if (cube[DOWNFACE_UPPERLEFT] != cube[DOWNFACE_DOWNRIGHT])
-//        {
-//          while (cube[DOWNFACE_UPPERLEFT] != cube[DOWNFACE_UPPERRIGHT])
-//            TurnCube(1);
-//          while (cube[UPPERFACE_UPPERLEFT] != cube[DOWNFACE_UPPERLEFT] || cube[UPPERFACE_UPPERRIGHT] != cube[DOWNFACE_UPPERRIGHT])
-//            RotateFaces("U");
-//          if (cube[UPPERFACE_UPPERLEFT] == cube[UPPERFACE_CENTER])
-//            RotateFaces("FF");
-//          else
-//            RotateFaces("BB");
-//        }
-//        else if (cube[UPPERFACE_UPPERLEFT] == cube[UPPERFACE_DOWNRIGHT])
-//        {
-//          if (cube[UPPERFACE_UPPERLEFT] != cube[DOWNFACE_DOWNLEFT])
-//            RotateFaces("U");
-//          if (cube[UPPERFACE_UPPERRIGHT] == cube[UPPERFACE_CENTER])
-//            TurnCube(1);
-//          RotateFaces("RRDDFF");
-//        }
-//        else
-//        {
-//          while (cube[UPPERFACE_UPPERLEFT] != cube[DOWNFACE_DOWNLEFT] || cube[UPPERFACE_DOWNLEFT] != cube[DOWNFACE_DOWNLEFT])
-//            TurnCube(1);
-//          if (cube[UPPERFACE_UPPERLEFT] != cube[UPPERFACE_CENTER])
-//            RotateFaces("RRDRRDLL");
-//          else
-//            RotateFaces("RRDRRDRR");
-//        }
-//      }
-//      if (cube[UPPERFACE_UPPERLEFT] == cube[LEFTFACE_CENTER])
-//        TiltCube(1);
-//      else if (cube[UPPERFACE_UPPERLEFT] == cube[FRONTFACE_CENTER])
-//      {
-//        TurnCube(1);
-//        TiltCube(1);
-//      }
-//      else if (cube[UPPERFACE_UPPERLEFT] == cube[RIGHTFACE_CENTER])
-//        TiltCube(3);
-//      else if (cube[UPPERFACE_UPPERLEFT] == cube[BACKFACE_CENTER])
-//      {
-//        TurnCube(3);
-//        TiltCube(1);
-//      }
-//      else if (cube[UPPERFACE_UPPERLEFT] == cube[DOWNFACE_CENTER])
-//        TiltCube(2);
-//      while (cube[UPPERFACE_UPPERLEFT] != cube[UPPERFACE_CENTER])
-//        RotateFaces("B");
-//      while (cube[UPPERFACE_DOWNLEFT] != cube[UPPERFACE_CENTER])
-//        RotateFaces("F");
-//    }
-
-
-//    //Step 3 Position all corners
-//    void PositionAllCorners()
-//    {
-//      int count = 0;
-//      int topCount = 0;
-//      int bottomCount = 0;
-//      for (int i = 0; i < 4; i++)
-//      {
-//        if (cube[BACKFACE_DOWNLEFT] == cube[BACKFACE_DOWNRIGHT])
-//          bottomCount++;
-//        if (cube[BACKFACE_UPPERLEFT] == cube[BACKFACE_UPPERRIGHT])
-//          topCount++;
-//        TurnCube(1);
-//      }
-//      if (topCount > bottomCount)
-//        TiltCube(2);
-//      count = topCount + bottomCount;
-//      if (count == 0)
-//        RotateFaces("RRFFRR");
-//      else if (count == 1)
-//      {
-//        while (cube[BACKFACE_DOWNLEFT] != cube[BACKFACE_DOWNRIGHT])
-//          TurnCube(1);
-//        RotateFaces("RuFUUfUr");
-//      }
-//      else if (count == 2)
-//      {
-//        while (cube[BACKFACE_DOWNLEFT] != cube[BACKFACE_DOWNRIGHT])
-//          TurnCube(1);
-//        while (cube[BACKFACE_UPPERLEFT] != cube[BACKFACE_UPPERRIGHT])
-//          RotateFaces("U");
-//        RotateFaces("RRUFFUURRURR");
-//      }
-//      else if (count == 4)
-//        RotateFaces("FFuRurUFFURUr");
-//      else if (count == 5)
-//      {
-//        while (cube[BACKFACE_UPPERLEFT] != cube[BACKFACE_UPPERRIGHT])
-//          TurnCube(1);
-//        RotateFaces("RuRFFrURFFRR");
-//      }
-//    }
-
-
-//    int TopEdgesSolved()
-//    {
-//      int solved = 0;
-//      if (cube[UPPERFACE_UPPERMID] == cube[UPPERFACE_CENTER] && cube[BACKFACE_UPPERMID] == cube[BACKFACE_UPPERLEFT])
-//        solved++;
-//      if (cube[UPPERFACE_MIDLEFT] == cube[UPPERFACE_CENTER] && cube[LEFTFACE_UPPERMID] == cube[LEFTFACE_UPPERLEFT])
-//        solved++;
-//      if (cube[UPPERFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] && cube[RIGHTFACE_UPPERMID] == cube[RIGHTFACE_UPPERLEFT])
-//        solved++;
-//      if (cube[UPPERFACE_DOWNMID] == cube[UPPERFACE_CENTER] && cube[FRONTFACE_UPPERMID] == cube[FRONTFACE_UPPERLEFT])
-//        solved++;
-//      return solved;
-//    }
-
-
-//    int BottomEdgesSolved()nander anz
-//    {
-//      int solved = 0;
-//      if (cube[DOWNFACE_UPPERMID] == cube[DOWNFACE_CENTER] && cube[FRONTFACE_DOWNMID] == cube[FRONTFACE_DOWNLEFT])
-//        solved++;
-//      if (cube[DOWNFACE_MIDLEFT] == cube[DOWNFACE_CENTER] && cube[LEFTFACE_DOWNMID] == cube[LEFTFACE_DOWNLEFT])
-//        solved++;
-//      if (cube[DOWNFACE_MIDRIGHT] == cube[DOWNFACE_CENTER] && cube[RIGHTFACE_DOWNMID] == cube[RIGHTFACE_DOWNLEFT])
-//        solved++;
-//      if (cube[DOWNFACE_DOWNMID] == cube[DOWNFACE_CENTER] && cube[BACKFACE_DOWNMID] == cube[BACKFACE_DOWNLEFT])
-//        solved++;
-//      return solved;
-//    }
-
-
-//    void SetBottomFace(int downface, int downpos, int sideface, int sidepos)
-//    {
-//      if (CubeGet(downface, downpos) == cube[DOWNFACE_CENTER])
-//      {
-//        while (cube[RIGHTFACE_DOWNLEFT] != CubeGet(sideface, sidepos))
-//          RotateFaces("D");
-//      }
-//      else
-//      {
-//        for (int i = 0; i < 4; i++)
-//        {
-//          if (cube[DOWNFACE_MIDRIGHT] != cube[DOWNFACE_CENTER] || cube[RIGHTFACE_DOWNMID] != cube[RIGHTFACE_DOWNLEFT])
-//            break;
-//          RotateFaces("D");
-//        }
-//      }
-//    }
-
-
-//    void TopEdgeMoveOut()
-//    {
-//      for (int i = 0; i < 4; i++)
-//      {
-//        if (cube[UPPERFACE_MIDRIGHT] != cube[UPPERFACE_CENTER] || cube[RIGHTFACE_UPPERMID] != cube[RIGHTFACE_UPPERLEFT])
-//        {
-//          SetBottomFace(0, 0, 0, 0);
-//          RotateFaces("rUdF");
-//          return;
-//        }
-//        TurnCube(1);
-//      }
-//    }
-
-
-//    bool TopEdgeShort()
-//    {
-//      for (int i = 0; i < 4; i++)
-//      {
-//        for (int j = 0; j < 4; j++)
-//        {
-//          if (cube[LEFTFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] && cube[FRONTFACE_MIDLEFT] == cube[RIGHTFACE_UPPERLEFT])
-//          {
-//            SetBottomFace(RIGHTFACE, UPPERMID, UPPERFACE, MIDRIGHT);
-//            RotateFaces("rUdF");
-//            return true;
-//          }
-//          if (cube[LEFTFACE_MIDLEFT] == cube[UPPERFACE_CENTER] && cube[BACKFACE_MIDRIGHT] == cube[RIGHTFACE_UPPERLEFT])
-//          {
-//            SetBottomFace(RIGHTFACE, UPPERMID, UPPERFACE, MIDRIGHT);
-//            RotateFaces("RuDb");
-//            return true;
-//          }
-//          if (cube[FRONTFACE_MIDLEFT] == cube[UPPERFACE_CENTER] && cube[LEFTFACE_MIDRIGHT] == cube[RIGHTFACE_UPPERLEFT])
-//          {
-//            SetBottomFace(BACKFACE, MIDRIGHT, LEFTFACE, MIDLEFT);
-//            RotateFaces("RUUddl");
-//            return true;
-//          }
-//          if (cube[BACKFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] && cube[LEFTFACE_MIDLEFT] == cube[RIGHTFACE_UPPERLEFT])
-//          {
-//            SetBottomFace(FRONTFACE, MIDLEFT, LEFTFACE, MIDRIGHT);
-//            RotateFaces("ruuDDL");
-//            return true;
-//          }
-//          if (cube[RIGHTFACE_DOWNMID] == cube[UPPERFACE_CENTER] && cube[DOWNFACE_MIDRIGHT] == cube[RIGHTFACE_UPPERLEFT])
-//          {
-//            RotateFaces("RUdf");
-//            return true;
-//          }
-//          TurnCube(1);
-//        }
-//        RotateFaces("U");
-//      }
-//      return false;
-//    }
-
-
-//    bool TopEdgeLong()
-//    {
-//      for (int i = 0; i < 4; i++)
-//      {
-//        for (int j = 0; j < 4; j++)
-//        {
-//          if (cube[DOWNFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] && cube[RIGHTFACE_DOWNMID] == cube[RIGHTFACE_UPPERLEFT])
-//          {
-//            SetBottomFace(BACKFACE, MIDRIGHT, LEFTFACE, MIDLEFT);
-//            RotateFaces("RuDBBUdR");
-//            return true;
-//          }
-//          if (cube[RIGHTFACE_UPPERMID] == cube[UPPERFACE_CENTER] && cube[UPPERFACE_MIDRIGHT] == cube[RIGHTFACE_UPPERLEFT])
-//          {
-//            SetBottomFace(LEFTFACE, MIDRIGHT, FRONTFACE, MIDLEFT);
-//            RotateFaces("ruDBBuuDDf");
-//            return true;
-//          }
-//          TurnCube(1);
-//        }
-//        RotateFaces("U");
-//      }
-//      return false;
-//    }
-
-
-//    //Step 4 Solve top and bottom edges
-//    void SolveTopAndBottomEdges()
-//    {
-//      int topEdgesSolved;
-//      int bottomEdgesSolved;
-//      while (true)
-//      {
-//        topEdgesSolved = TopEdgesSolved();
-//        bottomEdgesSolved = BottomEdgesSolved();
-//        if (topEdgesSolved + bottomEdgesSolved >= 7)
-//            break;
-//        if (topEdgesSolved < 3 || bottomEdgesSolved == 3)
-//          if (TopEdgeShort())
-//            continue;
-//        if (bottomEdgesSolved < 3 || topEdgesSolved == 3)
-//        {
-//          TiltCube(2);
-//          if (TopEdgeShort())
-//            continue;
-//        }
-//        if (topEdgesSolved < 3 || bottomEdgesSolved == 3)
-//          if (TopEdgeLong())
-//            continue;
-//        if (bottomEdgesSolved < 3 || topEdgesSolved == 3)
-//        {
-//          TiltCube(2);
-//          if (TopEdgeLong())
-//            continue;
-//        }
-//        if (topEdgesSolved >= 3)
-//          TiltCube(2);
-//        TopEdgeMoveOut();  //If two edges are swapped on upperface
-//      }
-//      if (bottomEdgesSolved < 4)
-//        TiltCube(2);
-//    }
-
-
-//    void PrepareMiddleEdges()
-//    {
-//      for (int i = 0; i < 4; i++)
-//      {
-//        if (cube[LEFTFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] || cube[LEFTFACE_MIDLEFT] == cube[UPPERFACE_CENTER])
-//        {
-//          while (cube[UPPERFACE_MIDRIGHT] == cube[UPPERFACE_CENTER])
-//            RotateFaces("U");
-//          break;
-//        }
-//        TurnCube(1);
-//      }
-//      for (int i = 0; i < 4; i++)
-//      {
-//        if (cube[UPPERFACE_MIDRIGHT] != cube[UPPERFACE_CENTER] || cube[RIGHTFACE_UPPERMID] != cube[RIGHTFACE_UPPERLEFT])
-//          break;
-//        TurnCube(1);
-//      }
-//    }
-
-
-//    int TopEdgesInMiddleLayerOrientation()
-//    {
-//      int orientation = 0;
-//      if (cube[RIGHTFACE_MIDLEFT] != cube[LEFTFACE_CENTER] && cube[RIGHTFACE_MIDLEFT] != cube[RIGHTFACE_CENTER])
-//        orientation = 4;
-//      if (cube[RIGHTFACE_UPPERMID] != cube[LEFTFACE_CENTER] && cube[RIGHTFACE_UPPERMID] != cube[RIGHTFACE_CENTER])
-//        orientation += 2;
-//      if (cube[RIGHTFACE_MIDRIGHT] != cube[LEFTFACE_CENTER] && cube[RIGHTFACE_MIDRIGHT] != cube[RIGHTFACE_CENTER])
-//        orientation += 1;
-//      return orientation;
-//    }
-
-
-//    bool MiddleEdgeTwisted(int face, int pos)
-//    {
-//      return CubeGet(face, pos) != cube[FRONTFACE_CENTER] && CubeGet(face, pos) != cube[BACKFACE_CENTER];
-//    }
-
-
-//    int TwistedMiddleEdges()
-//    {
-//      int twisted = 0;
-//      for (int i = 0; i < 4; i++)
-//      {
-//        if (MiddleEdgeTwisted(FRONTFACE, MIDRIGHT))
-//          twisted++;
-//        TurnCube(1);
-//      }
-//      return twisted;
-//    }
-
-
-//    //Step 5 Orient middle edges
-//    void OrientMiddleEdges()
-//    {
-//      PrepareMiddleEdges();
-//      if (cube[LEFTFACE_MIDRIGHT] == cube[UPPERFACE_CENTER])
-//      {
-//        switch (TopEdgesInMiddleLayerOrientation())
-//        {
-//          case 0: //OOO
-//            RotateFaces("UdFUdluDfUdL"); break;
-//          case 1: //OOX
-//            RotateFaces("UdfuDrUdfuDr"); break;
-//          case 2: //OXO
-//            RotateFaces("uDBUdRRUdF"); break;
-//          case 3: //OXX
-//            RotateFaces("ruDBUdrUdF"); break;
-//          case 4: //XOO
-//            RotateFaces("RRUdFuDRUdFuDr"); break;
-//          case 5: //XOX
-//            RotateFaces("rUdfuDruDBUdRuDB"); break;
-//          case 6: //XXO
-//            RotateFaces("ruDbUdRUdF"); break;
-//          case 7: //XXX
-//            RotateFaces("rUdfUdluDFFuDR"); break;
-//        }
-//      }
-//      else if (cube[LEFTFACE_MIDLEFT] == cube[UPPERFACE_CENTER])
-//      {
-//        switch (TopEdgesInMiddleLayerOrientation())
-//        {
-//          case 0: //OOO
-//            RotateFaces("uDbuDLUdBuDl"); break;
-//          case 1: //OOX
-//            RotateFaces("rruDbUdruDbUdR"); break;
-//          case 2: //OXO
-//            RotateFaces("UdfuDrruDb"); break;
-//          case 3: //OXX
-//            RotateFaces("RUdFuDruDb"); break;
-//          case 4: //XOO
-//            RotateFaces("uDBUdRuDBUdR"); break;
-//          case 5: //XOX
-//            RotateFaces("RuDBUdRUdfuDrUdf"); break;
-//          case 6: //XXO
-//            RotateFaces("RUdfuDRuDb"); break;
-//          case 7: //XXX
-//            RotateFaces("RuDBuDLUdbbUdr"); break;
-//        }
-//      }
-//      else if (cube[RIGHTFACE_UPPERMID] == cube[UPPERFACE_CENTER])
-//      {
-//        switch (TwistedMiddleEdges())
-//        {
-//          case 1:
-//            while (!MiddleEdgeTwisted(FRONTFACE, MIDRIGHT))
-//              TurnCube(1);
-//            while(cube[UPPERFACE_MIDLEFT]==cube[UPPERFACE_CENTER])
-//              RotateFaces("U");
-//            RotateFaces("RUUrUUddLLuDfUUf");
-//            break;
-//          case 3:
-//            while (MiddleEdgeTwisted(FRONTFACE, MIDRIGHT))
-//              TurnCube(1);
-//            while (cube[UPPERFACE_MIDRIGHT] == cube[UPPERFACE_CENTER])
-//              RotateFaces("U");
-//            RotateFaces("ruDbuDluDf");
-//            break;
-//        }
-//      }
-//      else if (cube[UPPERFACE_MIDRIGHT] == cube[UPPERFACE_CENTER])
-//      {
-//        switch (TwistedMiddleEdges())
-//        {
-//          case 2:
-//            while (true)
-//            {
-//              if (MiddleEdgeTwisted(FRONTFACE, MIDLEFT) && MiddleEdgeTwisted(FRONTFACE, MIDRIGHT))
-//              {
-//                RotateFaces("RRFlRuRRULrf");
-//                return;
-//              }
-//              else if (MiddleEdgeTwisted(FRONTFACE, MIDLEFT) && MiddleEdgeTwisted(BACKFACE, MIDLEFT))
-//              {
-//                RotateFaces("FlRuRRULrfRR");
-//                return;
-//              }
-//              TurnCube(1);
-//            }
-//          case 4:
-//            RotateFaces("RFFRRUdFUUddBRRBBUdR");
-//            break;
-//        }
-//      }
-//    }
-
-
-//    bool Rotate3MiddleEdges()
-//    {
-//      for (int i = 0; i < 2; i++)
-//      {
-//        for (int j = 0; j < 4; j++)
-//        {
-//          if (cube[LEFTFACE_MIDRIGHT] == cube[LEFTFACE_CENTER] && cube[FRONTFACE_MIDLEFT] == cube[FRONTFACE_CENTER] &&
-//            cube[FRONTFACE_MIDRIGHT] == cube[BACKFACE_CENTER] && cube[RIGHTFACE_MIDLEFT] == cube[LEFTFACE_CENTER] &&
-//            cube[BACKFACE_MIDRIGHT] == cube[BACKFACE_CENTER] && cube[LEFTFACE_MIDLEFT] == cube[RIGHTFACE_CENTER])
-//          {
-//            RotateFaces("RRuDBB");
-//            return true;
-//          }
-//          TurnCube(1);
-//        }
-//        TiltCube(2);
-//      }
-//      return false;
-//    }
-
-
-//    bool ExchangeMiddleCenters()
-//    {
-//      bool exchangeCenters = true;
-//      for (int i = 0; i < 4; i++)
-//      {
-//        if ((cube[FRONTFACE_CENTER] != cube[BACKFACE_MIDLEFT]) || (cube[FRONTFACE_CENTER] != cube[BACKFACE_MIDRIGHT]))
-//        {
-//          exchangeCenters = false;
-//          break;
-//        }
-//        TurnCube(1);
-//      }
-//      if (exchangeCenters)
-//        RotateFaces("LLRRuDFFBB");
-//      return exchangeCenters;
-//    }
-
-
-//    bool ExchangeMiddleCorners()
-//    {
-//      for (int i = 0; i < 2; i++)
-//      {
-//        if (cube[FRONTFACE_MIDLEFT] == cube[BACKFACE_CENTER] && cube[FRONTFACE_MIDRIGHT] == cube[BACKFACE_CENTER] &&
-//          cube[BACKFACE_MIDLEFT] == cube[FRONTFACE_CENTER] && cube[BACKFACE_MIDRIGHT] == cube[FRONTFACE_CENTER] &&
-//          cube[LEFTFACE_MIDLEFT] == cube[LEFTFACE_CENTER] && cube[LEFTFACE_MIDRIGHT] == cube[LEFTFACE_CENTER])
-//        {
-//          RotateFaces("RRUUddLL");
-//          return true;
-//        }
-//        TurnCube(1);
-//      }
-//      return false;
-//    }
-
-
-//    //Step 6 Position middle edges
-//    void PositionMiddleEdges()
-//    {
-//      if (!Rotate3MiddleEdges())
-//        if (!ExchangeMiddleCenters())
-//          ExchangeMiddleCorners();
-//      while (cube[FRONTFACE_UPPERMID] != cube[FRONTFACE_CENTER])
-//        RotateFaces("U");
-//      while (cube[FRONTFACE_DOWNMID] != cube[FRONTFACE_CENTER])
-//        RotateFaces("D");
-//    }
-
-
-//    void Optimize()
-//    {
-//      char move;
-//      int count;
-//      int pos;
-//      int optcount;
-//      optcount=movesCount;
-//      do
-//      {
-//        twists=0;
-//        movesCount=optcount;
-//        moves[movesCount]=0;
-//        optcount=0;
-//        pos=0;
-//        while(pos < movesCount)
-//        {
-//          move = moves[pos];
-//          count = 1;
-//          while (moves[++pos] == move)
-//            count++;
-//          count = count % 4;
-//          for(int i=0;i<count;i++)
-//            moves[optcount++]=move;
-//          twists++;
-//        }
-//      }while(optcount < movesCount);
-//      movesCount=optcount;
-//      moves[movesCount]=0;
-//    }
+    //*****************************************************************************
+    // Solve functions
+
+    private void CubeSet(final int face, final int pos, final char value) {
+    	cube[face * 9 + pos] = value;
+    }
+
+	private char CubeGet(final int face, final int pos) {
+		return cube[face * 9 + pos];
+	}
+
+    private char TmpCubeGet(final int face, final int pos) {
+    	return tmpCube[face * 9 + pos];
+    }
+
+    private void CopyCube() {
+        System.arraycopy(cube, 0, tmpCube, 0, tmpCube.length);
+    }
+
+    private void CopyFace(final int fromFace, final int toFace) {
+    	final int fromFaceOffset = fromFace * 9;
+    	final int toFaceOffset = toFace * 9;
+    	for(int i=0; i<9; i++) {
+    		cube[toFaceOffset + i] = tmpCube[fromFaceOffset + i];
+    	}
+    }
+
+	private void CopyFaceClockwise(final int fromFace, final int toFace, final int turns) {
+		final int fromFaceOffset = fromFace * 9;
+		final int toFaceOffset = toFace * 9;
+		if (turns == 1) {
+			cube[toFaceOffset + UPPERLEFT] = tmpCube[fromFaceOffset + DOWNLEFT];
+			cube[toFaceOffset + UPPERMID] = tmpCube[fromFaceOffset + MIDLEFT];
+			cube[toFaceOffset + UPPERRIGHT] = tmpCube[fromFaceOffset + UPPERLEFT];
+			cube[toFaceOffset + MIDLEFT] = tmpCube[fromFaceOffset + DOWNMID];
+			cube[toFaceOffset + CENTER] = tmpCube[fromFaceOffset + CENTER];
+			cube[toFaceOffset + MIDRIGHT] = tmpCube[fromFaceOffset + UPPERMID];
+			cube[toFaceOffset + DOWNLEFT] = tmpCube[fromFaceOffset + DOWNRIGHT];
+			cube[toFaceOffset + DOWNMID] = tmpCube[fromFaceOffset + MIDRIGHT];
+			cube[toFaceOffset + DOWNRIGHT] = tmpCube[fromFaceOffset + UPPERRIGHT];
+		} else if (turns == 2) {
+			cube[toFaceOffset + UPPERLEFT] = tmpCube[fromFaceOffset + DOWNRIGHT];
+			cube[toFaceOffset + UPPERMID] = tmpCube[fromFaceOffset + DOWNMID];
+			cube[toFaceOffset + UPPERRIGHT] = tmpCube[fromFaceOffset + DOWNLEFT];
+			cube[toFaceOffset + MIDLEFT] = tmpCube[fromFaceOffset + MIDRIGHT];
+			cube[toFaceOffset + CENTER] = tmpCube[fromFaceOffset + CENTER];
+			cube[toFaceOffset + MIDRIGHT] = tmpCube[fromFaceOffset + MIDLEFT];
+			cube[toFaceOffset + DOWNLEFT] = tmpCube[fromFaceOffset + UPPERRIGHT];
+			cube[toFaceOffset + DOWNMID] = tmpCube[fromFaceOffset + UPPERMID];
+			cube[toFaceOffset + DOWNRIGHT] = tmpCube[fromFaceOffset + UPPERLEFT];
+		} else {
+			// turns == 3
+			cube[toFaceOffset + UPPERLEFT] = tmpCube[fromFaceOffset + UPPERRIGHT];
+			cube[toFaceOffset + UPPERMID] = tmpCube[fromFaceOffset + MIDRIGHT];
+			cube[toFaceOffset + UPPERRIGHT] = tmpCube[fromFaceOffset + DOWNRIGHT];
+			cube[toFaceOffset + MIDLEFT] = tmpCube[fromFaceOffset + UPPERMID];
+			cube[toFaceOffset + CENTER] = tmpCube[fromFaceOffset + CENTER];
+			cube[toFaceOffset + MIDRIGHT] = tmpCube[fromFaceOffset + DOWNMID];
+			cube[toFaceOffset + DOWNLEFT] = tmpCube[fromFaceOffset + UPPERLEFT];
+			cube[toFaceOffset + DOWNMID] = tmpCube[fromFaceOffset + MIDLEFT];
+			cube[toFaceOffset + DOWNRIGHT] = tmpCube[fromFaceOffset + DOWNLEFT];
+		}
+	}
+
+	private void TurnCube(final int turns) {
+		CopyCube();
+		if (turns == 1) {
+			CopyFaceClockwise(UPPERFACE, UPPERFACE, 1);
+			CopyFace(LEFTFACE, BACKFACE);
+			CopyFace(BACKFACE, RIGHTFACE);
+			CopyFace(RIGHTFACE, FRONTFACE);
+			CopyFace(FRONTFACE, LEFTFACE);
+			CopyFaceClockwise(DOWNFACE, DOWNFACE, 3);
+		} else if (turns == 2) {
+			CopyFaceClockwise(UPPERFACE, UPPERFACE, 2);
+			CopyFace(LEFTFACE, RIGHTFACE);
+			CopyFace(BACKFACE, FRONTFACE);
+			CopyFace(RIGHTFACE, LEFTFACE);
+			CopyFace(FRONTFACE, BACKFACE);
+			CopyFaceClockwise(DOWNFACE, DOWNFACE, 2);
+		} else {
+			// turns==3
+			CopyFaceClockwise(UPPERFACE, UPPERFACE, 3);
+			CopyFace(LEFTFACE, FRONTFACE);
+			CopyFace(BACKFACE, LEFTFACE);
+			CopyFace(RIGHTFACE, BACKFACE);
+			CopyFace(FRONTFACE, RIGHTFACE);
+			CopyFaceClockwise(DOWNFACE, DOWNFACE, 1);
+		}
+	}
+
+    private void TiltCube(final int turns) {
+        CopyCube();
+        if (turns==1) {
+            CopyFaceClockwise(UPPERFACE,RIGHTFACE,1);
+	        CopyFaceClockwise(RIGHTFACE,DOWNFACE,1);
+	        CopyFaceClockwise(DOWNFACE,LEFTFACE,1);
+	        CopyFaceClockwise(LEFTFACE,UPPERFACE,1);
+	        CopyFaceClockwise(FRONTFACE,FRONTFACE,1);
+	        CopyFaceClockwise(BACKFACE,BACKFACE,3);
+		} else if (turns == 2) {
+			CopyFaceClockwise(UPPERFACE, DOWNFACE, 2);
+			CopyFaceClockwise(RIGHTFACE, LEFTFACE, 2);
+			CopyFaceClockwise(DOWNFACE, UPPERFACE, 2);
+			CopyFaceClockwise(LEFTFACE, RIGHTFACE, 2);
+			CopyFaceClockwise(FRONTFACE, FRONTFACE, 2);
+			CopyFaceClockwise(BACKFACE, BACKFACE, 2);
+		} else {
+			// turns == 3
+			CopyFaceClockwise(UPPERFACE, LEFTFACE, 3);
+			CopyFaceClockwise(RIGHTFACE, UPPERFACE, 3);
+			CopyFaceClockwise(DOWNFACE, RIGHTFACE, 3);
+			CopyFaceClockwise(LEFTFACE, DOWNFACE, 3);
+			CopyFaceClockwise(FRONTFACE, FRONTFACE, 3);
+			CopyFaceClockwise(BACKFACE, BACKFACE, 1);
+		}
+	}
+
+	private void TwistCube(final int turns) {
+		if (movesCount + turns >= MAXMOVES) {
+			Sorry();
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.exit(0);
+		}
+		for (int twists = 0; twists < turns; twists++) {
+			CopyCube();
+			CopyFaceClockwise(DOWNFACE, DOWNFACE, 1);
+			for (int i = 6; i < 9; i++) {
+				CubeSet(LEFTFACE, i, TmpCubeGet(BACKFACE, i));
+				CubeSet(FRONTFACE, i, TmpCubeGet(LEFTFACE, i));
+				CubeSet(RIGHTFACE, i, TmpCubeGet(FRONTFACE, i));
+				CubeSet(BACKFACE, i, TmpCubeGet(RIGHTFACE, i));
+			}
+            moves[movesCount++] = cube[DOWNFACE_CENTER];
+		}
+		// PlayTone(200+movesCount*20,1);
+    }
+
+    private void RotateFace(final int face, final int turns) {
+        switch (face) {
+        case UPPERFACE:
+            TiltCube(2); TwistCube(turns); TiltCube(2); break;
+        case LEFTFACE:
+        	TiltCube(3); TwistCube(turns); TiltCube(1); break;
+        case FRONTFACE:
+        	TurnCube(1); TiltCube(3); TwistCube(turns); TiltCube(1); TurnCube(3); break;
+        case RIGHTFACE:
+        	TiltCube(1); TwistCube(turns); TiltCube(3); break;
+        case BACKFACE:
+        	TurnCube(3); TiltCube(3); TwistCube(turns); TiltCube(1); TurnCube(1); break;
+        case DOWNFACE:
+        	TwistCube(turns); break;
+        }
+    }
+
+    private void RotateFaces(final String faces) {
+        char faceturn;
+        for (int i = 0; i < faces.length(); i++) {
+            faceturn = faces.charAt(i);
+            switch (faceturn) {
+            case 'U': RotateFace(UPPERFACE, 1); break;
+            case 'L': RotateFace(LEFTFACE, 1); break;
+            case 'F': RotateFace(FRONTFACE, 1); break;
+            case 'R': RotateFace(RIGHTFACE, 1); break;
+            case 'B': RotateFace(BACKFACE, 1); break;
+            case 'D': RotateFace(DOWNFACE, 1); break;
+            case 'u': RotateFace(UPPERFACE, 3); break;
+            case 'l': RotateFace(LEFTFACE, 3); break;
+            case 'f': RotateFace(FRONTFACE, 3); break;
+            case 'r': RotateFace(RIGHTFACE, 3); break;
+            case 'b': RotateFace(BACKFACE, 3); break;
+            case 'd': RotateFace(DOWNFACE, 3); break;
+            }
+        }
+    }
+
+    private boolean CornerColorOk(final int position, final char c1, final char c2) {
+        return cube[position] == c1 || cube[position] == c2;
+    }
+
+    boolean TryBottomFace(char c1, char c2, int twists) {
+        for (int i = 0; i < 4; i++) {
+            if (twists == 0) {
+                if (CornerColorOk(DOWNFACE_UPPERLEFT, c1, c2) && CornerColorOk(DOWNFACE_UPPERRIGHT, c1, c2) && CornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && !CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2)) {
+                    return true;
+                }
+            } else if (twists == 1) {
+                if (CornerColorOk(DOWNFACE_UPPERLEFT, c1, c2) && CornerColorOk(DOWNFACE_UPPERRIGHT, c1, c2)) {
+                    for (int j = 0; j < 4; j++) {
+                        RotateFaces("B");
+                        if (CornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && !CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2)) {
+                        	return true;
+                        } else if (!CornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2)) {
+                        	TurnCube(3);
+                        	return true;
+                        } else if (CornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2)) {
+                        	if (CornerColorOk(UPPERFACE_UPPERLEFT, c1, c2) && CornerColorOk(UPPERFACE_UPPERRIGHT, c1, c2) && CornerColorOk(UPPERFACE_DOWNLEFT, c1, c2) && CornerColorOk(UPPERFACE_DOWNRIGHT, c1, c2)) {
+                        		return true;
+                        	}
+                        }
+                    }
+                }
+            } else if (twists == 2) {
+            	if (CornerColorOk(DOWNFACE_UPPERLEFT, c1, c2)) {
+            		for (int j = 0; j < 4; j++) {
+            			RotateFaces("R");
+            			if (CornerColorOk(DOWNFACE_UPPERRIGHT, c1, c2)) {
+            				for (int k = 0; k < 4; k++) {
+            					RotateFaces("B");
+            					if (CornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && !CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2)) {
+            						return true;
+            					} else if (!CornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2)) {
+            						TurnCube(3);
+            						return true;
+            					}
+            				}
+            			}
+            		}
+            	}
+            }
+            TurnCube(1);
+        }
+        return false;
+    }
+
+
+    boolean PrepareBottomFace(char c1, char c2, int twists) {
+        if (TryBottomFace(c1, c2, twists)) {
+            return true;
+        }
+        TiltCube(1);
+        if (TryBottomFace(c1, c2, twists)) {
+        	return true;
+        }
+        TiltCube(1);
+        if (TryBottomFace(c1, c2, twists)) {
+        	return true;
+        }
+        TiltCube(1);
+        if (TryBottomFace(c1, c2, twists)) {
+        	return true;
+        }
+        TurnCube(1);
+        TiltCube(1);
+        if (TryBottomFace(c1, c2, twists)) {
+        	return true;
+        }
+        TiltCube(2);
+        if (TryBottomFace(c1, c2, twists)) {
+        	return true;
+        }
+        return false;
+    }
+
+	private boolean MoveCorners(final int corner1, final int corner2, final int corner3, final int corner4, final char color1, final char color2, final String moves) {
+		if (CornerColorOk(corner1, color1, color2) && CornerColorOk(corner2, color1, color2) && CornerColorOk(corner3, color1, color2) && CornerColorOk(corner4, color1, color2)) {
+			RotateFaces(moves);
+			return true;
+		}
+		return false;
+	}
+
+    private void OrientAllCorners(final char c1, final char c2) {
+        if (!PrepareBottomFace(c1, c2, 0)) {
+        	if (!PrepareBottomFace(c1, c2, 1)) {
+        		PrepareBottomFace(c1, c2, 2);
+        	}
+        }
+        if (CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2)) {
+        	return;
+        } else if (CornerColorOk(LEFTFACE_DOWNLEFT, c1, c2)) {
+        	for (int i = 0; i < 4; i++) {
+        		if (MoveCorners(BACKFACE_UPPERRIGHT, RIGHTFACE_UPPERRIGHT, UPPERFACE_DOWNLEFT, UPPERFACE_DOWNRIGHT, c1, c2, "Lul")) {
+        			return;
+        		} else if (MoveCorners(BACKFACE_UPPERRIGHT, UPPERFACE_UPPERRIGHT, UPPERFACE_DOWNLEFT, FRONTFACE_UPPERRIGHT, c1, c2, "flF")) {
+        			return;
+        		} else if (MoveCorners(LEFTFACE_UPPERLEFT, UPPERFACE_UPPERRIGHT, LEFTFACE_UPPERRIGHT, RIGHTFACE_UPPERLEFT, c1, c2, "fLLF")) {
+        			return;
+        		} else if (MoveCorners(BACKFACE_UPPERRIGHT, UPPERFACE_UPPERRIGHT, FRONTFACE_UPPERLEFT, RIGHTFACE_UPPERLEFT, c1, c2, "LLDF")) {
+        			return;
+        		} else if (MoveCorners(UPPERFACE_UPPERLEFT, UPPERFACE_UPPERRIGHT, FRONTFACE_UPPERLEFT, UPPERFACE_DOWNRIGHT, c1, c2, "LfLf")) {
+        			return;
+        		} else if (MoveCorners(LEFTFACE_UPPERLEFT, BACKFACE_UPPERLEFT, LEFTFACE_UPPERRIGHT, UPPERFACE_DOWNRIGHT, c1, c2, "bDDLdl")) {
+        			return;
+        		} else if (MoveCorners(BACKFACE_UPPERRIGHT, RIGHTFACE_UPPERRIGHT, FRONTFACE_UPPERLEFT, FRONTFACE_UPPERRIGHT, c1, c2, "fLfDDb")) {
+        			return;
+        		} else if (MoveCorners(LEFTFACE_UPPERLEFT, BACKFACE_UPPERLEFT, FRONTFACE_UPPERLEFT, RIGHTFACE_UPPERLEFT, c1, c2, "lULfLLF")) {
+        			return;
+        		}
+        		RotateFaces("U");
+        	}
+        } else if (CornerColorOk(BACKFACE_DOWNRIGHT, c1, c2)) {
+        	for (int i = 0; i < 4; i++) {
+        		if (MoveCorners(LEFTFACE_UPPERLEFT, UPPERFACE_UPPERRIGHT, FRONTFACE_UPPERLEFT, UPPERFACE_DOWNRIGHT, c1, c2, "bUB")) {
+        			return;
+        		} else if (MoveCorners(LEFTFACE_UPPERLEFT, UPPERFACE_UPPERRIGHT, UPPERFACE_DOWNLEFT, RIGHTFACE_UPPERLEFT, c1, c2, "LDF")) {
+        			return;
+        		} else if (MoveCorners(BACKFACE_UPPERRIGHT, BACKFACE_UPPERLEFT, UPPERFACE_DOWNLEFT, FRONTFACE_UPPERRIGHT, c1, c2, "RBBr")) {
+        			return;
+        		} else if (MoveCorners(LEFTFACE_UPPERLEFT, RIGHTFACE_UPPERRIGHT, UPPERFACE_DOWNLEFT, FRONTFACE_UPPERRIGHT, c1, c2, "FFdB")) {
+        			return;
+        		} else if (MoveCorners(UPPERFACE_UPPERLEFT, RIGHTFACE_UPPERRIGHT, UPPERFACE_DOWNLEFT, UPPERFACE_DOWNRIGHT, c1, c2, "bRbr")) {
+        			return;
+        		} else if (MoveCorners(BACKFACE_UPPERRIGHT, BACKFACE_UPPERLEFT, LEFTFACE_UPPERRIGHT, UPPERFACE_DOWNRIGHT, c1, c2, "LUUfDF")) {
+        			return;
+        		} else if (MoveCorners(LEFTFACE_UPPERLEFT, RIGHTFACE_UPPERRIGHT, FRONTFACE_UPPERLEFT, RIGHTFACE_UPPERLEFT, c1, c2, "RbRDDL")) {
+        			return;
+        		} else if (MoveCorners(BACKFACE_UPPERRIGHT, RIGHTFACE_UPPERRIGHT, LEFTFACE_UPPERRIGHT, FRONTFACE_UPPERRIGHT, c1, c2, "FluRUUR")) {
+        			return;
+        		}
+        		RotateFaces("U");
+        	}
+        }
+    }
+
+    private void SplitCorners(final char color, final char oppositeColor) {
+    	int count = 0;
+    	for (int i = 0; i < 4; i++) {
+    		if (cube[DOWNFACE_UPPERLEFT] == color) {
+    			count++;
+    		}
+    		TurnCube(1);
+    	}
+    	if (count == 1 || count == 3) {
+    		int singleColor;
+    		if (count == 1) {
+    			singleColor = color;
+    		} else {
+    			singleColor = oppositeColor;
+    		}
+    		while (cube[DOWNFACE_UPPERLEFT] != singleColor) {
+    			TurnCube(1);
+    		}
+			while (cube[UPPERFACE_DOWNRIGHT] == singleColor) {
+				RotateFaces("U");
+			}
+			if (cube[UPPERFACE_DOWNRIGHT] == cube[UPPERFACE_CENTER]) {
+				RotateFaces("RRDLL");
+			} else {
+				RotateFaces("RRDRR");
+			}
+    	} else if (count == 2) {
+			if (cube[DOWNFACE_UPPERLEFT] != cube[DOWNFACE_DOWNRIGHT]) {
+				TiltCube(2);
+			}
+			if (cube[DOWNFACE_UPPERLEFT] != cube[DOWNFACE_DOWNRIGHT]) {
+				while (cube[DOWNFACE_UPPERLEFT] != cube[DOWNFACE_UPPERRIGHT]) {
+					TurnCube(1);
+				}
+				while (cube[UPPERFACE_UPPERLEFT] != cube[DOWNFACE_UPPERLEFT] || cube[UPPERFACE_UPPERRIGHT] != cube[DOWNFACE_UPPERRIGHT]) {
+					RotateFaces("U");
+				}
+				if (cube[UPPERFACE_UPPERLEFT] == cube[UPPERFACE_CENTER]) {
+					RotateFaces("FF");
+				} else {
+					RotateFaces("BB");
+				}
+			} else if (cube[UPPERFACE_UPPERLEFT] == cube[UPPERFACE_DOWNRIGHT]) {
+				if (cube[UPPERFACE_UPPERLEFT] != cube[DOWNFACE_DOWNLEFT]) {
+					RotateFaces("U");
+				}
+				if (cube[UPPERFACE_UPPERRIGHT] == cube[UPPERFACE_CENTER]) {
+					TurnCube(1);
+				}
+				RotateFaces("RRDDFF");
+			} else {
+				while (cube[UPPERFACE_UPPERLEFT] != cube[DOWNFACE_DOWNLEFT] || cube[UPPERFACE_DOWNLEFT] != cube[DOWNFACE_DOWNLEFT]) {
+					TurnCube(1);
+				}
+				if (cube[UPPERFACE_UPPERLEFT] != cube[UPPERFACE_CENTER]) {
+					RotateFaces("RRDRRDLL");
+				} else {
+					RotateFaces("RRDRRDRR");
+				}
+			}
+    	}
+		if (cube[UPPERFACE_UPPERLEFT] == cube[LEFTFACE_CENTER]) {
+			TiltCube(1);
+		} else if (cube[UPPERFACE_UPPERLEFT] == cube[FRONTFACE_CENTER]) {
+			TurnCube(1);
+			TiltCube(1);
+		} else if (cube[UPPERFACE_UPPERLEFT] == cube[RIGHTFACE_CENTER]) {
+			TiltCube(3);
+		} else if (cube[UPPERFACE_UPPERLEFT] == cube[BACKFACE_CENTER]) {
+			TurnCube(3);
+			TiltCube(1);
+		} else if (cube[UPPERFACE_UPPERLEFT] == cube[DOWNFACE_CENTER]) {
+			TiltCube(2);
+		}
+		while (cube[UPPERFACE_UPPERLEFT] != cube[UPPERFACE_CENTER]) {
+			RotateFaces("B");
+		}
+		while (cube[UPPERFACE_DOWNLEFT] != cube[UPPERFACE_CENTER]) {
+			RotateFaces("F");
+		}
+    }
+
+    //Step 3 Position all corners
+    private void PositionAllCorners() {
+    	int count = 0;
+    	int topCount = 0;
+		int bottomCount = 0;
+		for (int i = 0; i < 4; i++) {
+			if (cube[BACKFACE_DOWNLEFT] == cube[BACKFACE_DOWNRIGHT]) {
+				bottomCount++;
+			}
+			if (cube[BACKFACE_UPPERLEFT] == cube[BACKFACE_UPPERRIGHT]) {
+				topCount++;
+			}
+			TurnCube(1);
+		}
+		if (topCount > bottomCount) {
+			TiltCube(2);
+		}
+		count = topCount + bottomCount;
+		if (count == 0) {
+			RotateFaces("RRFFRR");
+		} else if (count == 1) {
+			while (cube[BACKFACE_DOWNLEFT] != cube[BACKFACE_DOWNRIGHT]) {
+				TurnCube(1);
+			}
+			RotateFaces("RuFUUfUr");
+		} else if (count == 2) {
+			while (cube[BACKFACE_DOWNLEFT] != cube[BACKFACE_DOWNRIGHT]) {
+				TurnCube(1);
+			}
+			while (cube[BACKFACE_UPPERLEFT] != cube[BACKFACE_UPPERRIGHT]) {
+				RotateFaces("U");
+			}
+			RotateFaces("RRUFFUURRURR");
+		} else if (count == 4) {
+			RotateFaces("FFuRurUFFURUr");
+		} else if (count == 5) {
+			while (cube[BACKFACE_UPPERLEFT] != cube[BACKFACE_UPPERRIGHT]) {
+				TurnCube(1);
+			}
+			RotateFaces("RuRFFrURFFRR");
+		}
+    }
+
+    private int TopEdgesSolved() {
+		int solved = 0;
+		if (cube[UPPERFACE_UPPERMID] == cube[UPPERFACE_CENTER] && cube[BACKFACE_UPPERMID] == cube[BACKFACE_UPPERLEFT]) {
+			solved++;
+		}
+		if (cube[UPPERFACE_MIDLEFT] == cube[UPPERFACE_CENTER] && cube[LEFTFACE_UPPERMID] == cube[LEFTFACE_UPPERLEFT]) {
+			solved++;
+		}
+		if (cube[UPPERFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] && cube[RIGHTFACE_UPPERMID] == cube[RIGHTFACE_UPPERLEFT]) {
+			solved++;
+		}
+		if (cube[UPPERFACE_DOWNMID] == cube[UPPERFACE_CENTER] && cube[FRONTFACE_UPPERMID] == cube[FRONTFACE_UPPERLEFT]) {
+			solved++;
+		}
+		return solved;
+    }
+
+    private int BottomEdgesSolved() {
+		int solved = 0;
+		if (cube[DOWNFACE_UPPERMID] == cube[DOWNFACE_CENTER] && cube[FRONTFACE_DOWNMID] == cube[FRONTFACE_DOWNLEFT]) {
+			solved++;
+		}
+		if (cube[DOWNFACE_MIDLEFT] == cube[DOWNFACE_CENTER] && cube[LEFTFACE_DOWNMID] == cube[LEFTFACE_DOWNLEFT]) {
+			solved++;
+		}
+		if (cube[DOWNFACE_MIDRIGHT] == cube[DOWNFACE_CENTER] && cube[RIGHTFACE_DOWNMID] == cube[RIGHTFACE_DOWNLEFT]) {
+			solved++;
+		}
+		if (cube[DOWNFACE_DOWNMID] == cube[DOWNFACE_CENTER] && cube[BACKFACE_DOWNMID] == cube[BACKFACE_DOWNLEFT]) {
+			solved++;
+		}
+		return solved;
+    }
+
+	private void SetBottomFace(final int downface, final int downpos, final int sideface, final int sidepos) {
+		if (CubeGet(downface, downpos) == cube[DOWNFACE_CENTER]) {
+			while (cube[RIGHTFACE_DOWNLEFT] != CubeGet(sideface, sidepos)) {
+				RotateFaces("D");
+			}
+		} else {
+			for (int i = 0; i < 4; i++) {
+				if (cube[DOWNFACE_MIDRIGHT] != cube[DOWNFACE_CENTER] || cube[RIGHTFACE_DOWNMID] != cube[RIGHTFACE_DOWNLEFT]) {
+					break;
+				}
+				RotateFaces("D");
+			}
+		}
+	}
+
+	private void TopEdgeMoveOut() {
+		for (int i = 0; i < 4; i++) {
+			if (cube[UPPERFACE_MIDRIGHT] != cube[UPPERFACE_CENTER] || cube[RIGHTFACE_UPPERMID] != cube[RIGHTFACE_UPPERLEFT]) {
+				SetBottomFace(0, 0, 0, 0);
+				RotateFaces("rUdF");
+				return;
+			}
+			TurnCube(1);
+		}
+	}
+
+	private boolean TopEdgeShort() {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (cube[LEFTFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] && cube[FRONTFACE_MIDLEFT] == cube[RIGHTFACE_UPPERLEFT]) {
+					SetBottomFace(RIGHTFACE, UPPERMID, UPPERFACE, MIDRIGHT);
+					RotateFaces("rUdF");
+					return true;
+				}
+				if (cube[LEFTFACE_MIDLEFT] == cube[UPPERFACE_CENTER] && cube[BACKFACE_MIDRIGHT] == cube[RIGHTFACE_UPPERLEFT]) {
+					SetBottomFace(RIGHTFACE, UPPERMID, UPPERFACE, MIDRIGHT);
+					RotateFaces("RuDb");
+					return true;
+				}
+				if (cube[FRONTFACE_MIDLEFT] == cube[UPPERFACE_CENTER] && cube[LEFTFACE_MIDRIGHT] == cube[RIGHTFACE_UPPERLEFT]) {
+					SetBottomFace(BACKFACE, MIDRIGHT, LEFTFACE, MIDLEFT);
+					RotateFaces("RUUddl");
+					return true;
+				}
+				if (cube[BACKFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] && cube[LEFTFACE_MIDLEFT] == cube[RIGHTFACE_UPPERLEFT]) {
+					SetBottomFace(FRONTFACE, MIDLEFT, LEFTFACE, MIDRIGHT);
+					RotateFaces("ruuDDL");
+					return true;
+				}
+				if (cube[RIGHTFACE_DOWNMID] == cube[UPPERFACE_CENTER] && cube[DOWNFACE_MIDRIGHT] == cube[RIGHTFACE_UPPERLEFT]) {
+					RotateFaces("RUdf");
+					return true;
+				}
+				TurnCube(1);
+			}
+			RotateFaces("U");
+		}
+		return false;
+	}
+
+	private boolean TopEdgeLong() {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (cube[DOWNFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] && cube[RIGHTFACE_DOWNMID] == cube[RIGHTFACE_UPPERLEFT]) {
+					SetBottomFace(BACKFACE, MIDRIGHT, LEFTFACE, MIDLEFT);
+					RotateFaces("RuDBBUdR");
+					return true;
+				}
+				if (cube[RIGHTFACE_UPPERMID] == cube[UPPERFACE_CENTER] && cube[UPPERFACE_MIDRIGHT] == cube[RIGHTFACE_UPPERLEFT]) {
+					SetBottomFace(LEFTFACE, MIDRIGHT, FRONTFACE, MIDLEFT);
+					RotateFaces("ruDBBuuDDf");
+					return true;
+				}
+				TurnCube(1);
+			}
+			RotateFaces("U");
+		}
+		return false;
+	}
+
+    //Step 4 Solve top and bottom edges
+    private void SolveTopAndBottomEdges() {
+		int topEdgesSolved;
+		int bottomEdgesSolved;
+		while (true) {
+			topEdgesSolved = TopEdgesSolved();
+			bottomEdgesSolved = BottomEdgesSolved();
+			if (topEdgesSolved + bottomEdgesSolved >= 7) {
+				break;
+			}
+			if (topEdgesSolved < 3 || bottomEdgesSolved == 3) {
+				if (TopEdgeShort()) {
+					continue;
+				}
+			}
+			if (bottomEdgesSolved < 3 || topEdgesSolved == 3) {
+				TiltCube(2);
+				if (TopEdgeShort()) {
+					continue;
+				}
+			}
+			if (topEdgesSolved < 3 || bottomEdgesSolved == 3) {
+				if (TopEdgeLong()) {
+					continue;
+				}
+			}
+			if (bottomEdgesSolved < 3 || topEdgesSolved == 3) {
+				TiltCube(2);
+				if (TopEdgeLong()) {
+					continue;
+				}
+			}
+			if (topEdgesSolved >= 3) {
+				TiltCube(2);
+			}
+			TopEdgeMoveOut(); // If two edges are swapped on upperface
+		}
+		if (bottomEdgesSolved < 4) {
+			TiltCube(2);
+		}
+    }
+
+	private void PrepareMiddleEdges() {
+		for (int i = 0; i < 4; i++) {
+			if (cube[LEFTFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] || cube[LEFTFACE_MIDLEFT] == cube[UPPERFACE_CENTER]) {
+				while (cube[UPPERFACE_MIDRIGHT] == cube[UPPERFACE_CENTER]) {
+					RotateFaces("U");
+				}
+				break;
+			}
+			TurnCube(1);
+		}
+		for (int i = 0; i < 4; i++) {
+			if (cube[UPPERFACE_MIDRIGHT] != cube[UPPERFACE_CENTER] || cube[RIGHTFACE_UPPERMID] != cube[RIGHTFACE_UPPERLEFT]) {
+				break;
+			}
+			TurnCube(1);
+		}
+	}
+
+	private int TopEdgesInMiddleLayerOrientation() {
+		int orientation = 0;
+		if (cube[RIGHTFACE_MIDLEFT] != cube[LEFTFACE_CENTER] && cube[RIGHTFACE_MIDLEFT] != cube[RIGHTFACE_CENTER]) {
+			orientation = 4;
+		}
+		if (cube[RIGHTFACE_UPPERMID] != cube[LEFTFACE_CENTER] && cube[RIGHTFACE_UPPERMID] != cube[RIGHTFACE_CENTER]) {
+			orientation += 2;
+		}
+		if (cube[RIGHTFACE_MIDRIGHT] != cube[LEFTFACE_CENTER] && cube[RIGHTFACE_MIDRIGHT] != cube[RIGHTFACE_CENTER]) {
+			orientation += 1;
+		}
+		return orientation;
+    }
+
+    private boolean MiddleEdgeTwisted(final int face, final int pos) {
+        return CubeGet(face, pos) != cube[FRONTFACE_CENTER] && CubeGet(face, pos) != cube[BACKFACE_CENTER];
+    }
+
+    private int TwistedMiddleEdges() {
+        int twisted = 0;
+        for (int i = 0; i < 4; i++) {
+            if (MiddleEdgeTwisted(FRONTFACE, MIDRIGHT)) {
+                twisted++;
+            }
+            TurnCube(1);
+        }
+        return twisted;
+    }
+
+    //Step 5 Orient middle edges
+    private void OrientMiddleEdges() {
+    	PrepareMiddleEdges();
+    	if (cube[LEFTFACE_MIDRIGHT] == cube[UPPERFACE_CENTER]) {
+    		switch (TopEdgesInMiddleLayerOrientation()) {
+    		case 0: //OOO
+    			RotateFaces("UdFUdluDfUdL"); break;
+    		case 1: //OOX
+    			RotateFaces("UdfuDrUdfuDr"); break;
+    		case 2: //OXO
+    			RotateFaces("uDBUdRRUdF"); break;
+    		case 3: //OXX
+    			RotateFaces("ruDBUdrUdF"); break;
+    		case 4: //XOO
+    			RotateFaces("RRUdFuDRUdFuDr"); break;
+    		case 5: //XOX
+    			RotateFaces("rUdfuDruDBUdRuDB"); break;
+    		case 6: //XXO
+    			RotateFaces("ruDbUdRUdF"); break;
+    		case 7: //XXX
+    			RotateFaces("rUdfUdluDFFuDR"); break;
+    		}
+    	} else if (cube[LEFTFACE_MIDLEFT] == cube[UPPERFACE_CENTER]) {
+			switch (TopEdgesInMiddleLayerOrientation()) {
+			case 0: // OOO
+				RotateFaces("uDbuDLUdBuDl"); break;
+			case 1: // OOX
+				RotateFaces("rruDbUdruDbUdR"); break;
+			case 2: // OXO
+				RotateFaces("UdfuDrruDb"); break;
+			case 3: // OXX
+				RotateFaces("RUdFuDruDb"); break;
+			case 4: // XOO
+				RotateFaces("uDBUdRuDBUdR"); break;
+			case 5: // XOX
+				RotateFaces("RuDBUdRUdfuDrUdf"); break;
+			case 6: // XXO
+				RotateFaces("RUdfuDRuDb"); break;
+			case 7: // XXX
+				RotateFaces("RuDBuDLUdbbUdr"); break;
+			}
+		} else if (cube[RIGHTFACE_UPPERMID] == cube[UPPERFACE_CENTER]) {
+            switch (TwistedMiddleEdges()) {
+            case 1:
+                while (!MiddleEdgeTwisted(FRONTFACE, MIDRIGHT)) {
+                    TurnCube(1);
+                }
+                while (cube[UPPERFACE_MIDLEFT] == cube[UPPERFACE_CENTER]) {
+                    RotateFaces("U");
+                }
+                RotateFaces("RUUrUUddLLuDfUUf");
+                break;
+            case 3:
+                while (MiddleEdgeTwisted(FRONTFACE, MIDRIGHT))
+                    TurnCube(1);
+                while (cube[UPPERFACE_MIDRIGHT] == cube[UPPERFACE_CENTER])
+                    RotateFaces("U");
+                RotateFaces("ruDbuDluDf");
+                break;
+            }
+        } else if (cube[UPPERFACE_MIDRIGHT] == cube[UPPERFACE_CENTER]) {
+            switch (TwistedMiddleEdges()) {
+            case 2:
+                while (true) {
+                    if (MiddleEdgeTwisted(FRONTFACE, MIDLEFT) && MiddleEdgeTwisted(FRONTFACE, MIDRIGHT)) {
+                        RotateFaces("RRFlRuRRULrf");
+                        return;
+                    } else if (MiddleEdgeTwisted(FRONTFACE, MIDLEFT) && MiddleEdgeTwisted(BACKFACE, MIDLEFT)) {
+                        RotateFaces("FlRuRRULrfRR");
+                        return;
+                    }
+                    TurnCube(1);
+                }
+            case 4:
+                RotateFaces("RFFRRUdFUUddBRRBBUdR");
+                break;
+            }
+        }
+    }
+
+    private boolean Rotate3MiddleEdges() {
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (cube[LEFTFACE_MIDRIGHT] == cube[LEFTFACE_CENTER] && cube[FRONTFACE_MIDLEFT] == cube[FRONTFACE_CENTER] && cube[FRONTFACE_MIDRIGHT] == cube[BACKFACE_CENTER] && cube[RIGHTFACE_MIDLEFT] == cube[LEFTFACE_CENTER] && cube[BACKFACE_MIDRIGHT] == cube[BACKFACE_CENTER] && cube[LEFTFACE_MIDLEFT] == cube[RIGHTFACE_CENTER]) {
+                    RotateFaces("RRuDBB");
+                    return true;
+                }
+                TurnCube(1);
+            }
+            TiltCube(2);
+        }
+        return false;
+    }
+
+    private boolean ExchangeMiddleCenters() {
+        boolean exchangeCenters = true;
+        for (int i = 0; i < 4; i++) {
+            if ((cube[FRONTFACE_CENTER] != cube[BACKFACE_MIDLEFT]) || (cube[FRONTFACE_CENTER] != cube[BACKFACE_MIDRIGHT])) {
+                exchangeCenters = false;
+                break;
+            }
+            TurnCube(1);
+        }
+        if (exchangeCenters) {
+            RotateFaces("LLRRuDFFBB");
+        }
+        return exchangeCenters;
+    }
+
+    private boolean ExchangeMiddleCorners() {
+        for (int i = 0; i < 2; i++) {
+            if (cube[FRONTFACE_MIDLEFT] == cube[BACKFACE_CENTER] && cube[FRONTFACE_MIDRIGHT] == cube[BACKFACE_CENTER] && cube[BACKFACE_MIDLEFT] == cube[FRONTFACE_CENTER] && cube[BACKFACE_MIDRIGHT] == cube[FRONTFACE_CENTER] && cube[LEFTFACE_MIDLEFT] == cube[LEFTFACE_CENTER] && cube[LEFTFACE_MIDRIGHT] == cube[LEFTFACE_CENTER]) {
+                RotateFaces("RRUUddLL");
+                return true;
+            }
+            TurnCube(1);
+        }
+        return false;
+    }
+
+    //Step 6 Position middle edges
+    private void PositionMiddleEdges() {
+        if (!Rotate3MiddleEdges()) {
+            if (!ExchangeMiddleCenters()) {
+                ExchangeMiddleCorners();
+            }
+        }
+        while (cube[FRONTFACE_UPPERMID] != cube[FRONTFACE_CENTER]) {
+            RotateFaces("U");
+        }
+        while (cube[FRONTFACE_DOWNMID] != cube[FRONTFACE_CENTER]) {
+            RotateFaces("D");
+        }
+    }
+
+    private void Optimize() {
+        char move;
+        int count;
+        int pos;
+        int optcount;
+        optcount = movesCount;
+        do {
+            twists = 0;
+            movesCount = optcount;
+            moves[movesCount] = 0;
+            optcount = 0;
+            pos = 0;
+            while (pos < movesCount) {
+                move = moves[pos];
+                count = 1;
+                while (moves[++pos] == move) {
+                    count++;
+                }
+                count = count % 4;
+                for (int i = 0; i < count; i++) {
+                    moves[optcount++] = move;
+                }
+                twists++;
+            }
+        } while (optcount < movesCount);
+        movesCount = optcount;
+        moves[movesCount] = 0;
+    }
 
     //*****************************************************************************
 
-    private void SetCubeFace(final int c, final char f) {
+    private void SetCubeFace(final char c, final char f) {
         for (int pos = 0; pos < 6*9; pos++) {
             if (color[pos] == c) {
                 cube[pos] = f;
@@ -1836,37 +1731,35 @@ public class TiltedTwister implements Solver {
     }
 
     private void LoadCube() {
-        SetCubeFace(UPPERFACE, 'U');
-        SetCubeFace(LEFTFACE, 'L');
-        SetCubeFace(FRONTFACE, 'F');
-        SetCubeFace(RIGHTFACE, 'R');
-        SetCubeFace(BACKFACE, 'B');
-        SetCubeFace(DOWNFACE, 'D');
+        SetCubeFace('W', 'U');
+        SetCubeFace('B', 'L');
+        SetCubeFace('R', 'F');
+        SetCubeFace('G', 'R');
+        SetCubeFace('O', 'B');
+        SetCubeFace('Y', 'D');
         for (int i = 0; i < 6; i++) {
             faces[i] = staticfaces[i];
         }
         movesCount = 0;
     }
 
-//    void SaveSolution()
-//    {
-//      for(int i=0;i<movesCount;i++)
-//        solution[i]=moves[i];
-//      solutionCount=movesCount;
-//      solutionTwists=twists;
-//    }
+    private void SaveSolution() {
+        for (int i = 0; i < movesCount; i++) {
+            solution[i] = moves[i];
+        }
+        solutionCount = movesCount;
+        solutionTwists = twists;
+    }
 
-
-//    void Solve(char color, char oppositeColor )
-//    {
-//      OrientAllCorners(color, oppositeColor);
-//      SplitCorners(color, oppositeColor);
-//      PositionAllCorners();
-//      SolveTopAndBottomEdges();
-//      OrientMiddleEdges();
-//      PositionMiddleEdges();
-//      Optimize();
-//    }
+    private void Solve(final char color, final char oppositeColor) {
+		OrientAllCorners(color, oppositeColor);
+		SplitCorners(color, oppositeColor);
+		PositionAllCorners();
+		SolveTopAndBottomEdges();
+		OrientMiddleEdges();
+		PositionMiddleEdges();
+		Optimize();
+    }
 
 
 //    int RemoteSolve()
@@ -1907,24 +1800,26 @@ public class TiltedTwister implements Solver {
         System.out.println("SOLVING"); // TextOut(20,LCD_LINE2,"SOLVING",true);
         System.out.print("Solution 1 ="); // TextOut(0,LCD_LINE4,"Solution 1 =");
         LoadCube();
-//        Solve('U','D');
-//        NumOut (80, LCD_LINE4, twists);
-//        SaveSolution();
+        Solve('U','D');
+        System.out.println(twists); // NumOut (80, LCD_LINE4, twists);
+        SaveSolution();
 
-//        TextOut(0,LCD_LINE5,"Solution 2 =");
-//        LoadCube();
-//        Solve('F','B');
-//        NumOut (80, LCD_LINE5, twists);
-//        if(twists < solutionTwists)
-//          SaveSolution();
+        System.out.print("Solution 2 ="); // TextOut(0,LCD_LINE5,"Solution 2 =");
+        LoadCube();
+        Solve('F','B');
+        System.out.println(twists); // NumOut (80, LCD_LINE5, twists);
+        if (twists < solutionTwists) {
+            SaveSolution();
+        }
 
-//        TextOut(0,LCD_LINE6,"Solution 3 =");
-//        LoadCube();
-//        Solve('L','R');
-//        NumOut (80, LCD_LINE6, twists);
-//        Wait(500);
-//        if(twists < solutionTwists)
-//          SaveSolution();
+        System.out.print("Solution 3 ="); // TextOut(0,LCD_LINE6,"Solution 3 =");
+        LoadCube();
+        Solve('L','R');
+        System.out.println(twists); // NumOut (80, LCD_LINE6, twists);
+        // Wait(500);
+        if (twists < solutionTwists) {
+            SaveSolution();
+        }
         return true;
     }
 
@@ -2024,9 +1919,17 @@ public class TiltedTwister implements Solver {
 
     @Override
     public String solution(String facelets) {
-        
+        if (facelets.length() != color.length) {
+            return null;
+        }
+        for (int i = 0; i < color.length; i++) {
+            color[i] = facelets.charAt(i);
+        }
         SolveCube();
-        
-        return null;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < solutionCount; i++) {
+            sb.append(solution[i]);
+        }
+        return sb.toString();
     }
 }
