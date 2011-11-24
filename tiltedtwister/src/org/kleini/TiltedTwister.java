@@ -1732,9 +1732,9 @@ public class TiltedTwister implements Solver {
 
     private void LoadCube() {
         SetCubeFace('W', 'U');
-        SetCubeFace('B', 'L');
+        SetCubeFace('B', 'R');
         SetCubeFace('R', 'F');
-        SetCubeFace('G', 'R');
+        SetCubeFace('G', 'L');
         SetCubeFace('O', 'B');
         SetCubeFace('Y', 'D');
         for (int i = 0; i < 6; i++) {
