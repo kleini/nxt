@@ -26,7 +26,7 @@ public class Test {
      */
     public static void main(String[] args) {
         Solver solver = new TiltedTwister();
-        String solution = solver.solution(CUBE_6);
+        String solution = solver.solution(CUBE_X);
         System.out.println(solution);
     }
 

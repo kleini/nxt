@@ -191,8 +191,8 @@ public class TiltedTwister implements Solver {
     private int solutionCount;
     private int solutionTwists;
     private int twists;
-    private final char[] staticfaces = {'L','F','R','B','U','D'};
-    private final char[] faces = {'L','F','R','B','U','D'};
+//    private final char[] staticfaces = {'L','F','R','B','U','D'};
+//    private final char[] faces = {'L','F','R','B','U','D'};
 //    bool cubeGrabbed;
 //    int  currentAngle; //Current position of turntable
 //    int  tiltPower=85; //Initial tiltpower. Continuously adjusted depending on actual speed
@@ -1735,15 +1735,18 @@ public class TiltedTwister implements Solver {
     }
 
     private void LoadCube() {
-        SetCubeFace('W', 'U');
-        SetCubeFace('B', 'R');
-        SetCubeFace('R', 'F');
-        SetCubeFace('G', 'L');
-        SetCubeFace('O', 'B');
-        SetCubeFace('Y', 'D');
-        for (int i = 0; i < 6; i++) {
-            faces[i] = staticfaces[i];
+        for (int pos = 0; pos < 6 * 9; pos++) {
+            cube[pos] = color[pos];
         }
+//        SetCubeFace('W', 'U');
+//        SetCubeFace('B', 'R');
+//        SetCubeFace('R', 'F');
+//        SetCubeFace('G', 'L');
+//        SetCubeFace('O', 'B');
+//        SetCubeFace('Y', 'D');
+//        for (int i = 0; i < 6; i++) {
+//            faces[i] = staticfaces[i];
+//        }
         movesCount = 0;
     }
 
@@ -1804,13 +1807,13 @@ public class TiltedTwister implements Solver {
         System.out.println("SOLVING"); // TextOut(20,LCD_LINE2,"SOLVING",true);
         System.out.print("Solution 1 ="); // TextOut(0,LCD_LINE4,"Solution 1 =");
         LoadCube();
-        Solve('U','D');
+        Solve('W','Y');
         System.out.println(twists); // NumOut (80, LCD_LINE4, twists);
         SaveSolution();
 
         System.out.print("Solution 2 ="); // TextOut(0,LCD_LINE5,"Solution 2 =");
         LoadCube();
-        Solve('F','B');
+        Solve('R','O');
         System.out.println(twists); // NumOut (80, LCD_LINE5, twists);
         if (twists < solutionTwists) {
             SaveSolution();
@@ -1818,7 +1821,7 @@ public class TiltedTwister implements Solver {
 
         System.out.print("Solution 3 ="); // TextOut(0,LCD_LINE6,"Solution 3 =");
         LoadCube();
-        Solve('L','R');
+        Solve('G','B');
         System.out.println(twists); // NumOut (80, LCD_LINE6, twists);
         // Wait(500);
         if (twists < solutionTwists) {
@@ -1920,48 +1923,23 @@ public class TiltedTwister implements Solver {
 //      }
 //    }
 
-    private char transformBack(final char move) {
-        char retval = ' ';
-        switch (move) {
-        case 'U':
-            retval = 'W';
-            break;
-        case 'R':
-            retval = 'B';
-            break;
-        case 'F':
-            retval = 'R';
-            break;
-        case 'L':
-            retval = 'G';
-            break;
-        case 'B':
-            retval = 'O';
-            break;
-        case 'D':
-            retval = 'Y';
-            break;
-        }
-        return getFace(retval);
-    }
-
-    private char getFace(final char currentColor) {
-        if (color[LEFTFACE_CENTER] == currentColor) {
+    private char rotateBack(final char move) {
+        if (color[LEFTFACE_CENTER] == move) {
             return 'L'; 
         }
-        if (color[FRONTFACE_CENTER] == currentColor) {
+        if (color[FRONTFACE_CENTER] == move) {
             return 'F';
         }
-        if (color[RIGHTFACE_CENTER] == currentColor) {
+        if (color[RIGHTFACE_CENTER] == move) {
             return 'R';
         }
-        if (color[BACKFACE_CENTER] == currentColor) {
+        if (color[BACKFACE_CENTER] == move) {
             return 'B';
         }
-        if (color[UPPERFACE_CENTER] == currentColor) {
+        if (color[UPPERFACE_CENTER] == move) {
             return 'U';
         }
-        if (color[DOWNFACE_CENTER] == currentColor) {
+        if (color[DOWNFACE_CENTER] == move) {
             return 'D';
         }
         return ' ';
@@ -1975,11 +1953,10 @@ public class TiltedTwister implements Solver {
         for (int i = 0; i < color.length; i++) {
             color[i] = facelets.charAt(i);
         }
-        // U -> W
         SolveCube();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < solutionCount; i++) {
-            sb.append(transformBack(solution[i]));
+            sb.append(rotateBack(solution[i]));
         }
         return sb.toString();
     }
