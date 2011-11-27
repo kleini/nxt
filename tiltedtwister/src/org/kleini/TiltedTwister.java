@@ -179,6 +179,10 @@ public class TiltedTwister implements Solver {
 //    };
 
 //    colorType cubeColor[6*9];
+
+    /**
+     * the cube during the calculation of the solution.
+     */
     private final char[] cube = new char[6*9];
     private final char[] tmpCube = new char[6*9];
     private final char[] moves = new char[MAXMOVES];
@@ -1916,6 +1920,52 @@ public class TiltedTwister implements Solver {
 //      }
 //    }
 
+    private char transformBack(final char move) {
+        char retval = ' ';
+        switch (move) {
+        case 'U':
+            retval = 'W';
+            break;
+        case 'R':
+            retval = 'B';
+            break;
+        case 'F':
+            retval = 'R';
+            break;
+        case 'L':
+            retval = 'G';
+            break;
+        case 'B':
+            retval = 'O';
+            break;
+        case 'D':
+            retval = 'Y';
+            break;
+        }
+        return getFace(retval);
+    }
+
+    private char getFace(final char currentColor) {
+        if (color[LEFTFACE_CENTER] == currentColor) {
+            return 'L'; 
+        }
+        if (color[FRONTFACE_CENTER] == currentColor) {
+            return 'F';
+        }
+        if (color[RIGHTFACE_CENTER] == currentColor) {
+            return 'R';
+        }
+        if (color[BACKFACE_CENTER] == currentColor) {
+            return 'B';
+        }
+        if (color[UPPERFACE_CENTER] == currentColor) {
+            return 'U';
+        }
+        if (color[DOWNFACE_CENTER] == currentColor) {
+            return 'D';
+        }
+        return ' ';
+    }
 
     @Override
     public String solution(String facelets) {
@@ -1925,10 +1975,11 @@ public class TiltedTwister implements Solver {
         for (int i = 0; i < color.length; i++) {
             color[i] = facelets.charAt(i);
         }
+        // U -> W
         SolveCube();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < solutionCount; i++) {
-            sb.append(solution[i]);
+            sb.append(transformBack(solution[i]));
         }
         return sb.toString();
     }
