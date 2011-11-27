@@ -4,6 +4,8 @@
 
 package org.kleini;
 
+import lejos.nxt.LCD;
+
 /**
  *
  *
@@ -183,8 +185,10 @@ public class TiltedTwister implements Solver {
     /**
      * the cube during the calculation of the solution.
      */
-    private final char[] cube = new char[6*9];
-    private final char[] tmpCube = new char[6*9];
+//    private final char[] cube = new char[6*9];
+    private Cube cube;
+//    private final char[] tmpCube = new char[6*9];
+    private Cube tmpCube;
     private final char[] moves = new char[MAXMOVES];
     private int movesCount = 0;
     private char[] solution = new char[MAXMOVES];
@@ -213,729 +217,35 @@ public class TiltedTwister implements Solver {
     /** Found colors on the cube */ 
     private final char[] color = new char[6 * 9];
 
-//    inline void ColorSet(int face, int pos,int col)
-//    {
-//      color[face*9+pos]=col;
-//    }
-
-//    inline void CostMatrixSet(int x, int y, unsigned long cost)
-//    {
-//      costMatrix[x*12+y]=cost;
-//    }
-
-
-//    inline unsigned long CostMatrixGet(int x, int y)
-//    {
-//      return costMatrix[x*12+y];
-//    }
-
-
-//    inline void TwistMatrixSet(int x, int y, int twist)
-//    {
-//      twistMatrix[x*12+y]=twist;
-//    }
-
-
-//    inline int TwistMatrixGet(int x, int y)
-//    {
-//      return twistMatrix[x*12+y];
-//    }
-
-
-//    inline int Tile(int face, int pos)
-//    {
-//      return face*9+pos;
-//    }
-
-
-//    inline int OrientationGet(int orientation, int face)
-//    {
-//      return staticOrientations[orientation * 6 + face];
-//    }
-
-
-//    inline int CornerGet(int corner, int side)
-//    {
-//      return staticCorners[corner * 3 + side];
-//    }
-
-
-//    inline int EdgeGet(int edge, int side)
-//    {
-//      return staticEdges[edge * 2 + side];
-//    }
-
-
-//    void Tilt()
-//    {
-//      long tachoPrevious,tachoNow;
-//      unsigned long tick,time;
-//      Coast(OUT_A);
-//      Wait(200);
-//      tick=CurrentTick();
-//      OnFwd(OUT_B,tiltPower);
-//      while(MotorRotationCount(OUT_B)<65);
-//      time=CurrentTick()-tick;
-//      Off(OUT_B);
-//      if(time > 215)
-//      {
-//        tiltPower += 1 + (time-215)/10;
-//        if(tiltPower>100)
-//          tiltPower=100;
-//      }
-//      else
-//        tiltPower--;
-//      grabPower=tiltPower/11;
-//      Wait(TILTREST);
-//      OnFwd(OUT_B,-100);
-//      while(MotorRotationCount(OUT_B)>40);
-//      OnFwd(OUT_B,-20);
-//      while(MotorTachoCount(OUT_B)>20);
-//      tachoNow=MotorTachoCount(OUT_B);
-//      do{
-//        tachoPrevious=tachoNow;
-//        Wait(10);
-//        tachoNow=MotorTachoCount(OUT_B);
-//      }while(tachoNow!=tachoPrevious);
-//      Coast(OUT_B);
-//      char uf=faces[UPPERFACE];
-//      faces[UPPERFACE]=faces[LEFTFACE];
-//      faces[LEFTFACE]=faces[DOWNFACE];
-//      faces[DOWNFACE]=faces[RIGHTFACE];
-//      faces[RIGHTFACE]=uf;
-//    }
-
-
-//    void GrabCube()
-//    {
-//      Coast(OUT_A);
-//      OnFwd(OUT_B,100);
-//      while(MotorRotationCount(OUT_B)<20);
-//      OnFwd(OUT_B,20);
-//      while(MotorRotationCount(OUT_B)<30);
-//      OnFwd(OUT_B,grabPower);
-//      Wait(300);
-//      cubeGrabbed=true;
-//    }
-
-
-//    void ReleaseCube()
-//    {
-//      int tachoNow,tachoPrevious;
-//      Off(OUT_A);
-//      Off(OUT_B);
-//      OnFwd(OUT_B,-100);
-//      while(MotorRotationCount(OUT_B)>20);
-//      OnFwd(OUT_B,-20);
-//      while(MotorTachoCount(OUT_B)>20);
-//      tachoNow=MotorTachoCount(OUT_B);
-//      do
-//      {
-//        tachoPrevious=tachoNow;
-//        Wait(10);
-//        tachoNow=MotorTachoCount(OUT_B);
-//      }while(tachoNow!=tachoPrevious);
-//      Coast(OUT_B);
-//      cubeGrabbed=false;
-//    }
-
-
-//    void TurnTo(int newAngle)
-//    {
-//      int direction;
-//      int angle1,angle2;
-//      long pwr;
-//      int speed;
-//      int distance;
-//      if(newAngle!=currentAngle)
-//      {
-//        if(newAngle==0) //home
-//        {
-//          OnFwd(OUT_A,100);
-//          do
-//          {
-//            angle1=MotorRotationCount(OUT_A);
-//            Wait(20);
-//            angle2=MotorRotationCount(OUT_A);
-//            speed=abs(angle2-angle1);
-//            distance=abs(newAngle-angle2);
-//            if(speed>11)
-//            {
-//              pwr=20+distance;
-//              if(pwr<100)
-//                OnFwd(OUT_A,pwr);
-//            }
-//          }while(distance>30 || angle2!=angle1);
-//          Off(OUT_A);
-//          Wait(300);
-//        }
-//        else
-//        {
-//          int angle=newAngle - MotorRotationCount(OUT_A);
-//          ResetTachoCount(OUT_A);
-//          Wait(50);
-//          RotateMotor(OUT_A,60,angle);
-//          Wait(300);
-//        }
-//        int angle=MotorRotationCount(OUT_A);
-//        if(!cubeGrabbed)
-//        {
-//          int num=(4+(currentAngle-newAngle)/90)%4;
-//          for(int i=0;i<num;i++)
-//          {
-//            char lf=faces[LEFTFACE];
-//            faces[LEFTFACE]=faces[FRONTFACE];
-//            faces[FRONTFACE]=faces[RIGHTFACE];
-//            faces[RIGHTFACE]=faces[BACKFACE];
-//            faces[BACKFACE]=lf;
-//          }
-//        }
-//        currentAngle=newAngle;
-//      }
-//    }
-
-
-//    inline void TurnQuarter(int num)
-//    {
-//      TurnTo((currentAngle-num*90)%360);
-//    }
-
-
-//    void Twist(int num)
-//    {
-//      int angle=num * -90;
-//      if(angle==currentAngle)
-//        Wait(TILTREST);
-//      else
-//        TurnTo(angle);
-//      GrabCube();
-//      TurnTo(0);
-//      ReleaseCube();
-//    }
-
-
-//    //*****************************************************************************
-//    // Initialisation
-
-//    void InitTurntable()
-//    {
-//      int tachoNow,tachoPrevious;
-//      OnFwd(OUT_A,15);
-//      do
-//      {
-//        tachoPrevious=tachoNow;
-//        Wait(100);
-//        tachoNow=MotorTachoCount(OUT_A);
-//      }while(tachoNow!=tachoPrevious);
-//      Coast(OUT_A);
-//      Wait(500);
-//      ResetAllTachoCounts(OUT_A);
-//      Wait(500);
-//      currentAngle=0;
-//    }
-
-
-//    void InitTilter()
-//    {
-//      int tachoNow,tachoPrevious;
-//      OnFwd(OUT_B,-20);
-//      tachoNow=MotorTachoCount(OUT_B);
-//      do
-//      {
-//        tachoPrevious=tachoNow;
-//        Wait(100);
-//        tachoNow=MotorTachoCount(OUT_B);
-//      }while(tachoNow!=tachoPrevious);
-//      Coast(OUT_B);
-//      Wait(500);
-//      ResetAllTachoCounts(OUT_B);
-//    }
-
-
-//    void InitScanner()
-//    {
-//      int tachoNow,tachoPrevious;
-//      OnFwd(OUT_C,-15);
-//      tachoNow=MotorTachoCount(OUT_C);
-//      do
-//      {
-//        tachoPrevious=tachoNow;
-//        Wait(100);
-//        tachoNow=MotorTachoCount(OUT_C);
-//      }while(tachoNow!=tachoPrevious);
-//      Off(OUT_C);
-//      Wait(500);
-//      ResetAllTachoCounts(OUT_C);
-//      Wait(500);
-//      RotateMotor(OUT_C,10,SENSORPOS_HOME);
-//    }
-
-
-//    void Initialize()
-//    {
-//      InitTilter();
-//      InitScanner();
-//      InitTurntable();
-//      SetSensorLowspeed(IN_2);
-//    }
-
-
-//    //*****************************************************************************
-//    // Scan cube
-
-//    inline void DrawFacelet(int pos)
-//    {
-//      RectOut(59-(pos/3)*17,42-(pos%3)*17,15,15);
-//    }
-
-
-//    void ReadColor(int face, int pos)
-//    {
-//      int colorval;
-//      unsigned int raw[];
-//      unsigned int norm[];
-//      int scaled[];
-//      while(!ReadSensorColorEx(IN_1,colorval,raw,norm,scaled));
-//      int tile=Tile(face,pos);
-//      cubeColor[tile].colorval=colorval;
-//      cubeColor[tile].normRed=norm[0];
-//      cubeColor[tile].normGreen=norm[1];
-//      cubeColor[tile].normBlue=norm[2];
-//      cubeColor[tile].rawRed=raw[0];
-//      cubeColor[tile].rawGreen=raw[1];
-//      cubeColor[tile].rawBlue=raw[2];
-//    }
-
-
-//    void ScanFace(int face,int c1,int c2,int c3,int c4,int c5,int c6,int c7,int c8,int endAngle)
-//    {
-//      TurnTo(0);
-//      ResetTachoCount(OUT_A);
-//      ClearScreen();
-//      RotateMotorEx(OUT_C,20,SENSORPOS_CENTER-SENSORPOS_HOME,0,false,false);
-//      ReadColor(face,CENTER);
-//      DrawFacelet(CENTER);
-//      RotateMotor(OUT_C,20,SENSORPOS_CORNERS-SENSORPOS_CENTER);
-//      ReadColor(face,c1);
-//      DrawFacelet(UPPERRIGHT);
-//      RotateMotorEx(OUT_A,SCANSPEED,-90,0,false,false);
-//      ReadColor(face,c2);
-//      DrawFacelet(DOWNRIGHT);
-//      RotateMotorEx(OUT_A,SCANSPEED,-90,0,false,false);
-//      ReadColor(face,c3);
-//      DrawFacelet(DOWNLEFT);
-//      RotateMotor(OUT_A,SCANSPEED,-90);
-//      ReadColor(face,c4);
-//      DrawFacelet(UPPERLEFT);
-//      RotateMotor(OUT_C,10,SENSORPOS_EDGES-SENSORPOS_CORNERS);
-//      RotateMotorEx(OUT_A,SCANSPEED,OFFSET_EDGE,0,false,false);
-//      ReadColor(face,c5);
-//      DrawFacelet(MIDLEFT);
-//      RotateMotorEx(OUT_A,SCANSPEED,90,0,false,false);
-//      ReadColor(face,c6);
-//      DrawFacelet(UPPERMID);
-//      RotateMotorEx(OUT_A,SCANSPEED,90,0,false,false);
-//      ReadColor(face,c7);
-//      DrawFacelet(MIDRIGHT);
-//      RotateMotor(OUT_A,SCANSPEED,OFFSET_LASTEDGE - 270 - OFFSET_EDGE);
-//      RotateMotorEx(OUT_C,20,SENSORPOS_LASTEDGE-SENSORPOS_EDGES,0,false,false);
-//      ReadColor(face,c8);
-//      DrawFacelet(DOWNMID);
-//      RotateMotor(OUT_C,20,SENSORPOS_HOME-SENSORPOS_LASTEDGE);
-//      currentAngle=-1;
-//      TurnTo(endAngle);
-//    }
-
-
-//    void ScanCube()
-//    {
-//      SetSensorColorFull(IN_1);
-//      ScanFace(BACKFACE,UPPERRIGHT,UPPERLEFT,DOWNLEFT,DOWNRIGHT,DOWNMID,MIDLEFT,UPPERMID,MIDRIGHT,0);
-//      Tilt();
-//      ScanFace(LEFTFACE,UPPERRIGHT,UPPERLEFT,DOWNLEFT,DOWNRIGHT,DOWNMID,MIDLEFT,UPPERMID,MIDRIGHT,0);
-//      Tilt();
-//      ScanFace(FRONTFACE,UPPERRIGHT,UPPERLEFT,DOWNLEFT,DOWNRIGHT,DOWNMID,MIDLEFT,UPPERMID,MIDRIGHT,-270);
-//      Tilt();
-//      ScanFace(DOWNFACE,UPPERRIGHT,UPPERLEFT,DOWNLEFT,DOWNRIGHT,DOWNMID,MIDLEFT,UPPERMID,MIDRIGHT,0);
-//      Tilt();
-//      ScanFace(RIGHTFACE,UPPERLEFT,DOWNLEFT,DOWNRIGHT,UPPERRIGHT,MIDRIGHT,DOWNMID,MIDLEFT,UPPERMID,0);
-//      Tilt();
-//      ScanFace(UPPERFACE,DOWNLEFT,DOWNRIGHT,UPPERRIGHT,UPPERLEFT,UPPERMID,MIDRIGHT,DOWNMID,MIDLEFT,0);
-//      SetSensorType(IN_1,SENSOR_TYPE_NONE);
-//    }
-
     //*****************************************************************************
     // Color resolving
 
+//    private void Sorry() {
+//        System.out.println("SORRY");
+//        System.out.println("Can't resolve");
+//        System.out.println("colors");
+//    }
+
     private void Sorry() {
-    	System.out.println("SORRY"); // TextOut(5,LCD_LINE2,"SORRY",true);
-    	System.out.println("Can't resolve"); // TextOut(5,LCD_LINE4,"Can't resolve" );
-    	System.out.println("colors"); // TextOut(5,LCD_LINE5,"colors" );
-    	// PlayFile("Sorry.rso");
+        LCD.clearDisplay();
+        LCD.drawString("SORRY", 5, 1); //LCD_LINE2
+        LCD.drawString("Can't resolve", 5, 3);
+        LCD.drawString("colors", 5, 4);
+//        PlayFile("Sorry.rso");
     }
-
-//    int GetRefCornerColor(rgb refColor1,rgb refColor2)
-//    {
-//      int pos3;
-//      unsigned long minCost=$FFFFFFFF;
-//      for(int corner=1;corner<8;corner++)
-//      {
-//        int minCostTwist;
-//        for(int twist=0;twist<3;twist++)
-//        {
-//          int pos1 = CornerGet(corner,twist);
-//          int pos2 = CornerGet(corner,(1+twist)%3);
-//          rgb color1 = sensorColor[pos1];
-//          rgb color2 = sensorColor[pos2];
-//          unsigned long cost = ((refColor1.red - color1.red) * (refColor1.red - color1.red) + (refColor1.green - color1.green) * (refColor1.green - color1.green) + (refColor1.blue - color1.blue) * (refColor1.blue - color1.blue))/3;
-//          cost += ((refColor2.red - color2.red) * (refColor2.red - color2.red) + (refColor2.green - color2.green) * (refColor2.green - color2.green) + (refColor2.blue - color2.blue) * (refColor2.blue - color2.blue))/3;
-//          if(cost<minCost)
-//          {
-//            minCost=cost;
-//            minCostTwist=twist;
-//            pos3=CornerGet(corner,(2+twist)%3);
-//          }
-//        }
-//      }
-//      return pos3;
-//    }
-
-
-//    void InitColors()
-//    {
-//      for(int pos=0;pos<6*9;pos++)
-//      {
-//        sensorColor[pos].red=cubeColor[pos].rawRed;
-//        sensorColor[pos].green=cubeColor[pos].rawGreen;
-//        sensorColor[pos].blue=cubeColor[pos].rawBlue;
-//      }
-//      refColor[UPPERFACE]=sensorColor[UPPERFACE_UPPERLEFT];
-//      refColor[LEFTFACE]=sensorColor[LEFTFACE_UPPERLEFT];
-//      refColor[BACKFACE]=sensorColor[BACKFACE_UPPERRIGHT];
-//      refColor[FRONTFACE]=sensorColor[GetRefCornerColor(refColor[LEFTFACE],refColor[UPPERFACE])];
-//      refColor[RIGHTFACE]=sensorColor[GetRefCornerColor(refColor[UPPERFACE],refColor[BACKFACE])];
-//      refColor[DOWNFACE]=sensorColor[GetRefCornerColor(refColor[BACKFACE],refColor[LEFTFACE])];
-//    }
-
-
-//    int CenterFit(int orientation)
-//    {
-//      int fit=0;
-//      for(int face=0;face<6;face++)
-//        if(color[Tile(face,CENTER)] == OrientationGet(orientation, face))
-//          fit++;
-//      return fit;
-//    }
-
-
-//    void ResolveCenterColors()
-//    {
-//      TextOut(2,LCD_LINE4,"Center colors...");
-//      for(int center=0;center<6;center++)
-//      {
-//        unsigned long minCost=$FFFFFFFF;
-//        int bestCubie;
-//        for(int cubie=0;cubie<6;cubie++)
-//        {
-//          rgb centerColor,cubieColor;
-//          centerColor = refColor[center];
-//          cubieColor=sensorColor[Tile(cubie,CENTER)];
-//          unsigned long cost = (centerColor.red - cubieColor.red) * (centerColor.red - cubieColor.red) + (centerColor.green - cubieColor.green) * (centerColor.green - cubieColor.green) + (centerColor.blue - cubieColor.blue) * (centerColor.blue - cubieColor.blue);
-//          if(cost<minCost)
-//          {
-//            minCost=cost;
-//            bestCubie=cubie;
-//          }
-//        }
-//        ColorSet(center,CENTER,bestCubie);
-//      }
-
-//      int bestFit=0;
-//      int bestOrientation;
-//      for(int orientation=0;orientation<24;orientation++)
-//      {
-//        int fit=CenterFit(orientation);
-//        if(fit>bestFit)
-//        {
-//          bestFit=fit;
-//          bestOrientation=orientation;
-//        }
-//      }
-//      rgb tmpRefColor[6];
-//      ArraySubset(tmpRefColor,refColor,0,6);
-//      for(int face=0;face<6;face++)
-//      {
-//        rgb col=tmpRefColor[face];
-//        refColor[OrientationGet(bestOrientation, face)]=col;
-//      }
-
-//      for(int face=0;face<6;face++)
-//        ColorSet(face,CENTER,face);
-//    }
-
-
-//    int BestFitCubie(int &cubie, int &twist, int dim)
-//    {
-//      int bestX,bestY;
-//      unsigned long bestDiff=0;
-//      for(int x = 0; x < dim;x++)
-//      {
-//        unsigned long minCost=$FFFFFFFF;
-//        unsigned long min2Cost=$FFFFFFFF;
-//        int minY;
-//        for(int y=0; y < dim; y++)
-//          if(CostMatrixGet(x,y) < minCost)
-//          {
-//            minCost=CostMatrixGet(x,y);
-//            minY=y;
-//          }
-//        for(int y=0; y < dim; y++)
-//          if(y != minY && CostMatrixGet(x,y) < min2Cost)
-//            min2Cost=CostMatrixGet(x,y);
-//        if(min2Cost-minCost > bestDiff)
-//        {
-//          bestX = x;
-//          bestY = minY;
-//          bestDiff = min2Cost-minCost;
-//        }
-//      }
-//      for(int x=0;x<dim;x++)
-//        CostMatrixSet(x,bestY,$FFFFFFFF);
-//      for(int y=0;y<dim;y++)
-//        CostMatrixSet(bestX,y,$FFFFFFFF);
-
-//      cubie = bestY;
-//      twist = TwistMatrixGet(bestX,bestY);
-//      return bestX;
-//    }
-
-
-//    void ResolveCornerColors()
-//    {
-//      TextOut(2,LCD_LINE5,"Corner colors...");
-//      for(int corner=0;corner<8;corner++)
-//        for(int cubie=0;cubie<8;cubie++)
-//        {
-//          unsigned long minCost=$FFFFFFFF;
-//          int minCostTwist;
-//          for(int twist=0;twist<3;twist++)
-//          {
-//            unsigned long cost=0;
-//            for(int s=0;s<3;s++)
-//            {
-//              int face = CornerGet(corner,s) / 9;
-//              int pos = CornerGet(cubie,(s+twist)%3);
-//              rgb color1,color2;
-//              color1 = refColor[face];
-//              color2 = sensorColor[pos];
-//              cost += ((color1.red - color2.red) * (color1.red - color2.red) + (color1.green - color2.green) * (color1.green - color2.green) + (color1.blue - color2.blue) * (color1.blue - color2.blue))/3;
-//            }
-//            if(cost<minCost)
-//            {
-//              minCost=cost;
-//              minCostTwist=twist;
-//            }
-//          }
-//          CostMatrixSet(corner,cubie,minCost);
-//          TwistMatrixSet(corner,cubie,minCostTwist);
-//        }
-//        for(int face=0;face<6;face++) //calibrate refColor
-//        {
-//          refColor[face].red=0;
-//          refColor[face].green=0;
-//          refColor[face].blue=0;
-//        }
-//        for(int i=0;i<8;i++)
-//        {
-//          int cubie;
-//          int twist;
-//          int corner=BestFitCubie(cubie,twist,8);
-//          for(int s=0;s<3;s++)
-//          {
-//            int face = (CornerGet(corner,s))/9;
-//            int pos = CornerGet(cubie,(s+twist)%3);
-//            color[pos]=face;
-//            //calibrate refColor
-//            rgb ref=refColor[face];
-//            rgb col=sensorColor[pos];
-//            ref.red+=col.red;
-//            ref.green+=col.green;
-//            ref.blue+=col.blue;
-//            refColor[face]=ref;
-//          }
-//        }
-//        //calibrate refColor
-//        for(int face = 0 ; face < 6 ;face++)
-//        {
-//          rgb tmp=refColor[face];
-//          tmp.red/=4;
-//          tmp.green/=4;
-//          tmp.blue/=4;
-//          refColor[face]=tmp;
-//        }
-//    }
-
-
-//    void ResolveEdgeColors()
-//    {
-//      TextOut(2,LCD_LINE6,"Edge colors...");
-//      for(int edge=0;edge<12;edge++)
-//        for(int cubie=0;cubie<12;cubie++)
-//        {
-//          unsigned long minCost=$FFFFFFFF;
-//          int minCostTwist;
-//          for(int twist=0;twist<2;twist++)
-//          {
-//            unsigned long cost=0;
-//            for(int s=0;s<2;s++)
-//            {
-//              int face = EdgeGet(edge,s)/ 9;
-//              int pos = EdgeGet(cubie,(s+twist)%2);
-//              rgb color1,color2;
-//              color1 = refColor[face];
-//              color2 = sensorColor[pos];
-//              cost += ((color1.red - color2.red) * (color1.red - color2.red) + (color1.green - color2.green) * (color1.green - color2.green) + (color1.blue - color2.blue) * (color1.blue - color2.blue))/2;
-//            }
-//            if(cost<minCost)
-//            {
-//              minCost=cost;
-//              minCostTwist=twist;
-//            }
-//          }
-//          CostMatrixSet(edge,cubie,minCost);
-//          TwistMatrixSet(edge,cubie,minCostTwist);
-//        }
-//        for(int i = 0 ; i < 12 ;i++)
-//        {
-//          int cubie;
-//          int twist;
-//          int edge=BestFitCubie(cubie,twist,12);
-//          for(int s=0;s<2;s++)
-//            color[EdgeGet(cubie,(s+twist)%2)]=EdgeGet(edge,s)/9;
-//        }
-//    }
-
-
-//    string ColorToStr(int face, int pos)
-//    {
-//      byte c=color[Tile(face,pos)];
-//      return SubStr("LFRBUD",c,1);
-//    }
-
-
-//    void DumpCube()
-//    {
-//      int handle;
-//      DeleteFile("rubikscube.txt");
-//      CreateFile("rubikscube.txt", 4000, handle);
-//      int count;
-//      string msg,c;
-//      for(int row=0;row<3;row++)
-//      {
-//        msg="    ";
-//        for(int col=0;col<3;col++)
-//        {
-//          c=ColorToStr(UPPERFACE,row*3+col);
-//          msg=StrCat(msg,c);
-//        }
-//        WriteLnString(handle,msg,count);
-//      }
-//      WriteLnString(handle,"",count);
-//      for(int row=0;row<3;row++)
-//      {
-//        msg="";
-//        for(int face=LEFTFACE;face<=BACKFACE;face++)
-//        {
-//          for(int col=0;col<3;col++)
-//          {
-//            c=ColorToStr(face,row*3+col);
-//            msg=StrCat(msg,c);
-//          }
-//          msg=StrCat(msg," ");
-//        }
-//        WriteLnString(handle,msg,count);
-//      }
-//      WriteLnString(handle,"",count);
-//      for(int row=0;row<3;row++)
-//      {
-//        msg="    ";
-//        for(int col=0;col<3;col++)
-//        {
-//          c=ColorToStr(DOWNFACE,row*3+col);
-//          msg=StrCat(msg,c);
-//        }
-//        WriteLnString(handle,msg,count);
-//      }
-//      WriteLnString(handle,"",count);
-
-//      WriteLnString(handle,"colorval Raw-RGB [Norm-RGB] = Resolved face",count);
-//      WriteLnString(handle,"",count);
-//      for(int face=0;face<6;face++)
-//      {
-//        msg=SubStr("LFRBUD",face,1); WriteString(handle,msg,count); WriteString(handle,": ",count);
-//        for(int pos=0;pos<9;pos++)
-//        {
-//          colorType col=cubeColor[Tile(face,pos)];
-//          msg=NumToStr(col.colorval); WriteString(handle,msg,count); WriteString(handle," ",count);
-//          msg=NumToStr(col.rawRed); WriteString(handle,msg,count); WriteString(handle,".",count);
-//          msg=NumToStr(col.rawGreen); WriteString(handle,msg,count); WriteString(handle,".",count);
-//          msg=NumToStr(col.rawBlue); WriteString(handle,msg,count); WriteString(handle," [",count);
-//          msg=NumToStr(col.normRed); WriteString(handle,msg,count); WriteString(handle,".",count);
-//          msg=NumToStr(col.normGreen); WriteString(handle,msg,count); WriteString(handle,".",count);
-//          msg=NumToStr(col.normBlue); WriteString(handle,msg,count); WriteString(handle,"]=",count);
-//          msg=ColorToStr(face,pos); WriteString(handle,msg,count); WriteString(handle,", ",count);
-//        }
-//        WriteLnString(handle,"",count);
-//      }
-//      WriteLnString(handle,"",count);
-//      WriteLnString(handle,"Ref RGB",count);
-//      WriteLnString(handle,"",count);
-//      for(int face=0;face<6;face++)
-//      {
-//        msg=SubStr("LFRBUD",face,1); WriteString(handle,msg,count); WriteString(handle,": ",count);
-//        rgb col=refColor[face];
-//        msg=NumToStr(col.red); WriteString(handle,msg,count); WriteString(handle,".",count);
-//        msg=NumToStr(col.green); WriteString(handle,msg,count); WriteString(handle,".",count);
-//        msg=NumToStr(col.blue); WriteLnString(handle,msg,count);
-//      }
-//      CloseFile(handle);
-//    }
-
-
-//    void ResolveColors()
-//    {
-//      TextOut(2,LCD_LINE2,"RESOLVING COLORS",true);
-//      InitColors();
-//      ResolveCenterColors();
-//      ResolveCornerColors();
-//      ResolveEdgeColors();
-//      DumpCube();
-//    }
 
     //*****************************************************************************
     // Solve functions
 
-    private void CubeSet(final int face, final int pos, final char value) {
-    	cube[face * 9 + pos] = value;
-    }
-
-	private char CubeGet(final int face, final int pos) {
-		return cube[face * 9 + pos];
-	}
-
-    private char TmpCubeGet(final int face, final int pos) {
-    	return tmpCube[face * 9 + pos];
-    }
-
     private void CopyCube() {
-        System.arraycopy(cube, 0, tmpCube, 0, tmpCube.length);
+        tmpCube = new Cube(cube);
     }
 
     private void CopyFace(final int fromFace, final int toFace) {
     	final int fromFaceOffset = fromFace * 9;
     	final int toFaceOffset = toFace * 9;
     	for(int i=0; i<9; i++) {
-    		cube[toFaceOffset + i] = tmpCube[fromFaceOffset + i];
+    	    cube.setFace(toFaceOffset + i, tmpCube.getColor(fromFaceOffset + i));
     	}
     }
 
@@ -943,36 +253,36 @@ public class TiltedTwister implements Solver {
 		final int fromFaceOffset = fromFace * 9;
 		final int toFaceOffset = toFace * 9;
 		if (turns == 1) {
-			cube[toFaceOffset + UPPERLEFT] = tmpCube[fromFaceOffset + DOWNLEFT];
-			cube[toFaceOffset + UPPERMID] = tmpCube[fromFaceOffset + MIDLEFT];
-			cube[toFaceOffset + UPPERRIGHT] = tmpCube[fromFaceOffset + UPPERLEFT];
-			cube[toFaceOffset + MIDLEFT] = tmpCube[fromFaceOffset + DOWNMID];
-			cube[toFaceOffset + CENTER] = tmpCube[fromFaceOffset + CENTER];
-			cube[toFaceOffset + MIDRIGHT] = tmpCube[fromFaceOffset + UPPERMID];
-			cube[toFaceOffset + DOWNLEFT] = tmpCube[fromFaceOffset + DOWNRIGHT];
-			cube[toFaceOffset + DOWNMID] = tmpCube[fromFaceOffset + MIDRIGHT];
-			cube[toFaceOffset + DOWNRIGHT] = tmpCube[fromFaceOffset + UPPERRIGHT];
+		    cube.setFace(toFaceOffset + UPPERLEFT, tmpCube.getColor(fromFaceOffset + DOWNLEFT));
+		    cube.setFace(toFaceOffset + UPPERMID, tmpCube.getColor(fromFaceOffset + MIDLEFT));
+			cube.setFace(toFaceOffset + UPPERRIGHT, tmpCube.getColor(fromFaceOffset + UPPERLEFT));
+			cube.setFace(toFaceOffset + MIDLEFT, tmpCube.getColor(fromFaceOffset + DOWNMID));
+			cube.setFace(toFaceOffset + CENTER, tmpCube.getColor(fromFaceOffset + CENTER));
+			cube.setFace(toFaceOffset + MIDRIGHT, tmpCube.getColor(fromFaceOffset + UPPERMID));
+			cube.setFace(toFaceOffset + DOWNLEFT, tmpCube.getColor(fromFaceOffset + DOWNRIGHT));
+			cube.setFace(toFaceOffset + DOWNMID, tmpCube.getColor(fromFaceOffset + MIDRIGHT));
+			cube.setFace(toFaceOffset + DOWNRIGHT, tmpCube.getColor(fromFaceOffset + UPPERRIGHT));
 		} else if (turns == 2) {
-			cube[toFaceOffset + UPPERLEFT] = tmpCube[fromFaceOffset + DOWNRIGHT];
-			cube[toFaceOffset + UPPERMID] = tmpCube[fromFaceOffset + DOWNMID];
-			cube[toFaceOffset + UPPERRIGHT] = tmpCube[fromFaceOffset + DOWNLEFT];
-			cube[toFaceOffset + MIDLEFT] = tmpCube[fromFaceOffset + MIDRIGHT];
-			cube[toFaceOffset + CENTER] = tmpCube[fromFaceOffset + CENTER];
-			cube[toFaceOffset + MIDRIGHT] = tmpCube[fromFaceOffset + MIDLEFT];
-			cube[toFaceOffset + DOWNLEFT] = tmpCube[fromFaceOffset + UPPERRIGHT];
-			cube[toFaceOffset + DOWNMID] = tmpCube[fromFaceOffset + UPPERMID];
-			cube[toFaceOffset + DOWNRIGHT] = tmpCube[fromFaceOffset + UPPERLEFT];
+			cube.setFace(toFaceOffset + UPPERLEFT, tmpCube.getColor(fromFaceOffset + DOWNRIGHT));
+			cube.setFace(toFaceOffset + UPPERMID, tmpCube.getColor(fromFaceOffset + DOWNMID));
+			cube.setFace(toFaceOffset + UPPERRIGHT, tmpCube.getColor(fromFaceOffset + DOWNLEFT));
+			cube.setFace(toFaceOffset + MIDLEFT, tmpCube.getColor(fromFaceOffset + MIDRIGHT));
+			cube.setFace(toFaceOffset + CENTER, tmpCube.getColor(fromFaceOffset + CENTER));
+			cube.setFace(toFaceOffset + MIDRIGHT, tmpCube.getColor(fromFaceOffset + MIDLEFT));
+			cube.setFace(toFaceOffset + DOWNLEFT, tmpCube.getColor(fromFaceOffset + UPPERRIGHT));
+			cube.setFace(toFaceOffset + DOWNMID, tmpCube.getColor(fromFaceOffset + UPPERMID));
+			cube.setFace(toFaceOffset + DOWNRIGHT, tmpCube.getColor(fromFaceOffset + UPPERLEFT));
 		} else {
 			// turns == 3
-			cube[toFaceOffset + UPPERLEFT] = tmpCube[fromFaceOffset + UPPERRIGHT];
-			cube[toFaceOffset + UPPERMID] = tmpCube[fromFaceOffset + MIDRIGHT];
-			cube[toFaceOffset + UPPERRIGHT] = tmpCube[fromFaceOffset + DOWNRIGHT];
-			cube[toFaceOffset + MIDLEFT] = tmpCube[fromFaceOffset + UPPERMID];
-			cube[toFaceOffset + CENTER] = tmpCube[fromFaceOffset + CENTER];
-			cube[toFaceOffset + MIDRIGHT] = tmpCube[fromFaceOffset + DOWNMID];
-			cube[toFaceOffset + DOWNLEFT] = tmpCube[fromFaceOffset + UPPERLEFT];
-			cube[toFaceOffset + DOWNMID] = tmpCube[fromFaceOffset + MIDLEFT];
-			cube[toFaceOffset + DOWNRIGHT] = tmpCube[fromFaceOffset + DOWNLEFT];
+			cube.setFace(toFaceOffset + UPPERLEFT, tmpCube.getColor(fromFaceOffset + UPPERRIGHT));
+			cube.setFace(toFaceOffset + UPPERMID, tmpCube.getColor(fromFaceOffset + MIDRIGHT));
+			cube.setFace(toFaceOffset + UPPERRIGHT, tmpCube.getColor(fromFaceOffset + DOWNRIGHT));
+			cube.setFace(toFaceOffset + MIDLEFT, tmpCube.getColor(fromFaceOffset + UPPERMID));
+			cube.setFace(toFaceOffset + CENTER, tmpCube.getColor(fromFaceOffset + CENTER));
+			cube.setFace(toFaceOffset + MIDRIGHT, tmpCube.getColor(fromFaceOffset + DOWNMID));
+			cube.setFace(toFaceOffset + DOWNLEFT, tmpCube.getColor(fromFaceOffset + UPPERLEFT));
+			cube.setFace(toFaceOffset + DOWNMID, tmpCube.getColor(fromFaceOffset + MIDLEFT));
+			cube.setFace(toFaceOffset + DOWNRIGHT, tmpCube.getColor(fromFaceOffset + DOWNLEFT));
 		}
 	}
 
@@ -1045,12 +355,12 @@ public class TiltedTwister implements Solver {
 			CopyCube();
 			CopyFaceClockwise(DOWNFACE, DOWNFACE, 1);
 			for (int i = 6; i < 9; i++) {
-				CubeSet(LEFTFACE, i, TmpCubeGet(BACKFACE, i));
-				CubeSet(FRONTFACE, i, TmpCubeGet(LEFTFACE, i));
-				CubeSet(RIGHTFACE, i, TmpCubeGet(FRONTFACE, i));
-				CubeSet(BACKFACE, i, TmpCubeGet(RIGHTFACE, i));
+			    cube.setFace(LEFTFACE, i, tmpCube.get(BACKFACE, i));
+			    cube.setFace(FRONTFACE, i, tmpCube.get(LEFTFACE, i));
+			    cube.setFace(RIGHTFACE, i, tmpCube.get(FRONTFACE, i));
+			    cube.setFace(BACKFACE, i, tmpCube.get(RIGHTFACE, i));
 			}
-            moves[movesCount++] = cube[DOWNFACE_CENTER];
+            moves[movesCount++] = cube.getColor(DOWNFACE_CENTER).getLetter();
 		}
 		// PlayTone(200+movesCount*20,1);
     }
@@ -1093,11 +403,11 @@ public class TiltedTwister implements Solver {
         }
     }
 
-    private boolean CornerColorOk(final int position, final char c1, final char c2) {
-        return cube[position] == c1 || cube[position] == c2;
+    private boolean CornerColorOk(final int position, final Color color1, final Color color2) {
+        return cube.getColor(position) == color1 || cube.getColor(position) == color2;
     }
 
-    boolean TryBottomFace(char c1, char c2, int twists) {
+    boolean TryBottomFace(final Color c1, final Color c2, int twists) {
         for (int i = 0; i < 4; i++) {
             if (twists == 0) {
                 if (CornerColorOk(DOWNFACE_UPPERLEFT, c1, c2) && CornerColorOk(DOWNFACE_UPPERRIGHT, c1, c2) && CornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && !CornerColorOk(DOWNFACE_DOWNLEFT, c1, c2)) {
@@ -1143,7 +453,7 @@ public class TiltedTwister implements Solver {
     }
 
 
-    boolean PrepareBottomFace(char c1, char c2, int twists) {
+    boolean PrepareBottomFace(final Color c1, final Color c2, int twists) {
         if (TryBottomFace(c1, c2, twists)) {
             return true;
         }
@@ -1171,7 +481,7 @@ public class TiltedTwister implements Solver {
         return false;
     }
 
-	private boolean MoveCorners(final int corner1, final int corner2, final int corner3, final int corner4, final char color1, final char color2, final String moves) {
+	private boolean MoveCorners(final int corner1, final int corner2, final int corner3, final int corner4, final Color color1, final Color color2, final String moves) {
 		if (CornerColorOk(corner1, color1, color2) && CornerColorOk(corner2, color1, color2) && CornerColorOk(corner3, color1, color2) && CornerColorOk(corner4, color1, color2)) {
 			RotateFaces(moves);
 			return true;
@@ -1179,7 +489,7 @@ public class TiltedTwister implements Solver {
 		return false;
 	}
 
-    private void OrientAllCorners(final char c1, final char c2) {
+    private void OrientAllCorners(final Color c1, final Color c2) {
         if (!PrepareBottomFace(c1, c2, 0)) {
         	if (!PrepareBottomFace(c1, c2, 1)) {
         		PrepareBottomFace(c1, c2, 2);
@@ -1232,84 +542,84 @@ public class TiltedTwister implements Solver {
         }
     }
 
-    private void SplitCorners(final char color, final char oppositeColor) {
+    private void SplitCorners(final Color color, final Color opposite) {
     	int count = 0;
     	for (int i = 0; i < 4; i++) {
-    		if (cube[DOWNFACE_UPPERLEFT] == color) {
+    		if (cube.getColor(DOWNFACE_UPPERLEFT) == color) {
     			count++;
     		}
     		TurnCube(1);
     	}
     	if (count == 1 || count == 3) {
-    		int singleColor;
+    		Color singleColor;
     		if (count == 1) {
     			singleColor = color;
     		} else {
-    			singleColor = oppositeColor;
+    			singleColor = opposite;
     		}
-    		while (cube[DOWNFACE_UPPERLEFT] != singleColor) {
+    		while (cube.getColor(DOWNFACE_UPPERLEFT) != singleColor) {
     			TurnCube(1);
     		}
-			while (cube[UPPERFACE_DOWNRIGHT] == singleColor) {
+			while (cube.getColor(UPPERFACE_DOWNRIGHT) == singleColor) {
 				RotateFaces("U");
 			}
-			if (cube[UPPERFACE_DOWNRIGHT] == cube[UPPERFACE_CENTER]) {
+			if (cube.getColor(UPPERFACE_DOWNRIGHT) == cube.getColor(UPPERFACE_CENTER)) {
 				RotateFaces("RRDLL");
 			} else {
 				RotateFaces("RRDRR");
 			}
     	} else if (count == 2) {
-			if (cube[DOWNFACE_UPPERLEFT] != cube[DOWNFACE_DOWNRIGHT]) {
+			if (cube.getColor(DOWNFACE_UPPERLEFT) != cube.getColor(DOWNFACE_DOWNRIGHT)) {
 				TiltCube(2);
 			}
-			if (cube[DOWNFACE_UPPERLEFT] != cube[DOWNFACE_DOWNRIGHT]) {
-				while (cube[DOWNFACE_UPPERLEFT] != cube[DOWNFACE_UPPERRIGHT]) {
+			if (cube.getColor(DOWNFACE_UPPERLEFT) != cube.getColor(DOWNFACE_DOWNRIGHT)) {
+				while (cube.getColor(DOWNFACE_UPPERLEFT) != cube.getColor(DOWNFACE_UPPERRIGHT)) {
 					TurnCube(1);
 				}
-				while (cube[UPPERFACE_UPPERLEFT] != cube[DOWNFACE_UPPERLEFT] || cube[UPPERFACE_UPPERRIGHT] != cube[DOWNFACE_UPPERRIGHT]) {
+				while (cube.getColor(UPPERFACE_UPPERLEFT) != cube.getColor(DOWNFACE_UPPERLEFT) || cube.getColor(UPPERFACE_UPPERRIGHT) != cube.getColor(DOWNFACE_UPPERRIGHT)) {
 					RotateFaces("U");
 				}
-				if (cube[UPPERFACE_UPPERLEFT] == cube[UPPERFACE_CENTER]) {
+				if (cube.getColor(UPPERFACE_UPPERLEFT) == cube.getColor(UPPERFACE_CENTER)) {
 					RotateFaces("FF");
 				} else {
 					RotateFaces("BB");
 				}
-			} else if (cube[UPPERFACE_UPPERLEFT] == cube[UPPERFACE_DOWNRIGHT]) {
-				if (cube[UPPERFACE_UPPERLEFT] != cube[DOWNFACE_DOWNLEFT]) {
+			} else if (cube.getColor(UPPERFACE_UPPERLEFT) == cube.getColor(UPPERFACE_DOWNRIGHT)) {
+				if (cube.getColor(UPPERFACE_UPPERLEFT) != cube.getColor(DOWNFACE_DOWNLEFT)) {
 					RotateFaces("U");
 				}
-				if (cube[UPPERFACE_UPPERRIGHT] == cube[UPPERFACE_CENTER]) {
+				if (cube.getColor(UPPERFACE_UPPERRIGHT) == cube.getColor(UPPERFACE_CENTER)) {
 					TurnCube(1);
 				}
 				RotateFaces("RRDDFF");
 			} else {
-				while (cube[UPPERFACE_UPPERLEFT] != cube[DOWNFACE_DOWNLEFT] || cube[UPPERFACE_DOWNLEFT] != cube[DOWNFACE_DOWNLEFT]) {
+				while (cube.getColor(UPPERFACE_UPPERLEFT) != cube.getColor(DOWNFACE_DOWNLEFT) || cube.getColor(UPPERFACE_DOWNLEFT) != cube.getColor(DOWNFACE_DOWNLEFT)) {
 					TurnCube(1);
 				}
-				if (cube[UPPERFACE_UPPERLEFT] != cube[UPPERFACE_CENTER]) {
+				if (cube.getColor(UPPERFACE_UPPERLEFT) != cube.getColor(UPPERFACE_CENTER)) {
 					RotateFaces("RRDRRDLL");
 				} else {
 					RotateFaces("RRDRRDRR");
 				}
 			}
     	}
-		if (cube[UPPERFACE_UPPERLEFT] == cube[LEFTFACE_CENTER]) {
+		if (cube.getColor(UPPERFACE_UPPERLEFT) == cube.getColor(LEFTFACE_CENTER)) {
 			TiltCube(1);
-		} else if (cube[UPPERFACE_UPPERLEFT] == cube[FRONTFACE_CENTER]) {
+		} else if (cube.getColor(UPPERFACE_UPPERLEFT) == cube.getColor(FRONTFACE_CENTER)) {
 			TurnCube(1);
 			TiltCube(1);
-		} else if (cube[UPPERFACE_UPPERLEFT] == cube[RIGHTFACE_CENTER]) {
+		} else if (cube.getColor(UPPERFACE_UPPERLEFT) == cube.getColor(RIGHTFACE_CENTER)) {
 			TiltCube(3);
-		} else if (cube[UPPERFACE_UPPERLEFT] == cube[BACKFACE_CENTER]) {
+		} else if (cube.getColor(UPPERFACE_UPPERLEFT) == cube.getColor(BACKFACE_CENTER)) {
 			TurnCube(3);
 			TiltCube(1);
-		} else if (cube[UPPERFACE_UPPERLEFT] == cube[DOWNFACE_CENTER]) {
+		} else if (cube.getColor(UPPERFACE_UPPERLEFT) == cube.getColor(DOWNFACE_CENTER)) {
 			TiltCube(2);
 		}
-		while (cube[UPPERFACE_UPPERLEFT] != cube[UPPERFACE_CENTER]) {
+		while (cube.getColor(UPPERFACE_UPPERLEFT) != cube.getColor(UPPERFACE_CENTER)) {
 			RotateFaces("B");
 		}
-		while (cube[UPPERFACE_DOWNLEFT] != cube[UPPERFACE_CENTER]) {
+		while (cube.getColor(UPPERFACE_DOWNLEFT) != cube.getColor(UPPERFACE_CENTER)) {
 			RotateFaces("F");
 		}
     }
@@ -1320,10 +630,10 @@ public class TiltedTwister implements Solver {
     	int topCount = 0;
 		int bottomCount = 0;
 		for (int i = 0; i < 4; i++) {
-			if (cube[BACKFACE_DOWNLEFT] == cube[BACKFACE_DOWNRIGHT]) {
+			if (cube.getColor(BACKFACE_DOWNLEFT) == cube.getColor(BACKFACE_DOWNRIGHT)) {
 				bottomCount++;
 			}
-			if (cube[BACKFACE_UPPERLEFT] == cube[BACKFACE_UPPERRIGHT]) {
+			if (cube.getColor(BACKFACE_UPPERLEFT) == cube.getColor(BACKFACE_UPPERRIGHT)) {
 				topCount++;
 			}
 			TurnCube(1);
@@ -1335,22 +645,22 @@ public class TiltedTwister implements Solver {
 		if (count == 0) {
 			RotateFaces("RRFFRR");
 		} else if (count == 1) {
-			while (cube[BACKFACE_DOWNLEFT] != cube[BACKFACE_DOWNRIGHT]) {
+			while (cube.getColor(BACKFACE_DOWNLEFT) != cube.getColor(BACKFACE_DOWNRIGHT)) {
 				TurnCube(1);
 			}
 			RotateFaces("RuFUUfUr");
 		} else if (count == 2) {
-			while (cube[BACKFACE_DOWNLEFT] != cube[BACKFACE_DOWNRIGHT]) {
+			while (cube.getColor(BACKFACE_DOWNLEFT) != cube.getColor(BACKFACE_DOWNRIGHT)) {
 				TurnCube(1);
 			}
-			while (cube[BACKFACE_UPPERLEFT] != cube[BACKFACE_UPPERRIGHT]) {
+			while (cube.getColor(BACKFACE_UPPERLEFT) != cube.getColor(BACKFACE_UPPERRIGHT)) {
 				RotateFaces("U");
 			}
 			RotateFaces("RRUFFUURRURR");
 		} else if (count == 4) {
 			RotateFaces("FFuRurUFFURUr");
 		} else if (count == 5) {
-			while (cube[BACKFACE_UPPERLEFT] != cube[BACKFACE_UPPERRIGHT]) {
+			while (cube.getColor(BACKFACE_UPPERLEFT) != cube.getColor(BACKFACE_UPPERRIGHT)) {
 				TurnCube(1);
 			}
 			RotateFaces("RuRFFrURFFRR");
@@ -1359,16 +669,16 @@ public class TiltedTwister implements Solver {
 
     private int TopEdgesSolved() {
 		int solved = 0;
-		if (cube[UPPERFACE_UPPERMID] == cube[UPPERFACE_CENTER] && cube[BACKFACE_UPPERMID] == cube[BACKFACE_UPPERLEFT]) {
+		if (cube.getColor(UPPERFACE_UPPERMID) == cube.getColor(UPPERFACE_CENTER) && cube.getColor(BACKFACE_UPPERMID) == cube.getColor(BACKFACE_UPPERLEFT)) {
 			solved++;
 		}
-		if (cube[UPPERFACE_MIDLEFT] == cube[UPPERFACE_CENTER] && cube[LEFTFACE_UPPERMID] == cube[LEFTFACE_UPPERLEFT]) {
+		if (cube.getColor(UPPERFACE_MIDLEFT) == cube.getColor(UPPERFACE_CENTER) && cube.getColor(LEFTFACE_UPPERMID) == cube.getColor(LEFTFACE_UPPERLEFT)) {
 			solved++;
 		}
-		if (cube[UPPERFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] && cube[RIGHTFACE_UPPERMID] == cube[RIGHTFACE_UPPERLEFT]) {
+		if (cube.getColor(UPPERFACE_MIDRIGHT) == cube.getColor(UPPERFACE_CENTER) && cube.getColor(RIGHTFACE_UPPERMID) == cube.getColor(RIGHTFACE_UPPERLEFT)) {
 			solved++;
 		}
-		if (cube[UPPERFACE_DOWNMID] == cube[UPPERFACE_CENTER] && cube[FRONTFACE_UPPERMID] == cube[FRONTFACE_UPPERLEFT]) {
+		if (cube.getColor(UPPERFACE_DOWNMID) == cube.getColor(UPPERFACE_CENTER) && cube.getColor(FRONTFACE_UPPERMID) == cube.getColor(FRONTFACE_UPPERLEFT)) {
 			solved++;
 		}
 		return solved;
@@ -1376,29 +686,29 @@ public class TiltedTwister implements Solver {
 
     private int BottomEdgesSolved() {
 		int solved = 0;
-		if (cube[DOWNFACE_UPPERMID] == cube[DOWNFACE_CENTER] && cube[FRONTFACE_DOWNMID] == cube[FRONTFACE_DOWNLEFT]) {
+		if (cube.getColor(DOWNFACE_UPPERMID) == cube.getColor(DOWNFACE_CENTER) && cube.getColor(FRONTFACE_DOWNMID) == cube.getColor(FRONTFACE_DOWNLEFT)) {
 			solved++;
 		}
-		if (cube[DOWNFACE_MIDLEFT] == cube[DOWNFACE_CENTER] && cube[LEFTFACE_DOWNMID] == cube[LEFTFACE_DOWNLEFT]) {
+		if (cube.getColor(DOWNFACE_MIDLEFT) == cube.getColor(DOWNFACE_CENTER) && cube.getColor(LEFTFACE_DOWNMID) == cube.getColor(LEFTFACE_DOWNLEFT)) {
 			solved++;
 		}
-		if (cube[DOWNFACE_MIDRIGHT] == cube[DOWNFACE_CENTER] && cube[RIGHTFACE_DOWNMID] == cube[RIGHTFACE_DOWNLEFT]) {
+		if (cube.getColor(DOWNFACE_MIDRIGHT) == cube.getColor(DOWNFACE_CENTER) && cube.getColor(RIGHTFACE_DOWNMID) == cube.getColor(RIGHTFACE_DOWNLEFT)) {
 			solved++;
 		}
-		if (cube[DOWNFACE_DOWNMID] == cube[DOWNFACE_CENTER] && cube[BACKFACE_DOWNMID] == cube[BACKFACE_DOWNLEFT]) {
+		if (cube.getColor(DOWNFACE_DOWNMID) == cube.getColor(DOWNFACE_CENTER) && cube.getColor(BACKFACE_DOWNMID) == cube.getColor(BACKFACE_DOWNLEFT)) {
 			solved++;
 		}
 		return solved;
     }
 
 	private void SetBottomFace(final int downface, final int downpos, final int sideface, final int sidepos) {
-		if (CubeGet(downface, downpos) == cube[DOWNFACE_CENTER]) {
-			while (cube[RIGHTFACE_DOWNLEFT] != CubeGet(sideface, sidepos)) {
+		if (cube.get(downface, downpos) == cube.getColor(DOWNFACE_CENTER)) {
+			while (cube.getColor(RIGHTFACE_DOWNLEFT) != cube.get(sideface, sidepos)) {
 				RotateFaces("D");
 			}
 		} else {
 			for (int i = 0; i < 4; i++) {
-				if (cube[DOWNFACE_MIDRIGHT] != cube[DOWNFACE_CENTER] || cube[RIGHTFACE_DOWNMID] != cube[RIGHTFACE_DOWNLEFT]) {
+				if (cube.getColor(DOWNFACE_MIDRIGHT) != cube.getColor(DOWNFACE_CENTER) || cube.getColor(RIGHTFACE_DOWNMID) != cube.getColor(RIGHTFACE_DOWNLEFT)) {
 					break;
 				}
 				RotateFaces("D");
@@ -1408,7 +718,7 @@ public class TiltedTwister implements Solver {
 
 	private void TopEdgeMoveOut() {
 		for (int i = 0; i < 4; i++) {
-			if (cube[UPPERFACE_MIDRIGHT] != cube[UPPERFACE_CENTER] || cube[RIGHTFACE_UPPERMID] != cube[RIGHTFACE_UPPERLEFT]) {
+			if (cube.getColor(UPPERFACE_MIDRIGHT) != cube.getColor(UPPERFACE_CENTER) || cube.getColor(RIGHTFACE_UPPERMID) != cube.getColor(RIGHTFACE_UPPERLEFT)) {
 				SetBottomFace(0, 0, 0, 0);
 				RotateFaces("rUdF");
 				return;
@@ -1420,27 +730,27 @@ public class TiltedTwister implements Solver {
 	private boolean TopEdgeShort() {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				if (cube[LEFTFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] && cube[FRONTFACE_MIDLEFT] == cube[RIGHTFACE_UPPERLEFT]) {
+				if (cube.getColor(LEFTFACE_MIDRIGHT) == cube.getColor(UPPERFACE_CENTER) && cube.getColor(FRONTFACE_MIDLEFT) == cube.getColor(RIGHTFACE_UPPERLEFT)) {
 					SetBottomFace(RIGHTFACE, UPPERMID, UPPERFACE, MIDRIGHT);
 					RotateFaces("rUdF");
 					return true;
 				}
-				if (cube[LEFTFACE_MIDLEFT] == cube[UPPERFACE_CENTER] && cube[BACKFACE_MIDRIGHT] == cube[RIGHTFACE_UPPERLEFT]) {
+				if (cube.getColor(LEFTFACE_MIDLEFT) == cube.getColor(UPPERFACE_CENTER) && cube.getColor(BACKFACE_MIDRIGHT) == cube.getColor(RIGHTFACE_UPPERLEFT)) {
 					SetBottomFace(RIGHTFACE, UPPERMID, UPPERFACE, MIDRIGHT);
 					RotateFaces("RuDb");
 					return true;
 				}
-				if (cube[FRONTFACE_MIDLEFT] == cube[UPPERFACE_CENTER] && cube[LEFTFACE_MIDRIGHT] == cube[RIGHTFACE_UPPERLEFT]) {
+				if (cube.getColor(FRONTFACE_MIDLEFT) == cube.getColor(UPPERFACE_CENTER) && cube.getColor(LEFTFACE_MIDRIGHT) == cube.getColor(RIGHTFACE_UPPERLEFT)) {
 					SetBottomFace(BACKFACE, MIDRIGHT, LEFTFACE, MIDLEFT);
 					RotateFaces("RUUddl");
 					return true;
 				}
-				if (cube[BACKFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] && cube[LEFTFACE_MIDLEFT] == cube[RIGHTFACE_UPPERLEFT]) {
+				if (cube.getColor(BACKFACE_MIDRIGHT) == cube.getColor(UPPERFACE_CENTER) && cube.getColor(LEFTFACE_MIDLEFT) == cube.getColor(RIGHTFACE_UPPERLEFT)) {
 					SetBottomFace(FRONTFACE, MIDLEFT, LEFTFACE, MIDRIGHT);
 					RotateFaces("ruuDDL");
 					return true;
 				}
-				if (cube[RIGHTFACE_DOWNMID] == cube[UPPERFACE_CENTER] && cube[DOWNFACE_MIDRIGHT] == cube[RIGHTFACE_UPPERLEFT]) {
+				if (cube.getColor(RIGHTFACE_DOWNMID) == cube.getColor(UPPERFACE_CENTER) && cube.getColor(DOWNFACE_MIDRIGHT) == cube.getColor(RIGHTFACE_UPPERLEFT)) {
 					RotateFaces("RUdf");
 					return true;
 				}
@@ -1454,12 +764,12 @@ public class TiltedTwister implements Solver {
 	private boolean TopEdgeLong() {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				if (cube[DOWNFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] && cube[RIGHTFACE_DOWNMID] == cube[RIGHTFACE_UPPERLEFT]) {
+				if (cube.getColor(DOWNFACE_MIDRIGHT) == cube.getColor(UPPERFACE_CENTER) && cube.getColor(RIGHTFACE_DOWNMID) == cube.getColor(RIGHTFACE_UPPERLEFT)) {
 					SetBottomFace(BACKFACE, MIDRIGHT, LEFTFACE, MIDLEFT);
 					RotateFaces("RuDBBUdR");
 					return true;
 				}
-				if (cube[RIGHTFACE_UPPERMID] == cube[UPPERFACE_CENTER] && cube[UPPERFACE_MIDRIGHT] == cube[RIGHTFACE_UPPERLEFT]) {
+				if (cube.getColor(RIGHTFACE_UPPERMID) == cube.getColor(UPPERFACE_CENTER) && cube.getColor(UPPERFACE_MIDRIGHT) == cube.getColor(RIGHTFACE_UPPERLEFT)) {
 					SetBottomFace(LEFTFACE, MIDRIGHT, FRONTFACE, MIDLEFT);
 					RotateFaces("ruDBBuuDDf");
 					return true;
@@ -1515,8 +825,8 @@ public class TiltedTwister implements Solver {
 
 	private void PrepareMiddleEdges() {
 		for (int i = 0; i < 4; i++) {
-			if (cube[LEFTFACE_MIDRIGHT] == cube[UPPERFACE_CENTER] || cube[LEFTFACE_MIDLEFT] == cube[UPPERFACE_CENTER]) {
-				while (cube[UPPERFACE_MIDRIGHT] == cube[UPPERFACE_CENTER]) {
+			if (cube.getColor(LEFTFACE_MIDRIGHT) == cube.getColor(UPPERFACE_CENTER) || cube.getColor(LEFTFACE_MIDLEFT) == cube.getColor(UPPERFACE_CENTER)) {
+				while (cube.getColor(UPPERFACE_MIDRIGHT) == cube.getColor(UPPERFACE_CENTER)) {
 					RotateFaces("U");
 				}
 				break;
@@ -1524,7 +834,7 @@ public class TiltedTwister implements Solver {
 			TurnCube(1);
 		}
 		for (int i = 0; i < 4; i++) {
-			if (cube[UPPERFACE_MIDRIGHT] != cube[UPPERFACE_CENTER] || cube[RIGHTFACE_UPPERMID] != cube[RIGHTFACE_UPPERLEFT]) {
+			if (cube.getColor(UPPERFACE_MIDRIGHT) != cube.getColor(UPPERFACE_CENTER) || cube.getColor(RIGHTFACE_UPPERMID) != cube.getColor(RIGHTFACE_UPPERLEFT)) {
 				break;
 			}
 			TurnCube(1);
@@ -1533,20 +843,20 @@ public class TiltedTwister implements Solver {
 
 	private int TopEdgesInMiddleLayerOrientation() {
 		int orientation = 0;
-		if (cube[RIGHTFACE_MIDLEFT] != cube[LEFTFACE_CENTER] && cube[RIGHTFACE_MIDLEFT] != cube[RIGHTFACE_CENTER]) {
+		if (cube.getColor(RIGHTFACE_MIDLEFT) != cube.getColor(LEFTFACE_CENTER) && cube.getColor(RIGHTFACE_MIDLEFT) != cube.getColor(RIGHTFACE_CENTER)) {
 			orientation = 4;
 		}
-		if (cube[RIGHTFACE_UPPERMID] != cube[LEFTFACE_CENTER] && cube[RIGHTFACE_UPPERMID] != cube[RIGHTFACE_CENTER]) {
+		if (cube.getColor(RIGHTFACE_UPPERMID) != cube.getColor(LEFTFACE_CENTER) && cube.getColor(RIGHTFACE_UPPERMID) != cube.getColor(RIGHTFACE_CENTER)) {
 			orientation += 2;
 		}
-		if (cube[RIGHTFACE_MIDRIGHT] != cube[LEFTFACE_CENTER] && cube[RIGHTFACE_MIDRIGHT] != cube[RIGHTFACE_CENTER]) {
+		if (cube.getColor(RIGHTFACE_MIDRIGHT) != cube.getColor(LEFTFACE_CENTER) && cube.getColor(RIGHTFACE_MIDRIGHT) != cube.getColor(RIGHTFACE_CENTER)) {
 			orientation += 1;
 		}
 		return orientation;
     }
 
     private boolean MiddleEdgeTwisted(final int face, final int pos) {
-        return CubeGet(face, pos) != cube[FRONTFACE_CENTER] && CubeGet(face, pos) != cube[BACKFACE_CENTER];
+        return cube.get(face, pos) != cube.getColor(FRONTFACE_CENTER) && cube.get(face, pos) != cube.getColor(BACKFACE_CENTER);
     }
 
     private int TwistedMiddleEdges() {
@@ -1563,7 +873,7 @@ public class TiltedTwister implements Solver {
     //Step 5 Orient middle edges
     private void OrientMiddleEdges() {
     	PrepareMiddleEdges();
-    	if (cube[LEFTFACE_MIDRIGHT] == cube[UPPERFACE_CENTER]) {
+    	if (cube.getColor(LEFTFACE_MIDRIGHT) == cube.getColor(UPPERFACE_CENTER)) {
     		switch (TopEdgesInMiddleLayerOrientation()) {
     		case 0: //OOO
     			RotateFaces("UdFUdluDfUdL"); break;
@@ -1582,7 +892,7 @@ public class TiltedTwister implements Solver {
     		case 7: //XXX
     			RotateFaces("rUdfUdluDFFuDR"); break;
     		}
-    	} else if (cube[LEFTFACE_MIDLEFT] == cube[UPPERFACE_CENTER]) {
+    	} else if (cube.getColor(LEFTFACE_MIDLEFT) == cube.getColor(UPPERFACE_CENTER)) {
 			switch (TopEdgesInMiddleLayerOrientation()) {
 			case 0: // OOO
 				RotateFaces("uDbuDLUdBuDl"); break;
@@ -1601,13 +911,13 @@ public class TiltedTwister implements Solver {
 			case 7: // XXX
 				RotateFaces("RuDBuDLUdbbUdr"); break;
 			}
-		} else if (cube[RIGHTFACE_UPPERMID] == cube[UPPERFACE_CENTER]) {
+		} else if (cube.getColor(RIGHTFACE_UPPERMID) == cube.getColor(UPPERFACE_CENTER)) {
             switch (TwistedMiddleEdges()) {
             case 1:
                 while (!MiddleEdgeTwisted(FRONTFACE, MIDRIGHT)) {
                     TurnCube(1);
                 }
-                while (cube[UPPERFACE_MIDLEFT] == cube[UPPERFACE_CENTER]) {
+                while (cube.getColor(UPPERFACE_MIDLEFT) == cube.getColor(UPPERFACE_CENTER)) {
                     RotateFaces("U");
                 }
                 RotateFaces("RUUrUUddLLuDfUUf");
@@ -1615,12 +925,12 @@ public class TiltedTwister implements Solver {
             case 3:
                 while (MiddleEdgeTwisted(FRONTFACE, MIDRIGHT))
                     TurnCube(1);
-                while (cube[UPPERFACE_MIDRIGHT] == cube[UPPERFACE_CENTER])
+                while (cube.getColor(UPPERFACE_MIDRIGHT) == cube.getColor(UPPERFACE_CENTER))
                     RotateFaces("U");
                 RotateFaces("ruDbuDluDf");
                 break;
             }
-        } else if (cube[UPPERFACE_MIDRIGHT] == cube[UPPERFACE_CENTER]) {
+        } else if (cube.getColor(UPPERFACE_MIDRIGHT) == cube.getColor(UPPERFACE_CENTER)) {
             switch (TwistedMiddleEdges()) {
             case 2:
                 while (true) {
@@ -1643,7 +953,7 @@ public class TiltedTwister implements Solver {
     private boolean Rotate3MiddleEdges() {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 4; j++) {
-                if (cube[LEFTFACE_MIDRIGHT] == cube[LEFTFACE_CENTER] && cube[FRONTFACE_MIDLEFT] == cube[FRONTFACE_CENTER] && cube[FRONTFACE_MIDRIGHT] == cube[BACKFACE_CENTER] && cube[RIGHTFACE_MIDLEFT] == cube[LEFTFACE_CENTER] && cube[BACKFACE_MIDRIGHT] == cube[BACKFACE_CENTER] && cube[LEFTFACE_MIDLEFT] == cube[RIGHTFACE_CENTER]) {
+                if (cube.getColor(LEFTFACE_MIDRIGHT) == cube.getColor(LEFTFACE_CENTER) && cube.getColor(FRONTFACE_MIDLEFT) == cube.getColor(FRONTFACE_CENTER) && cube.getColor(FRONTFACE_MIDRIGHT) == cube.getColor(BACKFACE_CENTER) && cube.getColor(RIGHTFACE_MIDLEFT) == cube.getColor(LEFTFACE_CENTER) && cube.getColor(BACKFACE_MIDRIGHT) == cube.getColor(BACKFACE_CENTER) && cube.getColor(LEFTFACE_MIDLEFT) == cube.getColor(RIGHTFACE_CENTER)) {
                     RotateFaces("RRuDBB");
                     return true;
                 }
@@ -1657,7 +967,7 @@ public class TiltedTwister implements Solver {
     private boolean ExchangeMiddleCenters() {
         boolean exchangeCenters = true;
         for (int i = 0; i < 4; i++) {
-            if ((cube[FRONTFACE_CENTER] != cube[BACKFACE_MIDLEFT]) || (cube[FRONTFACE_CENTER] != cube[BACKFACE_MIDRIGHT])) {
+            if (cube.getColor(FRONTFACE_CENTER) != cube.getColor(BACKFACE_MIDLEFT) || cube.getColor(FRONTFACE_CENTER) != cube.getColor(BACKFACE_MIDRIGHT)) {
                 exchangeCenters = false;
                 break;
             }
@@ -1671,7 +981,7 @@ public class TiltedTwister implements Solver {
 
     private boolean ExchangeMiddleCorners() {
         for (int i = 0; i < 2; i++) {
-            if (cube[FRONTFACE_MIDLEFT] == cube[BACKFACE_CENTER] && cube[FRONTFACE_MIDRIGHT] == cube[BACKFACE_CENTER] && cube[BACKFACE_MIDLEFT] == cube[FRONTFACE_CENTER] && cube[BACKFACE_MIDRIGHT] == cube[FRONTFACE_CENTER] && cube[LEFTFACE_MIDLEFT] == cube[LEFTFACE_CENTER] && cube[LEFTFACE_MIDRIGHT] == cube[LEFTFACE_CENTER]) {
+            if (cube.getColor(FRONTFACE_MIDLEFT) == cube.getColor(BACKFACE_CENTER) && cube.getColor(FRONTFACE_MIDRIGHT) == cube.getColor(BACKFACE_CENTER) && cube.getColor(BACKFACE_MIDLEFT) == cube.getColor(FRONTFACE_CENTER) && cube.getColor(BACKFACE_MIDRIGHT) == cube.getColor(FRONTFACE_CENTER) && cube.getColor(LEFTFACE_MIDLEFT) == cube.getColor(LEFTFACE_CENTER) && cube.getColor(LEFTFACE_MIDRIGHT) == cube.getColor(LEFTFACE_CENTER)) {
                 RotateFaces("RRUUddLL");
                 return true;
             }
@@ -1687,10 +997,10 @@ public class TiltedTwister implements Solver {
                 ExchangeMiddleCorners();
             }
         }
-        while (cube[FRONTFACE_UPPERMID] != cube[FRONTFACE_CENTER]) {
+        while (cube.getColor(FRONTFACE_UPPERMID) != cube.getColor(FRONTFACE_CENTER)) {
             RotateFaces("U");
         }
-        while (cube[FRONTFACE_DOWNMID] != cube[FRONTFACE_CENTER]) {
+        while (cube.getColor(FRONTFACE_DOWNMID) != cube.getColor(FRONTFACE_CENTER)) {
             RotateFaces("D");
         }
     }
@@ -1726,27 +1036,8 @@ public class TiltedTwister implements Solver {
 
     //*****************************************************************************
 
-    private void SetCubeFace(final char c, final char f) {
-        for (int pos = 0; pos < 6*9; pos++) {
-            if (color[pos] == c) {
-                cube[pos] = f;
-            }
-        }
-    }
-
-    private void LoadCube() {
-        for (int pos = 0; pos < 6 * 9; pos++) {
-            cube[pos] = color[pos];
-        }
-//        SetCubeFace('W', 'U');
-//        SetCubeFace('B', 'R');
-//        SetCubeFace('R', 'F');
-//        SetCubeFace('G', 'L');
-//        SetCubeFace('O', 'B');
-//        SetCubeFace('Y', 'D');
-//        for (int i = 0; i < 6; i++) {
-//            faces[i] = staticfaces[i];
-//        }
+    private void LoadCube(final String facelets) {
+        cube = new Cube(facelets);
         movesCount = 0;
     }
 
@@ -1758,9 +1049,9 @@ public class TiltedTwister implements Solver {
         solutionTwists = twists;
     }
 
-    private void Solve(final char color, final char oppositeColor) {
-		OrientAllCorners(color, oppositeColor);
-		SplitCorners(color, oppositeColor);
+    private void Solve(final Color color, final Color opposite) {
+		OrientAllCorners(color, opposite);
+		SplitCorners(color, opposite);
 		PositionAllCorners();
 		SolveTopAndBottomEdges();
 		OrientMiddleEdges();
@@ -1768,178 +1059,76 @@ public class TiltedTwister implements Solver {
 		Optimize();
     }
 
-
-//    int RemoteSolve()
-//    {
-//      if(BluetoothStatus(0)==NO_ERR)
-//      {
-//        TextOut(10,LCD_LINE1,"Connecting...",true);
-//        LoadCube();
-//        string cubeString=ByteArrayToStr(cube);
-//        SendResponseString(OUTBOX,cubeString);
-//        string result;
-//        unsigned long tick;
-//        tick=CurrentTick();
-//        while(ReceiveRemoteString(INBOX, true, result) == STAT_MSG_EMPTY_MAILBOX && CurrentTick() < tick + REMOTE_MAXTIME);
-//        if(StrLen(result)==0)
-//          return REMOTESOLVE_ABSENT;
-//        else if(result=="ERROR")
-//        {
-//          Sorry();
-//          return REMOTESOLVE_ERROR;
+//    private boolean SolveCube(final String facelets) {
+//        System.out.println("SOLVING");
+//        System.out.print("Solution 1 = ");
+//        LoadCube(facelets);
+//        Solve('W','Y');
+//        System.out.println(twists);
+//        SaveSolution();
+//
+//        System.out.print("Solution 2 = ");
+//        LoadCube(facelets);
+//        Solve('R','O');
+//        System.out.println(twists);
+//        if (twists < solutionTwists) {
+//            SaveSolution();
 //        }
-//        else
-//        {
-//          for(int i=0;i<StrLen(result);i++)
-//            moves[i]=result[i];
-//          movesCount=StrLen(result);
-//          Optimize();
-//          SaveSolution();
-//          return REMOTESOLVE_OK;
+//
+//        System.out.print("Solution 3 = ");
+//        LoadCube(facelets);
+//        Solve('G','B');
+//        System.out.println(twists);
+//        if (twists < solutionTwists) {
+//            SaveSolution();
 //        }
-//      }
-//      else
-//        return REMOTESOLVE_ABSENT;
+//        return true;
 //    }
 
-
-    private boolean SolveCube() {
-        System.out.println("SOLVING"); // TextOut(20,LCD_LINE2,"SOLVING",true);
-        System.out.print("Solution 1 ="); // TextOut(0,LCD_LINE4,"Solution 1 =");
-        LoadCube();
-        Solve('W','Y');
-        System.out.println(twists); // NumOut (80, LCD_LINE4, twists);
+    private boolean SolveCube(final String facelets) {
+        LCD.clearDisplay();
+        LCD.drawString("SOLVING", 20, 1);
+        LCD.drawString("Solution 1 =", 0, 3);
+        LoadCube(facelets);
+        Solve(Color.W, Color.Y);
+        LCD.drawInt(twists, 13, 3);
         SaveSolution();
 
-        System.out.print("Solution 2 ="); // TextOut(0,LCD_LINE5,"Solution 2 =");
-        LoadCube();
-        Solve('R','O');
-        System.out.println(twists); // NumOut (80, LCD_LINE5, twists);
+        LCD.drawString("Solution 2 =", 0, 4);
+        LoadCube(facelets);
+        Solve(Color.R, Color.O);
+        LCD.drawInt(twists, 13, 4);
         if (twists < solutionTwists) {
             SaveSolution();
         }
 
-        System.out.print("Solution 3 ="); // TextOut(0,LCD_LINE6,"Solution 3 =");
-        LoadCube();
-        Solve('G','B');
-        System.out.println(twists); // NumOut (80, LCD_LINE6, twists);
-        // Wait(500);
+        LCD.drawString("Solution 3 =", 0, 5);
+        LoadCube(facelets);
+        Solve(Color.G, Color.B);
+        LCD.drawInt(twists, 13, 5);
         if (twists < solutionTwists) {
             SaveSolution();
         }
         return true;
     }
 
-//    //*****************************************************************************
-//    // Execute Moves
-
-//    char FaceFind(char face)
-//    {
-//      for(int i=0;i<6;i++)
-//        if(faces[i] == face)
-//          return staticfaces[i];
-//    }
-
-
-//    void FaceDown(char face)
-//    {
-//       switch(FaceFind(face))
-//      {
-//        case 'U': Tilt(); Tilt(); break;
-//        case 'L': TurnQuarter(2); Tilt(); break;
-//        case 'F': TurnQuarter(3);Tilt(); break;
-//        case 'R': Tilt(); break;
-//        case 'B': TurnQuarter(1); Tilt(); break;
-//      }
-//    }
-
-
-//    void DoMoves()
-//    {
-//      int turns;
-//      int pos=0;
-//      char face;
-//      for(int i=0;i<6;i++)
-//        faces[i]=staticfaces[i];
-
-//      while(pos < solutionCount)
-//      {
-//        face=solution[pos];
-//        FaceDown(face);
-//        turns=1;
-//        while(solution[++pos]==face)
-//          turns++;
-//        Twist(turns);
-//        NumOut(40,LCD_LINE4,--solutionTwists,true);
-//      }
-//      Wait(1000);
-//      TextOut(20,LCD_LINE4,"GAME OVER",true);
-//      PlayFile("Game Over.rso");
-//      Wait(2000);
-//      Coast(OUT_A);
-//    }
-
-
-//    //*****************************************************************************
-
-//    void WaitForCube()
-//    {
-//      TextOut(7,LCD_LINE4,"GIVE ME A CUBE",true);
-//      Wait(2000);
-//      unsigned long startTick=CurrentTick();
-//      do
-//      {
-//        if(SensorUS(IN_2) > 10)
-//          startTick=CurrentTick();
-//      }while(CurrentTick() - startTick < 1000 && !ButtonPressed(BTNCENTER,false));
-//      TextOut(20,LCD_LINE5,"THANK YOU !",true);
-//      PlayFile("Thank You.rso");
-//      Wait(2000);
-//    }
-
-
-//    void WaitForCubeRemove()  //Wait until cube absent for three seconds or button pressed
-//    {
-//      unsigned long startTick=CurrentTick();
-//      do
-//      {
-//        if(SensorUS(IN_2) < 10)
-//          startTick=CurrentTick();
-//      }while(CurrentTick() - startTick < 3000 && !ButtonPressed(BTNCENTER,false));
-//    }
-
-
-//    task main()
-//    {
-//      while(true)
-//      {
-//        Initialize();
-//        WaitForCube();
-//        ScanCube();
-//        ResolveColors();
-//        if(SolveCube())
-//          DoMoves();
-//        WaitForCubeRemove();
-//      }
-//    }
-
-    private char rotateBack(final char move) {
-        if (color[LEFTFACE_CENTER] == move) {
+    private char rotateBack(final String facelets, final char move) {
+        if (facelets.charAt(LEFTFACE_CENTER) == move) {
             return 'L'; 
         }
-        if (color[FRONTFACE_CENTER] == move) {
+        if (facelets.charAt(FRONTFACE_CENTER) == move) {
             return 'F';
         }
-        if (color[RIGHTFACE_CENTER] == move) {
+        if (facelets.charAt(RIGHTFACE_CENTER) == move) {
             return 'R';
         }
-        if (color[BACKFACE_CENTER] == move) {
+        if (facelets.charAt(BACKFACE_CENTER) == move) {
             return 'B';
         }
-        if (color[UPPERFACE_CENTER] == move) {
+        if (facelets.charAt(UPPERFACE_CENTER) == move) {
             return 'U';
         }
-        if (color[DOWNFACE_CENTER] == move) {
+        if (facelets.charAt(DOWNFACE_CENTER) == move) {
             return 'D';
         }
         return ' ';
@@ -1950,13 +1139,10 @@ public class TiltedTwister implements Solver {
         if (facelets.length() != color.length) {
             return null;
         }
-        for (int i = 0; i < color.length; i++) {
-            color[i] = facelets.charAt(i);
-        }
-        SolveCube();
+        SolveCube(facelets);
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < solutionCount; i++) {
-            sb.append(rotateBack(solution[i]));
+            sb.append(rotateBack(facelets, solution[i]));
         }
         return sb.toString();
     }

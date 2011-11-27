@@ -10,15 +10,34 @@ package org.kleini;
  */
 public enum Color {
     /** white */
-    W,
+    W('W'),
     /** blue */
-    B,
+    B('B'),
     /** red */
-    R,
+    R('R'),
     /** green */
-    G,
+    G('G'),
     /** orange */
-    O,
+    O('O'),
     /** yellow */
-    Y
+    Y('Y');
+
+    private final char letter;
+
+    private Color(final char letter) {
+        this.letter = letter;
+    }
+
+    public char getLetter() {
+        return letter;
+    }
+
+    public static Color byLetter(final char letter) {
+        for (Color color : values()) {
+            if (letter == color.letter) {
+                return color;
+            }
+        }
+        return null;
+    }
 }
