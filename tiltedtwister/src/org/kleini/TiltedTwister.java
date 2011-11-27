@@ -90,7 +90,6 @@ public class TiltedTwister implements Solver {
      * the cube during the calculation of the solution.
      */
     private Cube cube;
-    private Cube tmpCube;
 
     private final char[] moves = new char[MAXMOVES];
     private int movesCount = 0;
@@ -120,121 +119,15 @@ public class TiltedTwister implements Solver {
     //*****************************************************************************
     // Solve functions
 
-    private void copyCube() {
-        tmpCube = new Cube(cube);
-    }
-
-    private void copyFace(final Face from, final Face to) {
-        for (int i = 0; i < 9; i++) {
-            cube.set(to, i, tmpCube.get(from, i));
-        }
-    }
-
-    private void copyFaceClockwise(final Face from, final Face to, final int turns) {
-        if (turns == 1) {
-            cube.set(to, UPPERLEFT, tmpCube.get(from, DOWNLEFT));
-            cube.set(to, UPPERMID, tmpCube.get(from, MIDLEFT));
-            cube.set(to, UPPERRIGHT, tmpCube.get(from, UPPERLEFT));
-            cube.set(to, MIDLEFT, tmpCube.get(from, DOWNMID));
-            cube.set(to, CENTER, tmpCube.get(from, CENTER));
-            cube.set(to, MIDRIGHT, tmpCube.get(from, UPPERMID));
-            cube.set(to, DOWNLEFT, tmpCube.get(from, DOWNRIGHT));
-            cube.set(to, DOWNMID, tmpCube.get(from, MIDRIGHT));
-            cube.set(to, DOWNRIGHT, tmpCube.get(from, UPPERRIGHT));
-        } else if (turns == 2) {
-            cube.set(to, UPPERLEFT, tmpCube.get(from, DOWNRIGHT));
-            cube.set(to, UPPERMID, tmpCube.get(from, DOWNMID));
-            cube.set(to, UPPERRIGHT, tmpCube.get(from, DOWNLEFT));
-            cube.set(to, MIDLEFT, tmpCube.get(from, MIDRIGHT));
-            cube.set(to, CENTER, tmpCube.get(from, CENTER));
-            cube.set(to, MIDRIGHT, tmpCube.get(from, MIDLEFT));
-            cube.set(to, DOWNLEFT, tmpCube.get(from, UPPERRIGHT));
-            cube.set(to, DOWNMID, tmpCube.get(from, UPPERMID));
-            cube.set(to, DOWNRIGHT, tmpCube.get(from, UPPERLEFT));
-        } else {
-            // turns == 3
-            cube.set(to, UPPERLEFT, tmpCube.get(from, UPPERRIGHT));
-            cube.set(to, UPPERMID, tmpCube.get(from, MIDRIGHT));
-            cube.set(to, UPPERRIGHT, tmpCube.get(from, DOWNRIGHT));
-            cube.set(to, MIDLEFT, tmpCube.get(from, UPPERMID));
-            cube.set(to, CENTER, tmpCube.get(from, CENTER));
-            cube.set(to, MIDRIGHT, tmpCube.get(from, DOWNMID));
-            cube.set(to, DOWNLEFT, tmpCube.get(from, UPPERLEFT));
-            cube.set(to, DOWNMID, tmpCube.get(from, MIDLEFT));
-            cube.set(to, DOWNRIGHT, tmpCube.get(from, DOWNLEFT));
-        }
-    }
-
-    private void turnCube(final int turns) {
-        copyCube();
-        if (turns == 1) {
-            copyFaceClockwise(Face.UPPER, Face.UPPER, 1);
-            copyFace(Face.LEFT, Face.BACK);
-            copyFace(Face.BACK, Face.RIGHT);
-            copyFace(Face.RIGHT, Face.FRONT);
-            copyFace(Face.FRONT, Face.LEFT);
-            copyFaceClockwise(Face.DOWN, Face.DOWN, 3);
-        } else if (turns == 2) {
-            copyFaceClockwise(Face.UPPER, Face.UPPER, 2);
-            copyFace(Face.LEFT, Face.RIGHT);
-            copyFace(Face.BACK, Face.FRONT);
-            copyFace(Face.RIGHT, Face.LEFT);
-            copyFace(Face.FRONT, Face.BACK);
-            copyFaceClockwise(Face.DOWN, Face.DOWN, 2);
-        } else {
-            // turns==3
-            copyFaceClockwise(Face.UPPER, Face.UPPER, 3);
-            copyFace(Face.LEFT, Face.FRONT);
-            copyFace(Face.BACK, Face.LEFT);
-            copyFace(Face.RIGHT, Face.BACK);
-            copyFace(Face.FRONT, Face.RIGHT);
-            copyFaceClockwise(Face.DOWN, Face.DOWN, 1);
-        }
-    }
-
-    private void tiltCube(final int turns) {
-        copyCube();
-        if (turns==1) {
-            copyFaceClockwise(Face.UPPER, Face.RIGHT, 1);
-            copyFaceClockwise(Face.RIGHT, Face.DOWN, 1);
-            copyFaceClockwise(Face.DOWN, Face.LEFT, 1);
-            copyFaceClockwise(Face.LEFT, Face.UPPER, 1);
-            copyFaceClockwise(Face.FRONT, Face.FRONT, 1);
-            copyFaceClockwise(Face.BACK, Face.BACK, 3);
-        } else if (turns == 2) {
-            copyFaceClockwise(Face.UPPER, Face.DOWN, 2);
-            copyFaceClockwise(Face.RIGHT, Face.LEFT, 2);
-            copyFaceClockwise(Face.DOWN, Face.UPPER, 2);
-            copyFaceClockwise(Face.LEFT, Face.RIGHT, 2);
-            copyFaceClockwise(Face.FRONT, Face.FRONT, 2);
-            copyFaceClockwise(Face.BACK, Face.BACK, 2);
-        } else {
-            // turns == 3
-            copyFaceClockwise(Face.UPPER, Face.LEFT, 3);
-            copyFaceClockwise(Face.RIGHT, Face.UPPER, 3);
-            copyFaceClockwise(Face.DOWN, Face.RIGHT, 3);
-            copyFaceClockwise(Face.LEFT, Face.DOWN, 3);
-            copyFaceClockwise(Face.FRONT, Face.FRONT, 3);
-            copyFaceClockwise(Face.BACK, Face.BACK, 1);
-        }
-    }
-
     private void twistCube(final int turns) {
         if (movesCount + turns >= MAXMOVES) {
             sorry();
             Button.waitForPress();
             System.exit(0);
         }
-        for (int twists = 0; twists < turns; twists++) {
-            copyCube();
-            copyFaceClockwise(Face.DOWN, Face.DOWN, 1);
-            for (int i = 6; i < 9; i++) {
-                cube.set(Face.LEFT, i, tmpCube.get(Face.BACK, i));
-                cube.set(Face.FRONT, i, tmpCube.get(Face.LEFT, i));
-                cube.set(Face.RIGHT, i, tmpCube.get(Face.FRONT, i));
-                cube.set(Face.BACK, i, tmpCube.get(Face.RIGHT, i));
-            }
-            moves[movesCount++] = cube.get(DOWNFACE_CENTER).getLetter();
+        final String addedMoves = cube.twistCube(turns);
+        for (int i = 0; i < addedMoves.length(); i++) {
+            moves[movesCount++] = addedMoves.charAt(i);
         }
 //        Sound.playTone(200 + movesCount * 20, 1);
     }
@@ -242,15 +135,15 @@ public class TiltedTwister implements Solver {
     private void rotateFace(final Face face, final int turns) {
         switch (face) {
         case UPPER:
-            tiltCube(2); twistCube(turns); tiltCube(2); break;
+            cube.tiltCube(2); twistCube(turns); cube.tiltCube(2); break;
         case LEFT:
-            tiltCube(3); twistCube(turns); tiltCube(1); break;
+            cube.tiltCube(3); twistCube(turns); cube.tiltCube(1); break;
         case FRONT:
-            turnCube(1); tiltCube(3); twistCube(turns); tiltCube(1); turnCube(3); break;
+            cube.turnCube(1); cube.tiltCube(3); twistCube(turns); cube.tiltCube(1); cube.turnCube(3); break;
         case RIGHT:
-            tiltCube(1); twistCube(turns); tiltCube(3); break;
+            cube.tiltCube(1); twistCube(turns); cube.tiltCube(3); break;
         case BACK:
-            turnCube(3); tiltCube(3); twistCube(turns); tiltCube(1); turnCube(1); break;
+            cube.turnCube(3); cube.tiltCube(3); twistCube(turns); cube.tiltCube(1); cube.turnCube(1); break;
         case DOWN:
             twistCube(turns); break;
         }
@@ -294,7 +187,7 @@ public class TiltedTwister implements Solver {
                         if (cornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && !cornerColorOk(DOWNFACE_DOWNLEFT, c1, c2)) {
                             return true;
                         } else if (!cornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && cornerColorOk(DOWNFACE_DOWNLEFT, c1, c2)) {
-                            turnCube(3);
+                            cube.turnCube(3);
                             return true;
                         } else if (cornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && cornerColorOk(DOWNFACE_DOWNLEFT, c1, c2)) {
                             if (cornerColorOk(UPPERFACE_UPPERLEFT, c1, c2) && cornerColorOk(UPPERFACE_UPPERRIGHT, c1, c2) && cornerColorOk(UPPERFACE_DOWNLEFT, c1, c2) && cornerColorOk(UPPERFACE_DOWNRIGHT, c1, c2)) {
@@ -313,7 +206,7 @@ public class TiltedTwister implements Solver {
                                 if (cornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && !cornerColorOk(DOWNFACE_DOWNLEFT, c1, c2)) {
                                     return true;
                                 } else if (!cornerColorOk(DOWNFACE_DOWNRIGHT, c1, c2) && cornerColorOk(DOWNFACE_DOWNLEFT, c1, c2)) {
-                                    turnCube(3);
+                                    cube.turnCube(3);
                                     return true;
                                 }
                             }
@@ -321,7 +214,7 @@ public class TiltedTwister implements Solver {
                     }
                 }
             }
-            turnCube(1);
+            cube.turnCube(1);
         }
         return false;
     }
@@ -331,24 +224,24 @@ public class TiltedTwister implements Solver {
         if (tryBottomFace(c1, c2, twists)) {
             return true;
         }
-        tiltCube(1);
+        cube.tiltCube(1);
         if (tryBottomFace(c1, c2, twists)) {
             return true;
         }
-        tiltCube(1);
+        cube.tiltCube(1);
         if (tryBottomFace(c1, c2, twists)) {
             return true;
         }
-        tiltCube(1);
+        cube.tiltCube(1);
         if (tryBottomFace(c1, c2, twists)) {
             return true;
         }
-        turnCube(1);
-        tiltCube(1);
+        cube.turnCube(1);
+        cube.tiltCube(1);
         if (tryBottomFace(c1, c2, twists)) {
             return true;
         }
-        tiltCube(2);
+        cube.tiltCube(2);
         if (tryBottomFace(c1, c2, twists)) {
             return true;
         }
@@ -422,7 +315,7 @@ public class TiltedTwister implements Solver {
             if (cube.get(DOWNFACE_UPPERLEFT) == color) {
                 count++;
             }
-            turnCube(1);
+            cube.turnCube(1);
         }
         if (count == 1 || count == 3) {
             Color singleColor;
@@ -432,7 +325,7 @@ public class TiltedTwister implements Solver {
                 singleColor = opposite;
             }
             while (cube.get(DOWNFACE_UPPERLEFT) != singleColor) {
-                turnCube(1);
+                cube.turnCube(1);
             }
             while (cube.get(UPPERFACE_DOWNRIGHT) == singleColor) {
                 rotateFaces("U");
@@ -444,11 +337,11 @@ public class TiltedTwister implements Solver {
             }
         } else if (count == 2) {
             if (cube.get(DOWNFACE_UPPERLEFT) != cube.get(DOWNFACE_DOWNRIGHT)) {
-                tiltCube(2);
+                cube.tiltCube(2);
             }
             if (cube.get(DOWNFACE_UPPERLEFT) != cube.get(DOWNFACE_DOWNRIGHT)) {
                 while (cube.get(DOWNFACE_UPPERLEFT) != cube.get(DOWNFACE_UPPERRIGHT)) {
-                    turnCube(1);
+                    cube.turnCube(1);
                 }
                 while (cube.get(UPPERFACE_UPPERLEFT) != cube.get(DOWNFACE_UPPERLEFT) || cube.get(UPPERFACE_UPPERRIGHT) != cube.get(DOWNFACE_UPPERRIGHT)) {
                     rotateFaces("U");
@@ -463,12 +356,12 @@ public class TiltedTwister implements Solver {
                     rotateFaces("U");
                 }
                 if (cube.get(UPPERFACE_UPPERRIGHT) == cube.get(UPPERFACE_CENTER)) {
-                    turnCube(1);
+                    cube.turnCube(1);
                 }
                 rotateFaces("RRDDFF");
             } else {
                 while (cube.get(UPPERFACE_UPPERLEFT) != cube.get(DOWNFACE_DOWNLEFT) || cube.get(UPPERFACE_DOWNLEFT) != cube.get(DOWNFACE_DOWNLEFT)) {
-                    turnCube(1);
+                    cube.turnCube(1);
                 }
                 if (cube.get(UPPERFACE_UPPERLEFT) != cube.get(UPPERFACE_CENTER)) {
                     rotateFaces("RRDRRDLL");
@@ -478,17 +371,17 @@ public class TiltedTwister implements Solver {
             }
         }
         if (cube.get(UPPERFACE_UPPERLEFT) == cube.get(LEFTFACE_CENTER)) {
-            tiltCube(1);
+            cube.tiltCube(1);
         } else if (cube.get(UPPERFACE_UPPERLEFT) == cube.get(FRONTFACE_CENTER)) {
-            turnCube(1);
-            tiltCube(1);
+            cube.turnCube(1);
+            cube.tiltCube(1);
         } else if (cube.get(UPPERFACE_UPPERLEFT) == cube.get(RIGHTFACE_CENTER)) {
-            tiltCube(3);
+            cube.tiltCube(3);
         } else if (cube.get(UPPERFACE_UPPERLEFT) == cube.get(BACKFACE_CENTER)) {
-            turnCube(3);
-            tiltCube(1);
+            cube.turnCube(3);
+            cube.tiltCube(1);
         } else if (cube.get(UPPERFACE_UPPERLEFT) == cube.get(DOWNFACE_CENTER)) {
-            tiltCube(2);
+            cube.tiltCube(2);
         }
         while (cube.get(UPPERFACE_UPPERLEFT) != cube.get(UPPERFACE_CENTER)) {
             rotateFaces("B");
@@ -510,22 +403,22 @@ public class TiltedTwister implements Solver {
             if (cube.get(BACKFACE_UPPERLEFT) == cube.get(BACKFACE_UPPERRIGHT)) {
                 topCount++;
             }
-            turnCube(1);
+            cube.turnCube(1);
         }
         if (topCount > bottomCount) {
-            tiltCube(2);
+            cube.tiltCube(2);
         }
         count = topCount + bottomCount;
         if (count == 0) {
             rotateFaces("RRFFRR");
         } else if (count == 1) {
             while (cube.get(BACKFACE_DOWNLEFT) != cube.get(BACKFACE_DOWNRIGHT)) {
-                turnCube(1);
+                cube.turnCube(1);
             }
             rotateFaces("RuFUUfUr");
         } else if (count == 2) {
             while (cube.get(BACKFACE_DOWNLEFT) != cube.get(BACKFACE_DOWNRIGHT)) {
-                turnCube(1);
+                cube.turnCube(1);
             }
             while (cube.get(BACKFACE_UPPERLEFT) != cube.get(BACKFACE_UPPERRIGHT)) {
                 rotateFaces("U");
@@ -535,7 +428,7 @@ public class TiltedTwister implements Solver {
             rotateFaces("FFuRurUFFURUr");
         } else if (count == 5) {
             while (cube.get(BACKFACE_UPPERLEFT) != cube.get(BACKFACE_UPPERRIGHT)) {
-                turnCube(1);
+                cube.turnCube(1);
             }
             rotateFaces("RuRFFrURFFRR");
         }
@@ -597,7 +490,7 @@ public class TiltedTwister implements Solver {
                 rotateFaces("rUdF");
                 return;
             }
-            turnCube(1);
+            cube.turnCube(1);
         }
     }
 
@@ -628,7 +521,7 @@ public class TiltedTwister implements Solver {
                     rotateFaces("RUdf");
                     return true;
                 }
-                turnCube(1);
+                cube.turnCube(1);
             }
             rotateFaces("U");
         }
@@ -648,7 +541,7 @@ public class TiltedTwister implements Solver {
                     rotateFaces("ruDBBuuDDf");
                     return true;
                 }
-                turnCube(1);
+                cube.turnCube(1);
             }
             rotateFaces("U");
         }
@@ -671,7 +564,7 @@ public class TiltedTwister implements Solver {
                 }
             }
             if (bottomEdgesSolved < 3 || topEdgesSolved == 3) {
-                tiltCube(2);
+                cube.tiltCube(2);
                 if (topEdgeShort()) {
                     continue;
                 }
@@ -682,18 +575,18 @@ public class TiltedTwister implements Solver {
                 }
             }
             if (bottomEdgesSolved < 3 || topEdgesSolved == 3) {
-                tiltCube(2);
+                cube.tiltCube(2);
                 if (topEdgeLong()) {
                     continue;
                 }
             }
             if (topEdgesSolved >= 3) {
-                tiltCube(2);
+                cube.tiltCube(2);
             }
             topEdgeMoveOut(); // If two edges are swapped on upperface
         }
         if (bottomEdgesSolved < 4) {
-            tiltCube(2);
+            cube.tiltCube(2);
         }
     }
 
@@ -705,13 +598,13 @@ public class TiltedTwister implements Solver {
                 }
                 break;
             }
-            turnCube(1);
+            cube.turnCube(1);
         }
         for (int i = 0; i < 4; i++) {
             if (cube.get(UPPERFACE_MIDRIGHT) != cube.get(UPPERFACE_CENTER) || cube.get(RIGHTFACE_UPPERMID) != cube.get(RIGHTFACE_UPPERLEFT)) {
                 break;
             }
-            turnCube(1);
+            cube.turnCube(1);
         }
     }
 
@@ -739,7 +632,7 @@ public class TiltedTwister implements Solver {
             if (middleEdgeTwisted(Face.FRONT, MIDRIGHT)) {
                 twisted++;
             }
-            turnCube(1);
+            cube.turnCube(1);
         }
         return twisted;
     }
@@ -789,7 +682,7 @@ public class TiltedTwister implements Solver {
             switch (twistedMiddleEdges()) {
             case 1:
                 while (!middleEdgeTwisted(Face.FRONT, MIDRIGHT)) {
-                    turnCube(1);
+                    cube.turnCube(1);
                 }
                 while (cube.get(UPPERFACE_MIDLEFT) == cube.get(UPPERFACE_CENTER)) {
                     rotateFaces("U");
@@ -798,7 +691,7 @@ public class TiltedTwister implements Solver {
                 break;
             case 3:
                 while (middleEdgeTwisted(Face.FRONT, MIDRIGHT))
-                    turnCube(1);
+                    cube.turnCube(1);
                 while (cube.get(UPPERFACE_MIDRIGHT) == cube.get(UPPERFACE_CENTER))
                     rotateFaces("U");
                 rotateFaces("ruDbuDluDf");
@@ -815,7 +708,7 @@ public class TiltedTwister implements Solver {
                         rotateFaces("FlRuRRULrfRR");
                         return;
                     }
-                    turnCube(1);
+                    cube.turnCube(1);
                 }
             case 4:
                 rotateFaces("RFFRRUdFUUddBRRBBUdR");
@@ -831,9 +724,9 @@ public class TiltedTwister implements Solver {
                     rotateFaces("RRuDBB");
                     return true;
                 }
-                turnCube(1);
+                cube.turnCube(1);
             }
-            tiltCube(2);
+            cube.tiltCube(2);
         }
         return false;
     }
@@ -845,7 +738,7 @@ public class TiltedTwister implements Solver {
                 exchangeCenters = false;
                 break;
             }
-            turnCube(1);
+            cube.turnCube(1);
         }
         if (exchangeCenters) {
             rotateFaces("LLRRuDFFBB");
@@ -859,7 +752,7 @@ public class TiltedTwister implements Solver {
                 rotateFaces("RRUUddLL");
                 return true;
             }
-            turnCube(1);
+            cube.turnCube(1);
         }
         return false;
     }
