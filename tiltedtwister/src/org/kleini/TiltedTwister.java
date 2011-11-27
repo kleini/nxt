@@ -14,15 +14,15 @@ import lejos.nxt.LCD;
  */
 public class TiltedTwister implements Solver {
 
-    private static final int UPPERLEFT = 0;
+//    private static final int UPPERLEFT = 0;
     private static final int UPPERMID = 1;
-    private static final int UPPERRIGHT = 2;
+//    private static final int UPPERRIGHT = 2;
     private static final int MIDLEFT = 3;
-    private static final int CENTER = 4;
+//    private static final int CENTER = 4;
     private static final int MIDRIGHT = 5;
-    private static final int DOWNLEFT = 6;
-    private static final int DOWNMID = 7;
-    private static final int DOWNRIGHT = 8;
+//    private static final int DOWNLEFT = 6;
+//    private static final int DOWNMID = 7;
+//    private static final int DOWNRIGHT = 8;
 
     private static final int LEFTFACE_UPPERLEFT = 0;
     private static final int LEFTFACE_UPPERMID = 1;

@@ -4,8 +4,6 @@
 
 package org.kleini;
 
-import lejos.nxt.Button;
-
 /**
  *
  *
@@ -17,8 +15,8 @@ public final class Cube {
     private static final int FRONT_FACE_OFFSET = Face.FRONT.getIndex() * 9;
     private static final int RIGHT_FACE_OFFSET = Face.RIGHT.getIndex() * 9;
     private static final int BACK_FACE_OFFSET = Face.BACK.getIndex() * 9;
-    private static final int UP_FACE_OFFSET = Face.UPPER.getIndex() * 9;
-    private static final int DOWN_FACE_OFFSET = Face.DOWN.getIndex() * 9;
+//    private static final int UP_FACE_OFFSET = Face.UPPER.getIndex() * 9;
+//    private static final int DOWN_FACE_OFFSET = Face.DOWN.getIndex() * 9;
 
     private static final int UPPERLEFT = 0;
     private static final int UPPERMID = 1;
