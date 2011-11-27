@@ -10,17 +10,17 @@ package org.kleini;
  */
 public enum Color {
     /** white */
-    W('W'),
+    WHITE('W'),
     /** blue */
-    B('B'),
+    BLUE('B'),
     /** red */
-    R('R'),
+    RED('R'),
     /** green */
-    G('G'),
+    GREEN('G'),
     /** orange */
-    O('O'),
+    ORANGE('O'),
     /** yellow */
-    Y('Y');
+    YELLOW('Y');
 
     private final char letter;
 

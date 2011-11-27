@@ -21,26 +21,35 @@ public final class Cube {
     public Cube(final Cube other) {
         System.arraycopy(other.cube, 0, cube, 0, cube.length);
     }
+
     private void parseFaceList(final String faceList) {
         for (int i = 0; i < cube.length; i++) {
             cube[i] = Color.byLetter(faceList.charAt(i));
         }
     }
 
-    public void setFace(final int pos, final Color color) {
+    public void set(final int pos, final Color color) {
         cube[pos] = color;
     }
 
-    public void setFace(final int face, final int pos, final Color color) {
+    public void set(final int face, final int pos, final Color color) {
         cube[face * 9 + pos] = color;
     }
 
-    public Color getColor(final int pos) {
+    public void set(final Face face, final int pos, final Color color) {
+        cube[face.getIndex() * 9 + pos] = color;
+    }
+
+    public Color get(final int pos) {
         return cube[pos];
     }
 
     public Color get(final int face, final int pos) {
         return cube[face * 9 + pos];
+    }
+
+    public Color get(final Face face, final int pos) {
+        return cube[face.getIndex() * 9 + pos];
     }
 
     @Override
