@@ -10,7 +10,7 @@ import lejos.nxt.LCD;
 /**
  *
  *
- * @author <a href="mailto:m@kleini.org">Marcus Klein</a>
+ * @author <a href="mailto:himself@kleini.org">Marcus Klein</a>
  */
 public class TiltedTwister implements Solver {
 

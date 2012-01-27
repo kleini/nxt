@@ -35,7 +35,7 @@ package org.kleini;
  * R4, R5, R6, R7, R8, R9, B1, B2, B3, B4, B5, B6, B7, B8, B9, U1, U2, U3, U4, U5, U6, U7, U8, U9, D1, D2, D3, D4, D5, D6, D7, D8, D9 of the
  * enum constants.
  * 
- * @author <a href="mailto:m@kleini.org">Marcus Klein</a>
+ * @author <a href="mailto:himself@kleini.org">Marcus Klein</a>
  */
 public enum Facelet {
 	L1, L2, L3, L4, L5, L6, L7, L8, L9,

@@ -7,7 +7,7 @@ package org.kleini;
 /**
  *
  *
- * @author <a href="mailto:m@kleini.org">Marcus Klein</a>
+ * @author <a href="mailto:himself@kleini.org">Marcus Klein</a>
  */
 public interface Solver {
 
