@@ -10,16 +10,20 @@ package org.kleini;
  * @author <a href="mailto:m@kleini.org">Marcus Klein</a>
  */
 public enum Face {
-    LEFTFACE(0),
-    FRONTFACE(1),
-    RIGHTFACE(2),
-    BACKFACE(3),
-    UPPERFACE(4),
-    DOWNFACE(5);
+    LEFT(0),
+    FRONT(1),
+    RIGHT(2),
+    BACK(3),
+    UPPER(4),
+    DOWN(5);
 
-    public final int ord;
+    public final int index;
 
-    Face(final int ord) {
-        this.ord = ord;
+    Face(final int index) {
+        this.index = index;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
