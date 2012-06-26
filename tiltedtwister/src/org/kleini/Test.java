@@ -32,14 +32,14 @@ public class Test {
         long start = System.currentTimeMillis();
         final String solution = solver.solution(CUBE_X);
         long end = System.currentTimeMillis();
-        Button.waitForPress();
+        Button.waitForAnyPress();
         LCD.clearDisplay();
         LCD.drawInt((int)(end - start), 0, 0);
         for (int i = 0; i < solution.length() / 16; i++) {
             int endPos = Math.max((i+1)*16, solution.length());
             LCD.drawString(solution.substring(i*16, endPos), 0, i + 1);
         }
-        Button.waitForPress();
+        Button.waitForAnyPress();
 //        System.out.println(solution);
     }
 }

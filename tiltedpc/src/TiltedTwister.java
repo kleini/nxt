@@ -59,7 +59,7 @@ public class TiltedTwister {
 		System.out.println("Initiating bluetooth...");
 		NXTInfo[] nxtInfo = null;
 		try {
-			nxtInfo = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH).search(null, NXTCommFactory.BLUETOOTH);
+			nxtInfo = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH).search(null);
 		} catch (NXTCommException e1) {
 		}
 		int connected=0;
@@ -69,9 +69,8 @@ public class TiltedTwister {
 		{
 			try {
 				nxtComm[i]=NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH);
-				nxtCommand[i]=new NXTCommand();
 				nxtComm[i].open(nxtInfo[i]);
-				nxtCommand[i].setNXTComm(nxtComm[i]);
+				nxtCommand[i]=new NXTCommand(nxtComm[i]);
 				connected++;
 			} catch (NXTCommException e) {
 			}

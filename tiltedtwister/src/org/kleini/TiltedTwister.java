@@ -122,7 +122,7 @@ public class TiltedTwister implements Solver {
     private void twistCube(final int turns) {
         if (movesCount + turns >= MAXMOVES) {
             sorry();
-            Button.waitForPress();
+            Button.waitForAnyPress();
             System.exit(0);
         }
         final String addedMoves = cube.twistCube(turns);
