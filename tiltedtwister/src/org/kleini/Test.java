@@ -24,9 +24,6 @@ public class Test {
     private static final String CUBE_X = "ORGOBBRGRWGWYWYYBGBRWRGRWOOROYBYBGOYBWBWRGOYOGWRWOGBYY"; // FBBBLLLBUUURRBFFFULLLUFFUUULUFFUULUUULLRRDUUULLRRDFFFLLRRBRLDRRRLBBBLLLDDDRRRLBBRRLLFFFLLLURLLLBBBRRRLUUURLLLBUULLLRBBLLLRR
     private static final String CUBE_Y = "WRBOGRORWOYOGRWBWBGBRRBGOORGWRWOGBYYGBYYWYWGWROYBYBGOY"; // UDDDRRRDFFFLLDUUUFRRRFUUFFFRFUUFFRFFFRRLLBFFFRRLLBUUURRLLDLRBLLLRDDDRRRBBBLLLRDDLLRRUUURRRFLRRRDDDLLLRFFFLRRRDFFRRRLDDRRRLL
 
-    /**
-     * @param args
-     */
     public static void main(String[] args) {
         Solver solver = new TiltedTwister();
         long start = System.currentTimeMillis();
@@ -40,6 +37,5 @@ public class Test {
             LCD.drawString(solution.substring(i*16, endPos), 0, i + 1);
         }
         Button.waitForAnyPress();
-//        System.out.println(solution);
     }
 }
