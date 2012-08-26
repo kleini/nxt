@@ -854,7 +854,7 @@ public class TiltedTwister implements Solver {
 
     private boolean solveCube(final String facelets) {
         LCD.clearDisplay();
-        LCD.drawString("SOLVING", 20, 1);
+        LCD.drawString("SOLVING", 0, 1);
         LCD.drawString("Solution 1 =", 0, 3);
         loadCube(facelets);
         solve(Color.WHITE, Color.YELLOW);
