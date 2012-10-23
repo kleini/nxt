@@ -4,9 +4,6 @@
 
 package org.kleini.solver.controller;
 
-import org.kleini.nxt.Log;
-import org.kleini.nxt.LogFactory;
-
 import lejos.nxt.Button;
 
 /**
@@ -14,21 +11,14 @@ import lejos.nxt.Button;
  */
 public class Controller {
 
-	private Controller() {
-		super();
-	}
+    private Controller() {
+        super();
+    }
 
-	public static void main(String[] args) {
-		Log log = LogFactory.getLog();
-		Slaves slaves = new Slaves();
-		if (!slaves.connect2SlaveA()) {
-			log.info("Connect to Slave A failed.");
-			Button.waitForAnyPress();
-			System.exit(1);
-		}
-		slaves.messageA("Hello");
-		log.info("Message sent!");
-		Button.waitForAnyPress();
-		System.exit(0);
-	}
+    public static void main(String[] args) {
+        BtServer server = new BtServer();
+        Button.waitForAnyPress();
+        server.stop();
+        System.exit(0);
+    }
 }
