@@ -25,7 +25,7 @@ public class Test {
     private static final String CUBE_Y = "WRBOGRORWOYOGRWBWBGBRRBGOORGWRWOGBYYGBYYWYWGWROYBYBGOY"; // UDDDRRRDFFFLLDUUUFRRRFUUFFFRFUUFFRFFFRRLLBFFFRRLLBUUURRLLDLRBLLLRDDDRRRBBBLLLRDDLLRRUUURRRFLRRRDDDLLLRFFFLRRRDFFRRRLDDRRRLL
 
     public static void main(String[] args) {
-        Solver solver = new TiltedTwister();
+        Solver solver = new CornersFirst();
         long start = System.currentTimeMillis();
         final String solution = solver.solution(CUBE_X);
         long end = System.currentTimeMillis();

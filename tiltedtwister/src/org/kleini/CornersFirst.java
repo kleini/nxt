@@ -12,7 +12,7 @@ import lejos.nxt.LCD;
  *
  * @author <a href="mailto:himself@kleini.org">Marcus Klein</a>
  */
-public class TiltedTwister implements Solver {
+public class CornersFirst implements Solver {
 
 //    private static final int UPPERLEFT = 0;
     private static final int UPPERMID = 1;

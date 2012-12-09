@@ -10,7 +10,6 @@ import java.util.List;
 import lejos.nxt.comm.BTConnection;
 import lejos.nxt.comm.Bluetooth;
 import lejos.nxt.comm.NXTConnection;
-import lejos.nxt.remote.NXTComm;
 
 import org.kleini.nxt.Log;
 import org.kleini.nxt.LogFactory;

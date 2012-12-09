@@ -2,3 +2,4 @@ tiltedpc/bin
 tiltedtwister/bin
 *.nxd
 *.nxj
+*.class
