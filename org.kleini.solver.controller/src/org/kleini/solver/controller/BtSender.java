@@ -38,7 +38,7 @@ public class BtSender implements Runnable {
     @Override
     public void run() {
         while (running) {
-            byte[] buf = "Hallo".getBytes("UTF-8");
+            byte[] buf = "Hallo".getBytes("ASCII");
             connection.sendPacket(buf, buf.length);
             connection.close();
         }

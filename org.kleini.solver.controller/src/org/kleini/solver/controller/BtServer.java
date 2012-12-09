@@ -52,7 +52,7 @@ public class BtServer implements Runnable {
             if (null != connection) {
                 String address = connection.getAddress();
                 LOG.info("Client " + address + " connected.");
-    //            senders.add(new BtSender(connection));
+                senders.add(new BtSender(connection));
             } else {
                 LOG.info("No client connected.");
             }

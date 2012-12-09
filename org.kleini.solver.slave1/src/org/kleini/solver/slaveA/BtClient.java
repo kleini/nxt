@@ -57,6 +57,7 @@ public class BtClient implements Runnable, DiscoveryListener {
         LOG.info("Connecting to " + btDevice.getFriendlyName(true));
         BTConnection connection = Bluetooth.connect(btDevice);
         LOG.info("Connected to " + connection.getAddress());
+        new BtReceiver(connection);
     }
 
     @Override
