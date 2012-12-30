@@ -4,28 +4,47 @@
 
 package org.kleini.solver.slaveA;
 
+import org.kleini.nxt.Log;
+import org.kleini.nxt.LogFactory;
+
 import lejos.nxt.comm.BTConnection;
 
 public class BtReceiver implements Runnable {
 
-	private final Thread thread;
+    private static final Log LOG = LogFactory.getLog();
 
-	private BTConnection connection;
+    private final Thread thread;
 
-	BtReceiver(BTConnection connection) {
-		super();
-		this.connection = connection;
-		thread = new Thread(this);
-		thread.start();
-	}
+    private BTConnection connection;
+    private boolean running = true;
 
-	@Override
-	public void run() {
-		byte[] buf = new byte[256];
-		int length = -1;
-		while (true) {
-			length = connection.readPacket(buf, buf.length);
-			String text = new String(buf, 0, length, "ASCII");
-		}
-	}
+    BtReceiver(BTConnection connection) {
+        super();
+        this.connection = connection;
+        thread = new Thread(this);
+        thread.start();
+    }
+
+    void stop() {
+        running = false;
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            LOG.info(e.getMessage());
+        }
+        connection.close();
+    }
+
+    @Override
+    public void run() {
+        byte[] buf = new byte[256];
+        int length = -1;
+        while (running) {
+            length = connection.readPacket(buf, buf.length);
+            if (length > 0) {
+                String text = new String(buf, 0, length, "ASCII");
+                LOG.info(text);
+            }
+        }
+    }
 }

@@ -19,11 +19,13 @@ public class BtSender implements Runnable {
     private final BTConnection connection;
 
     private Thread thread;
-    private boolean running;
+    private boolean running = true;
 
     public BtSender(BTConnection connection) {
         super();
         this.connection = connection;
+        thread = new Thread(this);
+        thread.start();
     }
 
     public void stop() {
@@ -37,10 +39,19 @@ public class BtSender implements Runnable {
 
     @Override
     public void run() {
+        int count = 0;
         while (running) {
-            byte[] buf = "Hallo".getBytes("ASCII");
-            connection.sendPacket(buf, buf.length);
-            connection.close();
+            String text = "Hallo" + count++;
+            byte[] buf = text.getBytes("ASCII");
+            if (buf != null) {
+                connection.sendPacket(buf, buf.length);
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                LOG.info(e.getMessage());
+            }
         }
+        connection.close();
     }
 }

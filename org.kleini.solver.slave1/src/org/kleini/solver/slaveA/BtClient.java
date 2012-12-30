@@ -22,42 +22,69 @@ public class BtClient implements Runnable, DiscoveryListener {
     private static final Log LOG = LogFactory.getLog();
 
     private Thread thread;
+    private boolean running = true;
     private boolean connected = false;
+    private BtReceiver receiver = null;
 
     BtClient() {
-    	super();
-    	thread = new Thread(this);
-    	thread.start();
+        super();
+        thread = new Thread(this);
+        thread.start();
     }
 
-	@Override
-	public void run() {
-		while (true) {
-			if (!connected) {
-		        try {
-		            LocalDevice local = LocalDevice.getLocalDevice();
-		            LOG.info(local.getFriendlyName());
-		            DiscoveryAgent agent = local.getDiscoveryAgent();
-		            agent.startInquiry(DiscoveryAgent.GIAC, this);
-		        } catch (BluetoothStateException e) {
-		            LOG.info(e.getMessage());
-		        }
-			} else {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					LOG.info(e.getMessage());
-				}
-			}
-		}
-	}
+    void stop() {
+        running = false;
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            LOG.info(e.getMessage());
+        }
+        if (null != receiver) {
+            receiver.stop();
+            receiver = null;
+        }
+    }
+
+    private synchronized boolean isConnected() {
+        return connected;
+    }
+
+    private synchronized void connected() {
+        connected = true;
+    }
+
+    @Override
+    public void run() {
+        while (running) {
+            if (!isConnected()) {
+                try {
+                    LocalDevice local = LocalDevice.getLocalDevice();
+                    LOG.info(local.getFriendlyName() + " inquiring");
+                    DiscoveryAgent agent = local.getDiscoveryAgent();
+                    agent.startInquiry(DiscoveryAgent.GIAC, this);
+                } catch (BluetoothStateException e) {
+                    LOG.info(e.getMessage());
+                }
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                LOG.info(e.getMessage());
+            }
+        }
+    }
 
     @Override
     public void deviceDiscovered(RemoteDevice btDevice, DeviceClass cod) {
         LOG.info("Connecting to " + btDevice.getFriendlyName(true));
         BTConnection connection = Bluetooth.connect(btDevice);
-        LOG.info("Connected to " + connection.getAddress());
-        new BtReceiver(connection);
+        if (null == connection) {
+            LOG.info("Not connected.");
+        } else {
+            connected();
+            LOG.info("Connected to " + connection.getAddress());
+            receiver = new BtReceiver(connection);
+        }
     }
 
     @Override

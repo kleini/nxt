@@ -56,6 +56,11 @@ public class BtServer implements Runnable {
             } else {
                 LOG.info("No client connected.");
             }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                LOG.info(e.getMessage());
+            }
         }
     }
 }

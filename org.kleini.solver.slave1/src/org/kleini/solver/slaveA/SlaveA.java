@@ -11,13 +11,14 @@ import lejos.nxt.Button;
  */
 public class SlaveA {
 
-    public SlaveA() {
+    private SlaveA() {
         super();
     }
 
     public static void main(String[] args) {
-        new SlaveA();
+        BtClient client = new BtClient();
         Button.waitForAnyPress();
+        client.stop();
         System.exit(0);
     }
 }
