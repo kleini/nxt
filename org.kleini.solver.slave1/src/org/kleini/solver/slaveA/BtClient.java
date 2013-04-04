@@ -23,7 +23,7 @@ public class BtClient implements Runnable, DiscoveryListener {
 
     private Thread thread;
     private boolean running = true;
-    private boolean connected = false;
+    private volatile boolean connected = false;
     private BtReceiver receiver = null;
 
     BtClient() {

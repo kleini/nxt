@@ -45,7 +45,7 @@ public class BtSender implements Runnable {
             byte[] buf = text.getBytes("ASCII");
             connection.sendPacket(buf, buf.length);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 LOG.info(e.getMessage());
             }
