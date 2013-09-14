@@ -26,6 +26,7 @@ public class BtServer implements Runnable {
     private Thread thread;
     private boolean running = true;
     private List<BtSender> senders = new LinkedList<BtSender>();
+    private BtReceiver[] receivers = new BtReceiver[] { new BtReceiver("SlaveA", "0016530FC2F1") };
 
     public BtServer() {
         super();
@@ -48,13 +49,27 @@ public class BtServer implements Runnable {
     @Override
     public void run() {
         while (running) {
-            BTConnection connection = Bluetooth.waitForConnection(0, NXTConnection.PACKET);
-            if (null != connection) {
-                String address = connection.getAddress();
-                LOG.info("Client " + address + " connected.");
-                senders.add(new BtSender(connection));
-            } else {
-                LOG.info("No client connected.");
+            if (connectionMissing()) {
+                LOG.info("Waiting for connection");
+                BTConnection connection = Bluetooth.waitForConnection(0, NXTConnection.PACKET);
+                if (null != connection) {
+                    String address = connection.getAddress();
+                    boolean found = false;
+                    for (BtReceiver receiver : receivers) {
+                        if (receiver.getName().equals(address) || receiver.getIdentifier().equals(address)) {
+                            LOG.info(receiver.getName() + " connected.");
+                            receiver.setConnected(true);
+                            receiver.setSender(new BtSender(connection, receiver));
+                            found = true;
+                        }
+                    }
+                    if (!found) {
+                        LOG.info(address);
+                        connection.close();
+                    }
+                } else {
+                    LOG.info("No connection");
+                }
             }
             try {
                 Thread.sleep(1000);
@@ -62,5 +77,13 @@ public class BtServer implements Runnable {
                 LOG.info(e.getMessage());
             }
         }
+    }
+
+    private boolean connectionMissing() {
+        boolean retval = false;
+        for (BtReceiver receiver : receivers) {
+            retval |= !receiver.isConnected();
+        }
+        return retval;
     }
 }

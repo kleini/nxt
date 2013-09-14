@@ -9,6 +9,9 @@ package org.kleini.nxt;
  */
 public interface Log {
 
-	void info(String message);
+    void trace(String message);
 
+    void info(String message);
+
+    void error(String message);
 }

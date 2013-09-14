@@ -20,10 +20,12 @@ public class BtSender implements Runnable {
 
     private Thread thread;
     private boolean running = true;
+    private BtReceiver receiver;
 
-    public BtSender(BTConnection connection) {
+    public BtSender(BTConnection connection, BtReceiver receiver) {
         super();
         this.connection = connection;
+        this.receiver = receiver;
         thread = new Thread(this);
         thread.start();
     }
@@ -42,14 +44,47 @@ public class BtSender implements Runnable {
         int count = 0;
         while (running) {
             String text = "Hallo" + count++;
-            byte[] buf = text.getBytes("ASCII");
-            connection.sendPacket(buf, buf.length);
+            LOG.info(text);
+            byte[] send = text.getBytes("ASCII");
             try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                LOG.info(e.getMessage());
+                int sent = connection.sendPacket(send, send.length);
+                if (sent != text.length()) {
+                    running = false;
+                    continue;
+                } else {
+                    waitForACK();
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        LOG.info(e.getMessage());
+                    }
+                }
+            } catch (Exception e) {
+                running = false;
+                LOG.info("Kack" + e.getMessage());
             }
         }
+        LOG.info("Stop sending");
         connection.close();
+        receiver.setConnected(false);
+    }
+
+    private void waitForACK() {
+        byte[] buf = new byte[10];
+        int length = -1;
+        boolean received = false;
+        do {
+            length = connection.readPacket(buf, buf.length);
+            if (length > 0) {
+                String text = new String(buf, 0, length, "ASCII");
+                received = "ACK".equals(text);
+                LOG.info(text);
+            }
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                LOG.error(e.getMessage());
+            }
+        } while (!received);
     }
 }

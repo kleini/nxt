@@ -11,11 +11,13 @@ import org.kleini.nxt.internal.LogImpl;
  */
 public class LogFactory {
 
-	private LogFactory() {
-		super();
-	}
+    private static final Log SINGLETON = new LogImpl();
 
-	public static Log getLog() {
-		return new LogImpl();
-	}
+    private LogFactory() {
+        super();
+    }
+
+    public static Log getLog() {
+        return SINGLETON;
+    }
 }

@@ -24,6 +24,7 @@ public class BtClient implements Runnable, DiscoveryListener {
     private Thread thread;
     private boolean running = true;
     private volatile boolean connected = false;
+    private volatile boolean connecting = false;
     private BtReceiver receiver = null;
 
     BtClient() {
@@ -49,14 +50,28 @@ public class BtClient implements Runnable, DiscoveryListener {
         return connected;
     }
 
-    private synchronized void connected() {
-        connected = true;
+    private synchronized void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+
+    private synchronized void setConnecting(boolean connecting) {
+        this.connecting = connecting;
+    }
+
+    private synchronized boolean isConnecting() {
+        return connecting;
+    }
+
+    void connectionLost() {
+        receiver.stop();
+        receiver = null;
+        setConnected(false);
     }
 
     @Override
     public void run() {
         while (running) {
-            if (!isConnected()) {
+            if (!isConnected() && !isConnecting()) {
                 try {
                     LocalDevice local = LocalDevice.getLocalDevice();
                     LOG.info(local.getFriendlyName() + " inquiring");
@@ -76,15 +91,18 @@ public class BtClient implements Runnable, DiscoveryListener {
 
     @Override
     public void deviceDiscovered(RemoteDevice btDevice, DeviceClass cod) {
-        LOG.info("Connecting to " + btDevice.getFriendlyName(true));
+        setConnecting(true);
+        String name = btDevice.getFriendlyName(true);
+        LOG.info("CT " + name);
         BTConnection connection = Bluetooth.connect(btDevice);
         if (null == connection) {
             LOG.info("Not connected.");
         } else {
-            connected();
+            setConnected(true);
             LOG.info("Connected to " + connection.getAddress());
-            receiver = new BtReceiver(connection);
+            receiver = new BtReceiver(connection, this);
         }
+        setConnecting(false);
     }
 
     @Override
