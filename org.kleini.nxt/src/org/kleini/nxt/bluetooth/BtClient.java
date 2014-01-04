@@ -2,7 +2,7 @@
  * GPL v3
  */
 
-package org.kleini.solver.slaveA;
+package org.kleini.nxt.bluetooth;
 
 import javax.bluetooth.BluetoothStateException;
 import javax.bluetooth.DeviceClass;
@@ -27,13 +27,13 @@ public class BtClient implements Runnable, DiscoveryListener {
     private volatile boolean connecting = false;
     private BtReceiver receiver = null;
 
-    BtClient() {
+    public BtClient() {
         super();
         thread = new Thread(this);
         thread.start();
     }
 
-    void stop() {
+    public void stop() {
         running = false;
         try {
             thread.join();

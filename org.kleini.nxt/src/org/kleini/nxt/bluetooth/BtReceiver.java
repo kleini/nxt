@@ -2,7 +2,7 @@
  * GPL v3
  */
 
-package org.kleini.solver.slaveA;
+package org.kleini.nxt.bluetooth;
 
 import org.kleini.nxt.Log;
 import org.kleini.nxt.LogFactory;
