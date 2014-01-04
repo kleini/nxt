@@ -4,6 +4,8 @@
 
 package org.kleini.solver.slaveA;
 
+import org.kleini.nxt.bluetooth.BtClient;
+
 import lejos.nxt.Button;
 
 /**
