@@ -47,8 +47,8 @@ public class BtReceiver implements Runnable {
             if (length > 0) {
                 String text = new String(buf, 0, length, "ASCII");
                 LOG.info(text);
-                sendACK();
             }
+            sendACK();
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -62,6 +62,7 @@ public class BtReceiver implements Runnable {
         if (sent != ACK.length) {
             running = false;
             client.connectionLost();
+            LOG.trace("Lost connection.");
         }
     }
 }

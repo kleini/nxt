@@ -13,6 +13,7 @@ import javax.bluetooth.RemoteDevice;
 
 import lejos.nxt.comm.BTConnection;
 import lejos.nxt.comm.Bluetooth;
+import lejos.nxt.comm.NXTConnection;
 
 import org.kleini.nxt.Log;
 import org.kleini.nxt.LogFactory;
@@ -21,14 +22,16 @@ public class BtClient implements Runnable, DiscoveryListener {
 
     private static final Log LOG = LogFactory.getLog();
 
+    private final String controller;
     private Thread thread;
     private boolean running = true;
     private volatile boolean connected = false;
     private volatile boolean connecting = false;
     private BtReceiver receiver = null;
 
-    public BtClient() {
+    public BtClient(String controller) {
         super();
+        this.controller = controller;
         thread = new Thread(this);
         thread.start();
     }
@@ -74,17 +77,17 @@ public class BtClient implements Runnable, DiscoveryListener {
             if (!isConnected() && !isConnecting()) {
                 try {
                     LocalDevice local = LocalDevice.getLocalDevice();
-                    LOG.info(local.getFriendlyName() + " inquiring");
+                    LOG.trace(local.getFriendlyName() + " inquiring");
                     DiscoveryAgent agent = local.getDiscoveryAgent();
                     agent.startInquiry(DiscoveryAgent.GIAC, this);
                 } catch (BluetoothStateException e) {
-                    LOG.info(e.getMessage());
+                    LOG.error(e.getMessage());
                 }
             }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
-                LOG.info(e.getMessage());
+                LOG.error(e.getMessage());
             }
         }
     }
@@ -93,20 +96,22 @@ public class BtClient implements Runnable, DiscoveryListener {
     public void deviceDiscovered(RemoteDevice btDevice, DeviceClass cod) {
         setConnecting(true);
         String name = btDevice.getFriendlyName(true);
-        LOG.info("CT " + name);
-        BTConnection connection = Bluetooth.connect(btDevice);
-        if (null == connection) {
-            LOG.info("Not connected.");
-        } else {
-            setConnected(true);
-            LOG.info("Connected to " + connection.getAddress());
-            receiver = new BtReceiver(connection, this);
+        if (controller.equals(name)) {
+            LOG.trace("Discovered " + name);
+            BTConnection connection = Bluetooth.connect(btDevice.getDeviceAddr(), NXTConnection.RAW, null);
+            if (null == connection) {
+                LOG.trace("Not connected.");
+            } else {
+                setConnected(true);
+                LOG.trace("Connected to " + connection.getAddress());
+                receiver = new BtReceiver(connection, this);
+            }
+            setConnecting(false);
         }
-        setConnecting(false);
     }
 
     @Override
     public void inquiryCompleted(int discType) {
-        LOG.info("Inquiry complete " + discType);
+        LOG.trace("Inquiry complete " + discType);
     }
 }

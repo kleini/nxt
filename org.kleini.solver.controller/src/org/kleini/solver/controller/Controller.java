@@ -22,9 +22,31 @@ public class Controller {
 
     public static void main(String[] args) {
         LOG.info("Started controller");
-        BtServer server = new BtServer();
-        Button.waitForAnyPress();
+        BtReceiver[] receivers = new BtReceiver[] { new BtReceiver("SlaveA", "0016530FC2F1"), new BtReceiver("SlaveB", "0016530DD903") };
+        BtServer server = new BtServer(receivers);
+        while (server.connectionMissing()) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                LOG.error(e.getMessage());
+            }
+        }
+        boolean running = true;
+        do {
+            int count = 0;
+            for (BtReceiver receiver : receivers) {
+                count++;
+                if (!receiver.sendCommand("Hallo " + count)) {
+                    running = false;
+                }
+                LOG.trace("Waiting for finished command " + receiver.getName());
+                if (!receiver.finishedCommand("Hallo " + count)) {
+                    
+                }
+            }
+        } while (running && 0 == Button.readButtons());
         server.stop();
         System.exit(0);
+        LOG.info("Controller terminated");
     }
 }

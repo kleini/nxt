@@ -16,14 +16,12 @@ public class LogImpl implements Log {
 
     public LogImpl() {
         super();
-        RConsole.openUSB(100);
+        RConsole.openUSB(0);
     }
 
     @Override
     public void trace(String message) {
         RConsole.println(message);
-        LCD.scroll();
-        LCD.drawString(message, 0, 7);
     }
 
     @Override
@@ -35,7 +33,6 @@ public class LogImpl implements Log {
 
     @Override
     public void error(String message) {
-        LCD.scroll();
-        LCD.drawString(message, 0, 7);
+        RConsole.println(message);
     }
 }

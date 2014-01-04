@@ -35,56 +35,100 @@ public class BtSender implements Runnable {
         try {
             thread.join();
         } catch (InterruptedException e) {
-            LOG.info(e.getMessage());
+            LOG.error(e.getMessage());
         }
+    }
+
+    public void sendCommand(String command) {
+        setCommand(command);
+    }
+
+    private volatile Object synchronize = new Object();
+    private volatile String command = null;
+
+    private synchronized String getCommand() {
+        return command;
+    }
+
+    private synchronized void setCommand(String command) {
+        this.command = command;
+        synchronize.notifyAll();
     }
 
     @Override
     public void run() {
-        int count = 0;
         while (running) {
-            String text = "Hallo" + count++;
-            LOG.info(text);
-            byte[] send = text.getBytes("ASCII");
-            try {
-                int sent = connection.sendPacket(send, send.length);
-                if (sent != text.length()) {
-                    running = false;
-                    continue;
-                } else {
-                    waitForACK();
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        LOG.info(e.getMessage());
-                    }
+            String currentCommand = getCommand();
+            if (null == currentCommand) {
+                try {
+                    synchronize.wait();
+                } catch (InterruptedException e) {
+                    LOG.error(e.getMessage());
                 }
-            } catch (Exception e) {
-                running = false;
-                LOG.info("Kack" + e.getMessage());
+            } else {
+                LOG.trace("Sending " + currentCommand + " to " + receiver.getName());
+                byte[] bytes = currentCommand.getBytes("ASCII");
+                boolean sentSuccessfully = false;
+                do {
+                    int sent = connection.sendPacket(bytes, bytes.length);
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        LOG.error(e.getMessage());
+                    }
+                    if (sent != bytes.length) {
+                        running = false;
+                    } else {
+                        sentSuccessfully = receiveACK(currentCommand);
+                    }
+                    if (!sentSuccessfully) {
+                        LOG.trace(receiver.getName() + " did not confirm command.");
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    } else {
+                        setCommand(null);
+                    }
+                } while (!sentSuccessfully && running);
             }
         }
-        LOG.info("Stop sending");
+        LOG.trace("Lost connection to " + receiver.getName());
         connection.close();
         receiver.setConnected(false);
     }
 
-    private void waitForACK() {
-        byte[] buf = new byte[10];
+//    private void waitForACK() {
+//        byte[] buf = new byte[10];
+//        int length = -1;
+//        boolean received = false;
+//        do {
+//            length = connection.readPacket(buf, buf.length);
+//            if (length > 0) {
+//                String text = new String(buf, 0, length, "ASCII");
+//                received = "ACK".equals(text);
+//                LOG.info("Recv: " + text);
+//            }
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                LOG.error(e.getMessage());
+//            }
+//        } while (!received);
+//    }
+
+    private boolean receiveACK(String command) {
+        byte[] buf = new byte[32];
         int length = -1;
         boolean received = false;
-        do {
-            length = connection.readPacket(buf, buf.length);
-            if (length > 0) {
-                String text = new String(buf, 0, length, "ASCII");
-                received = "ACK".equals(text);
-                LOG.info(text);
-            }
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                LOG.error(e.getMessage());
-            }
-        } while (!received);
+        length = connection.readPacket(buf, buf.length);
+        if (length > 0) {
+            String text = new String(buf, 0, length, "ASCII");
+            LOG.trace("Recv: " + text + " from " + connection.getAddress());
+            received = text.startsWith("ACK") && text.substring(3).equals(command);
+        }
+        return received;
     }
 }

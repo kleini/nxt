@@ -23,13 +23,15 @@ public class BtServer implements Runnable {
 
     private static final Log LOG = LogFactory.getLog();
 
+    private final BtReceiver[] receivers;
+
     private Thread thread;
     private boolean running = true;
     private List<BtSender> senders = new LinkedList<BtSender>();
-    private BtReceiver[] receivers = new BtReceiver[] { new BtReceiver("SlaveA", "0016530FC2F1") };
 
-    public BtServer() {
+    public BtServer(BtReceiver[] receivers) {
         super();
+        this.receivers = receivers;
         thread = new Thread(this);
         thread.start();
     }
@@ -39,7 +41,7 @@ public class BtServer implements Runnable {
         try {
             thread.join(1000);
         } catch (InterruptedException e) {
-            LOG.info(e.getMessage());
+            LOG.error(e.getMessage());
         }
         for (BtSender sender : senders) {
             sender.stop();
@@ -50,10 +52,11 @@ public class BtServer implements Runnable {
     public void run() {
         while (running) {
             if (connectionMissing()) {
-                LOG.info("Waiting for connection");
-                BTConnection connection = Bluetooth.waitForConnection(0, NXTConnection.PACKET);
+                LOG.trace("Waiting for connection");
+                BTConnection connection = Bluetooth.waitForConnection(1000, NXTConnection.RAW);
                 if (null != connection) {
                     String address = connection.getAddress();
+                    LOG.trace("Device " + address + " connected.");
                     boolean found = false;
                     for (BtReceiver receiver : receivers) {
                         if (receiver.getName().equals(address) || receiver.getIdentifier().equals(address)) {
@@ -64,22 +67,24 @@ public class BtServer implements Runnable {
                         }
                     }
                     if (!found) {
-                        LOG.info(address);
+                        LOG.trace(address);
                         connection.close();
                     }
                 } else {
-                    LOG.info("No connection");
+                    LOG.trace("No connection");
                 }
+            } else {
+                LOG.trace("All slaves connected.");
             }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
-                LOG.info(e.getMessage());
+                LOG.error(e.getMessage());
             }
         }
     }
 
-    private boolean connectionMissing() {
+    public boolean connectionMissing() {
         boolean retval = false;
         for (BtReceiver receiver : receivers) {
             retval |= !receiver.isConnected();

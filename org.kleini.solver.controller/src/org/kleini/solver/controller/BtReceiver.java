@@ -43,4 +43,17 @@ public final class BtReceiver {
     public void setSender(BtSender sender) {
         this.sender = sender;
     }
+
+    public boolean sendCommand(String command) {
+        if (null == sender) {
+            return false;
+        }
+        sender.sendCommand(command);
+        return true;
+    }
+
+    public boolean finishedCommand(String command) {
+        // FIXME continue here
+        return false;
+    }
 }
